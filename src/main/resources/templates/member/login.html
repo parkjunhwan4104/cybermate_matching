@@ -18,10 +18,10 @@
   font-family: "Noto Sans KR", sans-serif;
 }
 
-a {
+/* a {
   text-decoration: none;
   color: black;
-}
+} */
 
 li {
   list-style: none;
@@ -34,23 +34,66 @@ li {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.1);
+  flex-direction: column;
 }
 
 .login {
   width: 30%;
-  height: 600px;
+  height: 460px;
   background: white;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /*생략??*/
   flex-direction: column;
+  align-items: center;
+  display: flex;
 }
 
-h2 {
-  color: tomato;
-  font-size: 2em;
+.header {
+  width: 30%;
+  height: 70px;
+  background-color: white;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
 }
+
+.bottom {
+  width: 30%;
+}
+
+.tab_bar {
+ width: 25%;
+ height: 70px;
+ background:rgb(124, 170, 255);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+ float: left;
+ border: 1px solid white;
+ font-size: 20px;
+ color: white;
+ text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+
+h2 {
+  font-size: 2em;
+  color: white;
+  text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
+}
+
+.log_on {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.rate {
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .login_sns {
   padding: 20px;
   display: flex;
@@ -115,72 +158,126 @@ h2 {
 
 .submit {
   margin-top: 50px;
-  width: 80%;
-}
-.submit input {
   width: 100%;
-  height: 50px;
-  border: 0;
-  outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
-  color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
+  border: 1px solid red;
 }
+
 .submit button {
   width: 100%;
-  height: 50px;
+  height: 100px;
   border: 0;
   outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  border-radius: 5px;
+  background: gray;
+  border: 1px solid black;
   color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
 }
+
+.form {
+ margin-top: 10px;
+ margin-bottom: 20px;
+}
+
+.form button {
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: gray;
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
+
+.form input {
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.foot_div {
+  /* border: 1px solid black; */
+  text-align: center;
+}
+
+.foot_div button {
+  width: 100px;
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: hsl(219, 100%, 61%);
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
+
+
     </style>
 </head>
 
 <body>
-    <div class="wrap">
-        <div class="login">
-            <h2>Log-in</h2>
+<div class="wrap">
 
-            <form action="" th:action="@{~/members/doLogin}" th:object="${memberLoginForm}" method="POST">
-                <div class="login_sns">
-                </div>
+    <div class="header">
+        <h2>로그인</h2>
+    </div>
 
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <div class="login">
 
-                <div class="login_id">
-                    <h4>Id</h4>
-                    <input type="text" name="loginId"  placeholder="loginId" autocomplete="off" required>
-                </div>
+        <form th:action="@{~/members/doLogin}" th:object="${memberLoginForm}" method="POST">
 
-                <div class ="login_pw">
-                    <h4>Password</h4>
-                    <input type="password" name="loginPw"  placeholder="Password" autocomplete="off" required>
-                </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-                <div class="login_etc">
-                    <div class="forgot_pw">
-                    <a th:href="@{~/members/join}">회원가입</a>
-                    </div>
-                </div>
+            <div class="form">
+                <h4>아이디</h4>
+                <input type="text" name="loginId" placeholder="아이디" autocomplete="off" required>
+            </div>
 
-                <div class="submit">
+            <div class ="form">
+                <h4>비밀번호</h4>
+                <input type="password" name="loginPw"  placeholder="비밀번호" autocomplete="off" required>
+            </div>
 
-                    <button >로그인</button>
-                    <br>
-                    <a th:href="@{~/}">
-                        <button  type="button" class="border bg-gray-500 p-1 rounded text-white">취소</button>
-                    </a>
-                </div>
-            </form>
+            <div class="foot_div">
+                <button class="mr-4 border bg-gray-500 p-1 rounded text-white">
+                    로그인
+                </button>
+                <a th:href="@{~/}">
+                    <button  type="button" class="border bg-gray-500 p-1 rounded text-white">취소</button>
+                </a>
+            </div>
+        </form>
 
+
+    </div>
+
+    <div class="bottom">
+        <div class="tab_bar">
+            <a class="menu" th:href="@{~/}">홈</a>
+        </div>
+        <div class="tab_bar">
+            <a class="menu" >스터디룸</a>
+        </div>
+        <div class="tab_bar">
+            <a class="menu" >신청목록</a>
+        </div>
+        <div class="tab_bar">
+            <a class="menu" >신청하기</a>
         </div>
     </div>
+
+</div>
 </body>
 
 </html>
