@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en"
+
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  list-style: none;
+}
+
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.login {
+  width: 30%;
+  height: 600px;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+.login_sns {
+  padding: 20px;
+  display: flex;
+}
+
+.login_sns li {
+  padding: 0px 15px;
+}
+
+.login_sns a {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50px;
+  background: white;
+  font-size: 20px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login_id {
+  margin-top: 20px;
+  width: 80%;
+}
+
+.login_id input {
+  width: 75%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+  float: left;
+}
+
+.login_id button {
+  width: 20%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+  float: right;
+}
+
+.login_pw {
+  margin-top: 20px;
+  width: 80%;
+}
+
+.login_pw input {
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.login_etc {
+  padding: 10px;
+  width: 80%;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.submit {
+  margin-top: 50px;
+  width: 80%;
+}
+.submit input {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  color: white;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
+.submit button {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  color: white;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+    </style>
+
+    <script th:inline="javascript">
+
+        /*<![CDATA[*/
+
+        let err_msg = [[ ${err_msg} ]]
+
+        if( err_msg != null || err_msg != undefined ){
+
+        alert(err_msg);
+
+        }
+
+        /*]]*/
+
+    </script>
+    <script src="/js/join.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="login">
+
+            <h2>Join</h2>
+
+            <form th:action="@{~/members/join}" th:object="${memberSaveForm}"  method="POST" onsubmit="return checkStatus()">
+                <div class="login_sns">
+                </div>
+
+                <div class="login_id">
+                    <h4>Id</h4>
+                    <input  class="border rounded p-1 rounded bg-gray-50" id="loginId" name="loginId" type="text" placeholder="아이디" autocomplete="off" th:field="*{loginId}"  th:errorclass="field-error">
+                    <span th:errors="*{loginId}"></span>
+                    <button type="button" onclick="checkDupleLoginId()">중복확인</button>
+                </div>
+
+                <div class="login_pw">
+                    <h4>Password</h4>
+                    <input class="border rounded p-1 rounded bg-gray-50"  name="loginPw" type="password" placeholder="비밀번호" autocomplete="off" th:field="*{loginPw}" th:errorclass="field-error">
+                    <span th:errors="*{loginPw}"></span>
+                </div>
+
+                <div class="login_id">
+                  <h4>Name</h4>
+                  <input  class="border rounded p-1 rounded bg-gray-50" id="nickName" name="nickName" type="text" placeholder="닉네임" autocomplete="off" th:field="*{nickName}"  th:errorclass="field-error">
+                  <span th:errors="*{nickName}"></span>
+                  <button type="button" onclick="checkDupleNickName()">중복확인</button>
+                </div>
+
+
+                <div class="submit">
+                    <button class="" type="submit" >회원가입</button>
+
+                    <a href="/">
+                        <button class="" type="submit" value="submit">
+                            취소
+                        </button>
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>
