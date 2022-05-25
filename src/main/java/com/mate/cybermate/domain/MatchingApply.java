@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
-
 public class MatchingApply {
 
     @Id

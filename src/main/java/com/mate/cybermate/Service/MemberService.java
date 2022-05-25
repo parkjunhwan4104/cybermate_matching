@@ -61,14 +61,19 @@ public class MemberService implements UserDetailsService {
 
     }
 
-    public Member findByLoginId(String loginId){
-        Optional<Member> findMember=memberRepository.findByLoginId(loginId);
-        findMember.orElseThrow(
+    public Member findByLoginId(String loginId) throws IllegalStateException{
+
+        Optional<Member> memberOption=memberRepository.findByLoginId(loginId);
+        memberOption.orElseThrow(
                 ()-> new IllegalStateException("존재하지 않는 회원입니다.")
         );
+        return memberOption.get();
 
-        return findMember.get();
+    }
 
+    public Member getMember(String loginId){
+        Member member=findByLoginId(loginId);
+        return member;
     }
 
     public boolean isDupleLoginId(String loginId){

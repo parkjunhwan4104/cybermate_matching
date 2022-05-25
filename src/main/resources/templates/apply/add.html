@@ -9,7 +9,6 @@
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
-
     <style>
         * {
   margin: 0;
@@ -177,8 +176,8 @@ h2 {
 }
 
 .form {
- margin-top: 10px;
- margin-bottom: 20px;
+ margin-top:5px;
+ margin-bottom: 10px;
 }
 
 .form button {
@@ -195,9 +194,9 @@ h2 {
 }
 
 .form input {
-  height: 40px;
+  height: 28px;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 3px;
   padding: 0px 20px;
   border: 1px solid lightgray;
   outline: none;
@@ -209,6 +208,7 @@ h2 {
 }
 
 .foot_div button {
+  margin-top: 10px;
   width: 100px;
   height: 40px;
   border: 0;
@@ -230,32 +230,47 @@ h2 {
 <div class="wrap">
 
     <div class="header">
-        <h2>로그인</h2>
+        <h2>매칭신청</h2>
     </div>
 
     <div class="login">
 
-        <form th:action="@{~/members/doLogin}" th:object="${memberLoginForm}" method="POST">
+        <form  th:action="@{~/members/apply}" th:object="${applySaveForm}" method="POST">
 
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div class="form">
-                <h4>아이디</h4>
-                <input type="text" name="loginId" placeholder="아이디" autocomplete="off" required>
+                <h4>나이</h4>
+                <input  class="border rounded p-1 rounded bg-gray-50" th:field="*{age}" type="number" autocomplete="off" th:errorclass="field-error" required>
+                <span th:errors="*{age}"></span>
             </div>
 
-            <div class ="form">
-                <h4>비밀번호</h4>
-                <input type="password" name="loginPw"  placeholder="비밀번호" autocomplete="off" required>
+            <div class="form">
+                <h4>성별(남자, 여자)</h4>
+                <input class="border rounded p-1 rounded bg-gray-50"  type="text" autocomplete="off" th:field="*{sex}"  th:errorclass="field-error" required>
+                <span th:errors="*{sex}"></span>
+            </div>
+
+            <div class="form">
+                <h4>과목</h4>
+                <input id="subject" class="border rounded p-1 rounded bg-gray-50" type="text" autocomplete="off" th:field="*{subject}"  th:errorclass="field-error" required>
+                <span th:errors="*{subject}"></span>
+            </div>
+
+            <div class="form">
+                <h4>강의명</h4>
+                <input class="border rounded p-1 rounded bg-gray-50" type="text" autocomplete="off" th:field="*{lectureName}"  th:errorclass="field-error" required>
+                <span th:errors="*{lectureName}"></span>
+            </div>
+
+            <div class="form">
+                <h4>강의 개수</h4>
+                <input  class="border rounded p-1 rounded bg-gray-50"  type="number" autocomplete="off" th:field="*{lectureContentNo}"  th:errorclass="field-error" required>
+                <span th:errors="*{lectureContentNo}"></span>
             </div>
 
             <div class="foot_div">
-                <button class="mr-4 border bg-gray-500 p-1 rounded text-white">
-                    로그인
-                </button>
-                <a th:href="@{~/}">
-                    <button  type="button" class="border bg-gray-500 p-1 rounded text-white">취소</button>
-                </a>
+                <button type="submit" >매칭신청</button>
             </div>
         </form>
 
@@ -273,7 +288,7 @@ h2 {
             <a class="menu" th:href="@{~/boards/2}" >신청목록</a>
         </div>
         <div class="tab_bar">
-            <a class="menu" th:href="@{~/members/apply}" >신청하기</a>
+            <a class="menu" th:href="@{~/members/apply}">신청하기</a>
         </div>
     </div>
 

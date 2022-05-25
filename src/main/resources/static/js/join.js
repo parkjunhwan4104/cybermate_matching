@@ -12,7 +12,7 @@ async function checkDupleLoginId(){
     let inputLoginId= document.querySelector("#loginId")
     let loginId=inputLoginId.value;
 
-    await fetch("http://localhost:8080/members/check/loginId?loginId=" +encodeURI(loginId))
+    await fetch("http://localhost:8085/members/check/loginId?loginId=" +encodeURI(loginId))
     .then(
 
         (response)=> {
@@ -63,7 +63,7 @@ async function checkDupleNickName(){
         let inputNickName= document.querySelector("#nickName")
         let nickName=inputNickName.value;
 
-        await fetch("http://localhost:8080/members/check/nickName?nickName=" +encodeURI(nickName))
+        await fetch("http://localhost:8085/members/check/nickName?nickName=" +encodeURI(nickName))
         .then(
 
             (response)=> {
