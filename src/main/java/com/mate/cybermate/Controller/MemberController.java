@@ -68,6 +68,18 @@ public class MemberController {
         return "member/login";
     }
 
+    @GetMapping("/members/loginSucess")
+    public String showSucess(){
+
+        return "member/loginSucessPopup";
+    }
+
+
+    @GetMapping("/members/loginFail")
+    public String showFail(){
+
+        return "member/loginFail";
+    }
 
 
 

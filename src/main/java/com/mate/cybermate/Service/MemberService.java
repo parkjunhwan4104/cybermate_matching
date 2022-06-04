@@ -52,7 +52,10 @@ public class MemberService implements UserDetailsService {
                 memberSaveForm.getLoginId(),
                 bCryptPasswordEncoder.encode(memberSaveForm.getLoginPw()),
                 memberSaveForm.getNickName(),
-                Role.MEMBER
+                Role.MEMBER,
+                memberSaveForm.getSex(),
+                memberSaveForm.getAge(),
+                memberSaveForm.getFavorite()
 
         );
 

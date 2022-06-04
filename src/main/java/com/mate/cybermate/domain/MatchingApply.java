@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -17,15 +19,15 @@ public class MatchingApply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long applyId;
 
-    private Long age;
+    private String roomName;
 
-    private String sex;
+    private Long maxNum;
+
+    private String requirement;
+
+    private String description;
 
     private String subject;
-
-    private String lectureName;
-
-    private Long lectureContentNo;
 
     private LocalDateTime regDate=LocalDateTime.now();
 
@@ -33,24 +35,29 @@ public class MatchingApply {
     @JoinColumn(name="boardId")
     private Board board;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="memberId")
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="member_id")
     private Member member;
 
-    public static MatchingApply createApply(Long age,String sex,String subject, String lectureName,Long lectureContentNo){
+    @OneToMany(mappedBy = "board",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<MatchingApply> applyList=new ArrayList<>();
+
+    public static MatchingApply createApply(String roomName,Long maxNum,String requirement, String description,String subject){
         MatchingApply matchingApply=new MatchingApply();
-        matchingApply.age=age;
-        matchingApply.sex=sex;
+        matchingApply.roomName=roomName;
+        matchingApply.maxNum=maxNum;
+        matchingApply.requirement=requirement;
+        matchingApply.description=description;
         matchingApply.subject=subject;
-        matchingApply.lectureName=lectureName;
-        matchingApply.lectureContentNo=lectureContentNo;
+
 
         return matchingApply;
     }
 
     public void setMember(Member member){
         this.member=member;
-        member.setApply(this);
+        member.setMatchingApply(this);
+
 
     }
 

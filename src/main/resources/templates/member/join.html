@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
 
     <style>
-        * {
+              * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -40,12 +40,13 @@ li {
 
 .login {
   width: 30%;
-  height: 460px;
+  height: 530px;
   background: white;
   justify-content: center; /*생략??*/
   flex-direction: column;
   align-items: center;
   display: flex;
+  /* overflow:scroll; */
 }
 
 .header {
@@ -178,12 +179,12 @@ h2 {
 }
 
 .form {
- margin-top: 10px;
- margin-bottom: 20px;
+ margin-top: 5px;
+ margin-bottom: 10px;
 }
 
 .form button {
-  height: 40px;
+  height: 30px;
   border: 0;
   outline: none;
   border-radius: 5px;
@@ -196,7 +197,7 @@ h2 {
 }
 
 .form input {
-  height: 40px;
+  height: 30px;
   border-radius: 5px;
   margin-top: 10px;
   padding: 0px 20px;
@@ -222,6 +223,7 @@ h2 {
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
   letter-spacing: 1px;
 }
+
 </style>
     <script th:inline="javascript">
 
@@ -272,6 +274,27 @@ h2 {
                 <span th:errors="*{loginPw}"></span>
             </div>
 
+            <div class="form">
+                <h4>성별</h4>
+                <input name="sex" type="text" placeholder="성별" autocomplete="off" th:field="*{sex}"  th:errorclass="field-error">
+                <span th:errors="*{sex}"></span>
+
+            </div>
+
+            <div class="form">
+                <h4>나이</h4>
+                <input  name="age" type="number" placeholder="나이" autocomplete="off" th:field="*{age}"  th:errorclass="field-error">
+                <span th:errors="*{age}"></span>
+
+            </div>
+
+            <div class="form">
+                <h4>관심분야</h4>
+                <input  name="favorite" type="text" placeholder="관심분야" autocomplete="off" th:field="*{favorite}"  th:errorclass="field-error">
+                <span th:errors="*{favorite}"></span>
+
+            </div>
+
             <div class="foot_div">
                 <button type="submit" >회원가입</button>
 
@@ -287,20 +310,6 @@ h2 {
 
     </div>
 
-    <div class="bottom">
-        <div class="tab_bar">
-            <a class="menu" href="/">홈</a>
-        </div>
-        <div class="tab_bar">
-            <a class="menu" >스터디룸</a>
-        </div>
-        <div class="tab_bar">
-            <a class="menu" th:href="@{~/boards/2}" >신청목록</a>
-        </div>
-        <div class="tab_bar">
-            <a class="menu" th:href="@{~/members/apply}">신청하기</a>
-        </div>
-    </div>
 
 </div>
 </body>

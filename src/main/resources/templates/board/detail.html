@@ -59,12 +59,37 @@ li {
   border: 1px solid black;
 }
 
+.goal {
+  width: 30%;
+  height: 70px;
+  background-color: white;
+  /* justify-content: center; */
+  /* flex-direction: flex; */
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+  /* text-align: center;  */
+}
+.goal button {
+  width: 100px;
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: hsl(219, 100%, 61%);
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
+
 .bottom {
   width: 30%;
 }
 
 .tab_bar {
- width: 25%;
+ width: 33.3%;
  height: 70px;
  background:rgb(124, 170, 255);
  display: flex;
@@ -202,14 +227,12 @@ h2 {
   letter-spacing: 2px;
 }
 
-
-
-
 .scrolltable{
     table-layout: fixed;
     border-collapse: collapse;
     border: 1px solid #888;
     height: 460px;
+    width: 100%;
 }
 .scrolltable thead {
     display:block;
@@ -217,6 +240,7 @@ h2 {
     color:#fff;
     height: 40px;
     text-align: center;
+    width:100%;
 }
 .scrolltable tbody{
     display:block;
@@ -228,9 +252,10 @@ h2 {
 .scrolltable th, .scrolltable td {
   padding: 10px;
   text-align: left;
-  width: 100px;
+  width: 180px; /*100px*/
   text-align: center;
   font-size: 0.875em;
+  /* border: 1px solid black; */
 }
 .scrolltable tbody tr:nth-child(2n+1){
     background-color: #f0f0f0;
@@ -254,22 +279,40 @@ h2 {
 
         <table class="scrolltable">
             <thead>
-            <tr>
-                <th>번호</th>
-                <th>이름</th>
-                <th>과목</th>
-                <th>강의</th>
-            </tr>
+                <tr>
+                    <th>이름</th>
+                    <th>강의명</th>
+                    <th>입장조건</th>
+                    <th>팀원 수</th>
+                    <th>신청</th>
+                </tr>
             </thead>
 
             <tbody>
 
-            <tr th:each="apply : ${applyList}" class="">
-                <td class="" th:text="${apply.id}">번호</td>
-                <td class="" th:text="${apply.memberNickName}">이름</td>
-                <td class="" th:text="${apply.subject}">신청과목</td>
-                <td class="" th:text="${apply.lectureName}">신청강의</td>
-            </tr>
+                <tr th:each="apply : ${applyList}" class="">
+                    <td class="" th:text="${apply.roomName}">이름</td>
+                    <td class="" th:text="${apply.subject}">강의명</td>
+                    <td class="" th:text="${apply.requirement}">입장조건</td>
+                    <td class="" th:text="${apply.people}">팀원 수</td>
+                    <span th:if="${srId}!=null">
+                        <td >
+
+                            <button>입장</button>
+
+                        </td>
+                    </span>
+                    <span th:if="${srId}==null">
+                        <td >
+
+                            <button>신청</button>
+
+                        </td>
+                    </span>
+
+
+
+                </tr>
 
 
             </tbody>
@@ -283,13 +326,11 @@ h2 {
             <a class="menu" th:href="@{~/}">홈</a>
         </div>
         <div class="tab_bar">
-            <a class="menu" >스터디룸</a>
+            <a class="menu" >스터디룸 목록</a>
         </div>
+
         <div class="tab_bar">
-            <a class="menu" th:href="@{~/boards/2}">신청목록</a>
-        </div>
-        <div class="tab_bar">
-            <a class="menu" th:href="@{~/members/apply}">신청하기</a>
+            <a class="menu">마이페이지</a>
         </div>
     </div>
 

@@ -227,15 +227,16 @@ h2 {
 
             <li class="button pt-4 pr-4" sec:authorize="isAuthenticated()">
                 <div class="log_on">
-                  <p class="rate">
-                      전체 스터디룸 진행률 100<?php echo $color ?>%
-                  </p>
-                  <p class="rate">
-                      나의 스터디룸 진행률 100<?php echo $color ?>%
-                  </p>
-                  <p class="rate">
-                    &nbsp;
-                  </p>
+
+                      <p class="rate">
+                          전체 스터디룸 진행률 0<?php echo $color ?>%
+                      </p>
+                      <p class="rate">
+                          나의 스터디룸 진행률 0<?php echo $color ?>%
+                      </p>
+                      <p class="rate">
+                        &nbsp;
+                      </p>
                   <a class="button" th:href="@{~/members/logout}">로그아웃</a>
                 </div>
             </li>
@@ -248,14 +249,12 @@ h2 {
             <a class="menu" th:href="@{/}">홈</a>
           </div>
           <div class="tab_bar">
-            <a class="menu" >스터디룸</a>
+            <a class="menu" th:href="@{~/boards/1}">스터디룸 목록</a>
           </div>
           <div class="tab_bar">
-            <a class="menu" th:href="@{~/boards/2}">신청목록</a>
+            <a class="menu" th:href="@{~/members/makeApply}">신청목록</a>
           </div>
-          <div class="tab_bar">
-            <a class="menu" th:href="@{~/members/apply}">신청하기</a>
-          </div>
+
         </div>
 
     </div>

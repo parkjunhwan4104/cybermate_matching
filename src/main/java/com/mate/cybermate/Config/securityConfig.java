@@ -24,9 +24,9 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
         http
 
                 .authorizeRequests(authorize ->authorize
-                        .mvcMatchers("/members/join","/members/login","/members/check/**","/async").anonymous() //URL이 간소화될수있도록함,  회원가입하는 url, 어나니머스는 로그인이 되지 않은 사람도 해당 페이지를 들어갈수 있도록함
-                        .mvcMatchers("/members/apply","/boards/2").authenticated()
-                        .mvcMatchers("/").permitAll()
+                        .mvcMatchers("/members/join","/members/login","/members/check/**").anonymous() //URL이 간소화될수있도록함,  회원가입하는 url, 어나니머스는 로그인이 되지 않은 사람도 해당 페이지를 들어갈수 있도록함
+                        .mvcMatchers("/members/makeApply","/boards/1","/members/applyError","/members/studyRoom/**","/members/studyRoom/setGoal/**").authenticated()
+                        .mvcMatchers("/","/members/loginFail","/members/loginSucess").permitAll()
 
                         .anyRequest()
                         .denyAll() //위의 3개 페이지말고는 모두 다 거절해라
@@ -37,8 +37,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/members/doLogin")   //로그인이 이루어지는 페이지
                     .usernameParameter("loginId")
                     .passwordParameter("loginPw")
-
-                    .defaultSuccessUrl("/")         //로그인 성공후에 인덱스 페이지로 보내줌
+                    .failureUrl("/members/loginFail")
+                    .defaultSuccessUrl("/members/loginSucess")         //로그인 성공후에 인덱스 페이지로 보내줌
                 .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))

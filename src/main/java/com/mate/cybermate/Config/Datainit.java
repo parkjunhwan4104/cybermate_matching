@@ -46,17 +46,14 @@ public class Datainit {
                             "cybermate",
                             bCryptPasswordEncoder.encode("admin"),
                             "관리자",
-                            Role.ADMIN
+                            Role.ADMIN,
+                            "남자",
+                            Long.valueOf(25),
+                            "자바"
                     );
 
             memberRepository.save(admin);
 
-            Board board1= Board.createBoard(
-                    "스터디룸",
-                    admin
-
-            );
-            boardRepository.save(board1);
 
             Board board2= Board.createBoard(
                     "신청목록",

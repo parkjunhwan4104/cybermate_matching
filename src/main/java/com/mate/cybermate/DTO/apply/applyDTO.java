@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class applyDTO {
-
+    /*
     private Long id;
     private Long age;
     private String sex;
@@ -37,5 +37,5 @@ public class applyDTO {
         this.boardName=matchingApply.getBoard().getBoardName();
     }
 
-
+    */
 }

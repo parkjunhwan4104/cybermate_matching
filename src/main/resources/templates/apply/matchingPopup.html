@@ -9,7 +9,6 @@
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
-
     <style>
         * {
   margin: 0;
@@ -39,7 +38,7 @@ li {
 
 .login {
   width: 30%;
-  height: 530px; /*460px*/
+  height: 530px;
   background: white;
   justify-content: center; /*생략??*/
   flex-direction: column;
@@ -77,6 +76,23 @@ li {
  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }
 
+.button_div {
+  text-align: center;
+}
+
+.button {
+  width: 100%;
+  height: 100px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: hsl(219, 100%, 61%);
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
 
 h2 {
   font-size: 2em;
@@ -158,114 +174,56 @@ h2 {
 
 .submit {
   margin-top: 50px;
-  width: 100%;
-  border: 1px solid red;
+  width: 80%;
 }
-
+.submit input {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  color: white;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
 .submit button {
   width: 100%;
-  height: 100px;
+  height: 50px;
   border: 0;
   outline: none;
-  border-radius: 5px;
-  background: gray;
-  border: 1px solid black;
+  border-radius: 40px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
   color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
+  font-size: 1.2em;
+  letter-spacing: 2px;
 }
-
-.form {
- margin-top: 10px;
- margin-bottom: 20px;
-}
-
-.form button {
-  height: 40px;
-  border: 0;
-  outline: none;
-  border-radius: 5px;
-  background: gray;
-  border: 1px solid black;
-  color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
-}
-
-.form input {
-  height: 40px;
-  border-radius: 5px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.foot_div {
-  /* border: 1px solid black; */
-  text-align: center;
-}
-
-.foot_div button {
-  width: 100px;
-  height: 40px;
-  border: 0;
-  outline: none;
-  border-radius: 5px;
-  background: hsl(219, 100%, 61%);
-  border: 1px solid black;
-  color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
-}
-
 
 
     </style>
 </head>
 
 <body>
-<div class="wrap">
+    <div class="wrap">
 
-    <div class="header">
-        <h2>로그인</h2>
-    </div>
+        <div class="header">
+          <h2>WARNING</h2>
+        </div>
 
-    <div class="login">
+        <div class="login">
 
-        <form th:action="@{~/members/doLogin}" th:object="${memberLoginForm}" method="POST">
-
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-            <div class="form">
-                <h4>아이디</h4>
-                <input type="text" name="loginId" placeholder="아이디" autocomplete="off" required>
+            <div class="button_div">
+              <h3>이미 매칭을 신청한 상태입니다.</h3>
+              <br>
+              <a class="button" th:href="@{~/}">확인</a>
             </div>
 
-            <div class ="form">
-                <h4>비밀번호</h4>
-                <input type="password" name="loginPw"  placeholder="비밀번호" autocomplete="off" required>
-            </div>
 
-            <div class="foot_div">
-                <button class="mr-4 border bg-gray-500 p-1 rounded text-white">
-                    로그인
-                </button>
-                <a th:href="@{~/}">
-                    <button  type="button" class="border bg-gray-500 p-1 rounded text-white">취소</button>
-                </a>
-            </div>
-        </form>
+        </div>
 
+        
 
     </div>
-
-
-
-</div>
 </body>
 
 </html>

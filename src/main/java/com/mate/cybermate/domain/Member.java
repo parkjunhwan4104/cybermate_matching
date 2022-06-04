@@ -2,6 +2,7 @@ package com.mate.cybermate.domain;
 
 
 import com.mate.cybermate.Config.Role;
+import com.mate.cybermate.Dao.MatchingApplyRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,25 +35,31 @@ public class Member implements UserDetails {
 
     private LocalDateTime regDate=LocalDateTime.now();
 
+    private String sex;
+
+    private Long age;
+
+    private String favorite;
+
     @Enumerated(EnumType.STRING)
     private Role authority;
 
-    @Column(columnDefinition = "BIGINT DEFAULT 0")
-    private Long mateId;
-
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @OneToOne(fetch=FetchType.LAZY)
     private MatchingApply matchingApply;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="srId")
     private StudyRoom studyRoom;
 
-    public static Member createMember(String loginId,String loginPw,String nickName,Role authority){
+    public static Member createMember(String loginId,String loginPw,String nickName,Role authority,String sex,Long age,String favorite){
         Member member=new Member();
         member.loginId=loginId;
         member.loginPw=loginPw;
         member.nickName=nickName;
         member.authority=authority;
+        member.sex=sex;
+        member.age=age;
+        member.favorite=favorite;
 
         return member;
     }
@@ -104,11 +111,10 @@ public class Member implements UserDetails {
         this.authority=authority;
     }
 
-    public void setApply(MatchingApply apply){
-            this.matchingApply=apply;
+    public void setMatchingApply(MatchingApply matchingApply){
 
+        this.matchingApply=matchingApply;
     }
-
     public void setStudyRoom(StudyRoom studyRoom){
         this.studyRoom=studyRoom;
     }

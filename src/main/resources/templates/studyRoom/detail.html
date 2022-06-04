@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+/* a {
+  text-decoration: none;
+  color: black;
+} */
+
+li {
+  list-style: none;
+}
+
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+}
+
+.login {
+  width: 30%;
+  height: 320px;
+  background: white;
+  justify-content: center; /*생략??*/
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  border: 2px solid red;
+}
+
+.header {
+  width: 30%;
+  height: 70px;
+  background-color: white;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+}
+
+.goal {
+  width: 30%;
+  height: 70px;
+  background-color: white;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+  text-align: center; 
+}
+
+.bottom {
+  width: 30%;
+}
+
+.tab_bar {
+ width: 25%;
+ height: 70px;
+ background:rgb(124, 170, 255);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+ float: left;
+ border: 1px solid white;
+ font-size: 20px;
+ color: white;
+ text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.button_div {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.button {
+  width: 100%;
+  height: 100px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: gray;
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 2em;
+  color: white;
+  text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
+}
+
+.log_on {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.rate {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.login_sns {
+  padding: 20px;
+  display: flex;
+}
+
+.login_sns li {
+  padding: 0px 15px;
+}
+
+.login_sns a {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50px;
+  background: white;
+  font-size: 20px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login_id {
+  margin-top: 20px;
+  width: 80%;
+}
+
+.login_id input {
+  width: 100%;
+  height: 50px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.login_pw {
+  margin-top: 20px;
+  width: 80%;
+}
+
+.login_pw input {
+  width: 100%;
+  height: 50px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.login_etc {
+  padding: 10px;
+  width: 80%;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.submit {
+  margin-top: 50px;
+  width: 80%;
+}
+.submit input {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  color: white;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
+.submit button {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  color: white;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
+
+.scrolltable{
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #888;
+    height: 320px;
+    width: 100%;
+}
+.scrolltable thead {
+    display:block;
+    background: hsl(219, 100%, 61%);
+    color:#fff;
+    height: 40px;
+    text-align: center;
+    width:100%;
+}
+.scrolltable tbody{
+    display:block;
+    overflow:auto;
+    height:280px; /*418px 190px*/
+    width:100%;
+}
+/* 행 장식 */
+.scrolltable th, .scrolltable td {
+  padding: 10px;
+  text-align: left;
+  width: 180px; /*100px*/
+  text-align: center;
+  font-size: 0.875em;
+  /* border: 1px solid black; */
+}
+.scrolltable tbody tr:nth-child(2n+1){
+    background-color: #f0f0f0;
+}
+
+
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <div class="header">
+          <h2>스터디룸</h2>
+        </div>
+
+
+        <div class="goal">
+          <form th:action="@{~/members/studyRoom/setGoal/}+${srId}"   method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <p>목표</p>
+            <select name="period">
+              <option value="none" selected="selected">기간</option>
+              <option value="1일">1일</option>
+              <option value="1주일">1주일</option>
+              <option value="1달">1달</option>
+            </select>
+            <select name="count">
+              <option value="none" selected="selected">개수</option>
+              <option value="1">1개</option>
+              <option value="2">2개</option>
+              <option value="3">3개</option>
+              <option value="4">4개</option>
+              <option value="5">5개</option>
+              <option value="6">6개</option>
+              <option value="7">7개</option>
+              <option value="8">8개</option>
+              <option value="9">9개</option>
+              <option value="10">10개</option>
+            </select>
+            <button >
+              수정
+            </button>
+          </form>
+        </div>
+
+        <div class="goal">
+          <p class="rate">
+            나의 강의 진도율 0<?php echo $color ?>%
+          </p>
+          <p class="rate">
+            메이트의 강의 진도율 0<?php echo $color ?>%
+          </p>
+        </div>
+
+        <div class="login">
+
+
+        <form action=""   method="POST">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <table class="scrolltable">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>
+                      <button class="">
+                        수강확인
+                      </button>
+                    </th>
+                </tr>
+            </thead>
+        
+            <tbody>
+  
+              <!-- <tr th:each="article : ${articleList}" class="">
+                  <td class="" th:text="${article.id}">번호</td>
+                  <td class="">
+                      <a th:href="@{~/articles/} + ${article.id}">
+                          <span class="font-bold underline" th:text="${article.title}"></span>
+                          <input type="checkbox" name="" value="">
+                      </a>
+                  </td>
+              </tr> -->
+  
+                <tr>
+                    <td>행1열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행2열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행3열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행4열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행5열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행6열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행7열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행8열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행9열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>행10열1</td>
+                    <td>
+                      <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                <tr>
+                  <td>행11열1</td>
+                  <td>
+                    <input type="checkbox" name="" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>행12열1</td>
+                  <td>
+                    <input type="checkbox" name="" value="">
+                  </td>
+                </tr>        
+            </tbody>
+        </table>
+        </form>
+
+
+        </div>
+
+        <div class="bottom">
+          <div class="tab_bar">
+            <a class="menu" th:href="@{~/}">홈</a>
+          </div>
+          <div class="tab_bar">
+            <a class="menu" >스터디룸</a>
+          </div>
+          <div class="tab_bar">
+            <a class="menu" th:href="@{~/board/1}">신청목록</a>
+          </div>
+          <div class="tab_bar">
+            <a class="menu" th:href="@{~/members/apply}">신청하기</a>
+          </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

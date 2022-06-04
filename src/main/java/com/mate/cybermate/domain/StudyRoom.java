@@ -1,5 +1,6 @@
 package com.mate.cybermate.domain;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class StudyRoom {
+
 
     @Id
     @Column(name="srId")
@@ -37,6 +39,35 @@ public class StudyRoom {
 
         this.goalLectureNo=goalLectureNo;
     }
+
+
+    public static StudyRoom createStudyRoom(List<Member> member){
+        StudyRoom studyRoom=new StudyRoom();
+
+        for(int i=0;i<member.size();i++){
+            studyRoom.studyRoomMember.add(member.get(i));
+        }
+
+        return studyRoom;
+
+    }
+
+
+
+
+    public void setMember(List<Member> member){
+
+        for(int i=0;i<member.size();i++){
+            this.studyRoomMember.add(member.get(i));
+            member.get(i).setStudyRoom(this);
+        }
+
+
+
+    }
+
+
+
 
 
 
