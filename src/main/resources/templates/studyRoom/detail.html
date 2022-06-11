@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>[어플이름]스터디룸</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
@@ -39,13 +39,12 @@ li {
 
 .login {
   width: 30%;
-  height: 320px;
+  height: 460px; /*460px*/
   background: white;
   justify-content: center; /*생략??*/
   flex-direction: column;
   align-items: center;
   display: flex;
-  border: 2px solid red;
 }
 
 .header {
@@ -53,7 +52,7 @@ li {
   height: 70px;
   background-color: white;
   justify-content: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   display: flex;
   border: 1px solid black;
@@ -64,11 +63,24 @@ li {
   height: 70px;
   background-color: white;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: flex;
   align-items: center;
   display: flex;
   border: 1px solid black;
-  text-align: center; 
+  text-align: center;
+}
+.goal button {
+  width: 100px;
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: hsl(219, 100%, 61%);
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
 }
 
 .bottom {
@@ -90,24 +102,6 @@ li {
  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }
 
-.button_div {
-  border: 1px solid black;
-  text-align: center;
-}
-
-.button {
-  width: 100%;
-  height: 100px;
-  border: 0;
-  outline: none;
-  border-radius: 5px;
-  background: gray;
-  border: 1px solid black;
-  color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
-}
 
 h2 {
   font-size: 2em;
@@ -189,36 +183,75 @@ h2 {
 
 .submit {
   margin-top: 50px;
-  width: 80%;
-}
-.submit input {
   width: 100%;
-  height: 50px;
-  border: 0;
-  outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
-  color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
+  border: 1px solid red;
 }
+
 .submit button {
   width: 100%;
-  height: 50px;
+  height: 100px;
   border: 0;
   outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  border-radius: 5px;
+  background: gray;
+  border: 1px solid black;
   color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
+
+.form {
+ margin-top: 10px;
+ margin-bottom: 20px;
+}
+
+.form button {
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: gray;
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
+
+.form input {
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.foot_div {
+  /* border: 1px solid black; */
+  text-align: center;
+}
+
+.foot_div button {
+  width: 100px;
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: hsl(219, 100%, 61%);
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
 }
 
 .scrolltable{
     table-layout: fixed;
     border-collapse: collapse;
     border: 1px solid #888;
-    height: 320px;
+    height: 195px;
     width: 100%;
 }
 .scrolltable thead {
@@ -232,7 +265,7 @@ h2 {
 .scrolltable tbody{
     display:block;
     overflow:auto;
-    height:280px; /*418px 190px*/
+    height:155px; /*418px 190px*/
     width:100%;
 }
 /* 행 장식 */
@@ -253,175 +286,183 @@ h2 {
 </head>
 
 <body>
-    <div class="wrap">
+<div class="wrap">
 
-        <div class="header">
-          <h2>스터디룸</h2>
+    <div class="header">
+        <h2>스터디룸</h2>
+        <div class="foot_div">
+            <a th:href="@{~/}">
+                <button  type="button" class="border bg-gray-500 p-1 rounded text-white">나가기</button>
+            </a>
         </div>
+    </div>
 
+    <div class="goal">
+        <p class="rate">
+            나의 진도율 100<?php echo $color ?>%
+        </p>
+        <p class="rate">
+            메이트의 진도율 100<?php echo $color ?>%
+        </p>
+    </div>
 
-        <div class="goal">
-          <form th:action="@{~/members/studyRoom/setGoal/}+${srId}"   method="POST">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <p>목표</p>
-            <select name="period">
-              <option value="none" selected="selected">기간</option>
-              <option value="1일">1일</option>
-              <option value="1주일">1주일</option>
-              <option value="1달">1달</option>
-            </select>
-            <select name="count">
-              <option value="none" selected="selected">개수</option>
-              <option value="1">1개</option>
-              <option value="2">2개</option>
-              <option value="3">3개</option>
-              <option value="4">4개</option>
-              <option value="5">5개</option>
-              <option value="6">6개</option>
-              <option value="7">7개</option>
-              <option value="8">8개</option>
-              <option value="9">9개</option>
-              <option value="10">10개</option>
-            </select>
-            <button >
-              수정
-            </button>
-          </form>
-        </div>
+    <div class="login">
 
-        <div class="goal">
-          <p class="rate">
-            나의 강의 진도율 0<?php echo $color ?>%
-          </p>
-          <p class="rate">
-            메이트의 강의 진도율 0<?php echo $color ?>%
-          </p>
-        </div>
+        <form  method="POST">
 
-        <div class="login">
-
-
-        <form action=""   method="POST">
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <table class="scrolltable">
-            <thead>
+            <table class="scrolltable">
+                <thead>
                 <tr>
                     <th>번호</th>
                     <th>
-                      <button class="">
-                        수강확인
-                      </button>
+                        <button class="">
+                            수강확인
+                        </button>
                     </th>
                 </tr>
-            </thead>
-        
-            <tbody>
-  
-              <!-- <tr th:each="article : ${articleList}" class="">
-                  <td class="" th:text="${article.id}">번호</td>
-                  <td class="">
-                      <a th:href="@{~/articles/} + ${article.id}">
-                          <span class="font-bold underline" th:text="${article.title}"></span>
-                          <input type="checkbox" name="" value="">
-                      </a>
-                  </td>
-              </tr> -->
-  
+                </thead>
+
+                <tbody>
+
                 <tr>
-                    <td>행1열1</td>
+                    <td>1회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행2열1</td>
+                    <td>2회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행3열1</td>
+                    <td>3회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행4열1</td>
+                    <td>4회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행5열1</td>
+                    <td>5회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행6열1</td>
+                    <td>6회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행7열1</td>
+                    <td>7회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행8열1</td>
+                    <td>8회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행9열1</td>
+                    <td>9회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                    <td>행10열1</td>
+                    <td>10회차</td>
                     <td>
-                      <input type="checkbox" name="" value="">
+                        <input type="checkbox" name="" value="">
                     </td>
                 </tr>
                 <tr>
-                  <td>행11열1</td>
-                  <td>
-                    <input type="checkbox" name="" value="">
-                  </td>
+                    <td>11회차</td>
+                    <td>
+                        <input type="checkbox" name="" value="">
+                    </td>
                 </tr>
                 <tr>
-                  <td>행12열1</td>
-                  <td>
-                    <input type="checkbox" name="" value="">
-                  </td>
-                </tr>        
-            </tbody>
-        </table>
+                    <td>12회차</td>
+                    <td>
+                        <input type="checkbox" name="" value="">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
         </form>
 
+        <div style="width: 100%;
+        height: 70px;
+        background-color: white;
+        justify-content: center;
+        flex-direction: flex;
+        align-items: center;
+        display: flex;
+        border: 1px solid black;
+        text-align: center;">
+            <p>게시판</p>
+            <button>글 작성</button>
 
         </div>
 
-        <div class="bottom">
-          <div class="tab_bar">
-            <a class="menu" th:href="@{~/}">홈</a>
-          </div>
-          <div class="tab_bar">
-            <a class="menu" >스터디룸</a>
-          </div>
-          <div class="tab_bar">
-            <a class="menu" th:href="@{~/board/1}">신청목록</a>
-          </div>
-          <div class="tab_bar">
-            <a class="menu" th:href="@{~/members/apply}">신청하기</a>
-          </div>
-        </div>
+        <table class="scrolltable">
+            <thead>
+            <tr>
+                <th>게시글 번호</th>
+                <th>작성자</th>
+                <th>제목</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>작성자1</td>
+                <td>
+                    <a th:href="@{~/}">
+                        <p>[질문]게시글 1</p>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>작성자2</td>
+                <td>
+                    <a th:href="@{~/}">
+                        <p>[공지]게시글 2</p>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>작성자3</td>
+                <td>
+                    <a th:href="@{~/}">
+                        <p>[질문]게시글 3</p>
+                    </a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
 
     </div>
+
+
+
+</div>
 </body>
 
 </html>

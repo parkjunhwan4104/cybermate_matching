@@ -2,7 +2,6 @@ package com.mate.cybermate.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,7 +28,7 @@ public class Board {
     private Member member;
 
     @OneToMany(mappedBy = "board",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<MatchingApply> applyList=new ArrayList<>();
+    private List<Study_Room> roomList=new ArrayList<>();
 
     public static Board createBoard(String boardName,Member member){
             Board board=new Board();

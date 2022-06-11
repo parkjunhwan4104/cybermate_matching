@@ -3,6 +3,7 @@ package com.mate.cybermate.Controller;
 
 import com.mate.cybermate.DTO.member.CheckStatus;
 import com.mate.cybermate.DTO.member.MemberLoginForm;
+import com.mate.cybermate.DTO.member.MemberMyPageForm;
 import com.mate.cybermate.DTO.member.MemberSaveForm;
 import com.mate.cybermate.Service.MemberService;
 import com.mate.cybermate.domain.Member;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -79,6 +82,31 @@ public class MemberController {
     public String showFail(){
 
         return "member/loginFail";
+    }
+
+    @PostMapping("/members/myPage")
+    public String doSetMyPage(@Validated MemberMyPageForm memberMyPageForm, BindingResult bindingResult,Model model,Principal principal){
+        if(bindingResult.hasErrors()){
+            return "/members/myPage";
+
+        }
+        try{
+            memberService.setMyPage(memberMyPageForm, principal.getName());
+
+        }
+        catch (Exception e){
+            model.addAttribute("err_msg",e.getMessage());
+        }
+        return "redirect:/members/myPage";
+
+    }
+
+    @GetMapping("/members/myPage")
+    public String showMyPage(Model model){
+        model.addAttribute("memberMyPageForm",new MemberMyPageForm());
+
+
+        return "member/myPage";
     }
 
 

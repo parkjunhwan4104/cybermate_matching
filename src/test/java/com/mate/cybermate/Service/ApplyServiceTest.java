@@ -1,18 +1,5 @@
 package com.mate.cybermate.Service;
 
-import com.mate.cybermate.Config.Role;
-import com.mate.cybermate.Dao.MatchingApplyRepository;
-import com.mate.cybermate.domain.MatchingApply;
-import com.mate.cybermate.domain.Member;
-import com.mate.cybermate.domain.StudyRoom;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class ApplyServiceTest {
 /*

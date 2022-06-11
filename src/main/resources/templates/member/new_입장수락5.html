@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>[어플이름]_입장수락</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
     <style>
         * {
   margin: 0;
@@ -38,12 +39,13 @@ li {
 
 .login {
   width: 30%;
-  height: 530px;
+  height: 530px; 
   background: white;
   justify-content: center; /*생략??*/
   flex-direction: column;
   align-items: center;
   display: flex;
+  border: 2px solid red;
 }
 
 .header {
@@ -57,12 +59,37 @@ li {
   border: 1px solid black;
 }
 
+.goal {
+  width: 30%;
+  height: 70px;
+  background-color: white;
+  /* justify-content: center; */
+  /* flex-direction: flex; */
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+  /* text-align: center;  */
+}
+.goal button {
+  width: 100px;
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: hsl(219, 100%, 61%);
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
+}
+
 .bottom {
   width: 30%;
 }
 
 .tab_bar {
- width: 25%;
+ width: 33.3%;
  height: 70px;
  background:rgb(124, 170, 255);
  display: flex;
@@ -77,6 +104,7 @@ li {
 }
 
 .button_div {
+  border: 1px solid black;
   text-align: center;
 }
 
@@ -86,7 +114,7 @@ li {
   border: 0;
   outline: none;
   border-radius: 5px;
-  background: hsl(219, 100%, 61%);
+  background: gray;
   border: 1px solid black;
   color: white;
   font-size: 18px;
@@ -199,6 +227,40 @@ h2 {
   letter-spacing: 2px;
 }
 
+.scrolltable{
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #888;
+    height: 530px;
+    width: 100%;
+}
+.scrolltable thead {
+    display:block;
+    background: hsl(219, 100%, 61%);
+    color:#fff;
+    height: 40px;
+    text-align: center;
+    width:100%;
+}
+.scrolltable tbody{
+    display:block;
+    overflow:auto;
+    height:490px; /*418px 190px*/
+    width:100%;
+}
+/* 행 장식 */
+.scrolltable th, .scrolltable td {
+  padding: 10px;
+  text-align: left;
+  width: 180px; /*100px*/
+  text-align: center;
+  font-size: 0.875em;
+  /* border: 1px solid black; */
+}
+.scrolltable tbody tr:nth-child(2n+1){
+    background-color: #f0f0f0;
+}
+
 
     </style>
 </head>
@@ -206,17 +268,62 @@ h2 {
 <body>
     <div class="wrap">
 
-        <div class="header">
-          <h2>WARNING</h2>
+        <div class="goal">
+          <div style='float: left;'>
+            <h4>스터디룸 입장 수락</h4>
+          </div>
+          <div style='float: right;'>
+          <a href="/">
+            <button type="submit" value="submit">
+              뒤로가기
+            </button>
+          </a>
+          </div>
         </div>
 
         <div class="login">
 
-            <div class="button_div">
-              <h3>이미 매칭을 신청한 상태입니다.</h3>
-              <br>
-              <a class="button" th:href="@{~/}">확인</a>
-            </div>
+          <table class="scrolltable">
+            <thead>
+                <tr>
+                    <th>스터디</th>
+                    <th>이름</th>
+                    <th>강의명</th>
+                    <th>나이</th>
+                    <th>성별</th>
+                    <th>수락</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+  
+                <tr>
+                    <td>스터디1</td>
+                    <td>사용자10</td>
+                    <td>모두의파이썬</td>
+                    <td>22</td>
+                    <td>여</td>
+                    <td>
+                      <button class="">
+                        수락
+                      </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>스터디2</td>
+                    <td>사용자24</td>
+                    <td>자바의 정석</td>
+                    <td>19</td>
+                    <td>남</td>
+                    <td>
+                      <button class="">
+                        수락
+                      </button>
+                    </td>
+                </tr>
+                        
+            </tbody>
+        </table>
 
 
         </div>

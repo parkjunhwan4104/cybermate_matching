@@ -1,7 +1,6 @@
 package com.mate.cybermate.Service;
 
 import com.mate.cybermate.Dao.BoardRepository;
-import com.mate.cybermate.Dao.MatchingApplyRepository;
 import com.mate.cybermate.domain.Board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -3,6 +3,7 @@ package com.mate.cybermate.Service;
 
 import com.mate.cybermate.Config.Role;
 import com.mate.cybermate.DTO.member.MemberLoginForm;
+import com.mate.cybermate.DTO.member.MemberMyPageForm;
 import com.mate.cybermate.DTO.member.MemberSaveForm;
 import com.mate.cybermate.Dao.MemberRepository;
 import com.mate.cybermate.domain.Member;
@@ -88,6 +89,20 @@ public class MemberService implements UserDetailsService {
     public boolean isDupleNickName(String nickName){
         boolean isDuple=memberRepository.existsByNickName(nickName);
         return isDuple;
+    }
+
+    @Transactional
+    public void setMyPage(MemberMyPageForm memberMyPageForm, String loginId){
+
+        Member findMember=findByLoginId(loginId);
+
+
+        findMember.setFavorite(memberMyPageForm.getFavorite());
+
+        findMember.setIntroduce(memberMyPageForm.getIntroduce());
+
+
+
     }
 
 

@@ -1,9 +1,7 @@
 package com.mate.cybermate.Controller;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
-import com.mate.cybermate.Config.Role;
-import com.mate.cybermate.DTO.apply.applySaveForm;
-import com.mate.cybermate.Service.ApplyService;
+import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
+import com.mate.cybermate.Service.StudyRoomApplyService;
 import com.mate.cybermate.Service.BoardService;
 import com.mate.cybermate.Service.MemberService;
 import com.mate.cybermate.Service.StudyRoomService;
@@ -15,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
@@ -24,34 +21,29 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class ApplyController {
+public class MakeRoomController {
 
     private final BoardService boardService;
-    private final ApplyService applyService;
+    private final StudyRoomApplyService studyRoomApplyService;
     private final MemberService memberService;
     private final StudyRoomService studyRoomService;
 
 
-    @GetMapping("/members/makeApply")
+    @GetMapping("/members/makeRoom")
     public String showApply(Model model,Principal principal){
 
         Member member=memberService.getMember(principal.getName());
 
-        if(member.getStudyRoom()!=null) {
-            Long id = member.getStudyRoom().getSr_id();
-
-            model.addAttribute("srId",id);
-        }
-        model.addAttribute("applySaveForm",new applySaveForm());
+        model.addAttribute("studyRoomApplySaveForm",new StudyRoomApplySaveForm());
 
 
-        return "apply/add";
+        return "StudyRoomApply/add";
     }
 
-    @PostMapping("/members/makeApply")
-    public String doApply(@Validated applySaveForm applysaveform, BindingResult bindingResult, Principal principal,Model model){
+    @PostMapping("/members/makeRoom")
+    public String doApply(@Validated StudyRoomApplySaveForm studyRoomApplySaveForm, BindingResult bindingResult, Principal principal, Model model){
         if(bindingResult.hasErrors()){
-            return "apply/add";
+            return "StudyRoomApply/add";
         }
 
         try{
@@ -61,21 +53,9 @@ public class ApplyController {
 
             Member member=memberService.getMember(principal.getName());
 
-            member.setAuthority(Role.OWNER);
 
-            List<Member> members=new ArrayList<>();
+            studyRoomApplyService.saveRoom(studyRoomApplySaveForm,member,board);
 
-            members.add(member);
-
-            if(member.getMatchingApply()==null){
-                applyService.saveApply(applysaveform,member,board);
-
-                studyRoomService.saveStudyRoom(members);
-            }
-
-            else{
-                return "redirect:/members/applyError";
-            }
 
 
 
@@ -83,16 +63,12 @@ public class ApplyController {
         }
         catch(Exception e){
             model.addAttribute("error_msg",e.getMessage());
-            return "apply/add";
+            return "StudyRoomApply/add";
         }
         return "redirect:/";
 
     }
 
-    @GetMapping("/members/applyError")
-    public String showApplyError(){
 
-        return "apply/matchingPopup";
-    }
 
 }

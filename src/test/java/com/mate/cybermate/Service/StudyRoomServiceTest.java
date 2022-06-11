@@ -1,14 +1,5 @@
 package com.mate.cybermate.Service;
 
-import com.mate.cybermate.Config.Role;
-import com.mate.cybermate.domain.Member;
-import com.mate.cybermate.domain.StudyRoom;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 /*
 class StudyRoomServiceTest {
 

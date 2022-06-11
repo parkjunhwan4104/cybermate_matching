@@ -2,10 +2,8 @@ package com.mate.cybermate.domain;
 
 
 import com.mate.cybermate.Config.Role;
-import com.mate.cybermate.Dao.MatchingApplyRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +16,6 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-
 @Getter
 public class Member implements UserDetails {
 
@@ -41,15 +38,20 @@ public class Member implements UserDetails {
 
     private String favorite;
 
+    private String introduce;
+
     @Enumerated(EnumType.STRING)
     private Role authority;
 
-    @OneToOne(fetch=FetchType.LAZY)
-    private MatchingApply matchingApply;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="srId")
-    private StudyRoom studyRoom;
+    /*@OneToMany(fetch=FetchType.LAZY)
+    private List<ApplyHistory> applyList=new ArrayList<>();*/
+
+    @OneToMany(mappedBy = "member",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<StudyRoomApply> studyRoomApplies=new ArrayList<>();
+
+
+
 
     public static Member createMember(String loginId,String loginPw,String nickName,Role authority,String sex,Long age,String favorite){
         Member member=new Member();
@@ -111,11 +113,16 @@ public class Member implements UserDetails {
         this.authority=authority;
     }
 
-    public void setMatchingApply(MatchingApply matchingApply){
 
-        this.matchingApply=matchingApply;
+    public void setIntroduce(String introduce){
+        this.introduce=introduce;
     }
-    public void setStudyRoom(StudyRoom studyRoom){
-        this.studyRoom=studyRoom;
+
+    public void setFavorite(String favorite){
+
+        this.favorite=favorite;
     }
+
+
+
 }

@@ -289,32 +289,41 @@ h2 {
             </thead>
 
             <tbody>
+            <span th:if="${size}!=0">
+                <tr th:each="Room : ${studyRoomList}" class="">
+                    <td class="" th:text="${Room.roomName}">이름</td>
+                    <td class="" th:text="${Room.subject}">강의명</td>
+                    <td class="" th:text="${Room.requirement}">입장조건</td>
+                    <td class="" th:text="${Room.people}">팀원 수</td>
 
-                <tr th:each="apply : ${applyList}" class="">
-                    <td class="" th:text="${apply.roomName}">이름</td>
-                    <td class="" th:text="${apply.subject}">강의명</td>
-                    <td class="" th:text="${apply.requirement}">입장조건</td>
-                    <td class="" th:text="${apply.people}">팀원 수</td>
-                    <span th:if="${srId}!=null">
+
+
+                    <span th:if="${Room.belong}==true">
                         <td >
-
-                            <button>입장</button>
-
-                        </td>
-                    </span>
-                    <span th:if="${srId}==null">
-                        <td >
-
-                            <button>신청</button>
-
+                            <a th:href="@{~/members/studyRoom/}+${Room.id}">
+                                <button>입장</button>
+                            </a>
                         </td>
                     </span>
 
+
+                    <span th:if="${Room.belong}==false">
+                        <td >
+                            <form th:action="@{~/boards/1/}+${Room.id}" method="POST">
+                                <button>신청</button>
+                            </form>
+                        </td>
+                    </span>
+
+
+
+
+                    </tr>
 
 
                 </tr>
 
-
+            </span>
             </tbody>
         </table>
 
@@ -326,11 +335,11 @@ h2 {
             <a class="menu" th:href="@{~/}">홈</a>
         </div>
         <div class="tab_bar">
-            <a class="menu" >스터디룸 목록</a>
+            <a class="menu" th:href="@{~/boards/1}" >스터디룸 목록</a>
         </div>
 
         <div class="tab_bar">
-            <a class="menu">마이페이지</a>
+            <a class="menu" th:href="@{~/members/myPage}">마이페이지</a>
         </div>
     </div>
 

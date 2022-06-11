@@ -235,7 +235,7 @@ h2 {
 
     <div class="login">
 
-        <form  th:action="@{~/members/makeApply}" th:object="${applySaveForm}" method="POST">
+        <form  th:action="@{~/members/makeRoom}" th:object="${studyRoomApplySaveForm}" method="POST">
 
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
