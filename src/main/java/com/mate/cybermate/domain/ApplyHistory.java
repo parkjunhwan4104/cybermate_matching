@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -28,16 +29,22 @@ public class ApplyHistory {
 
     private String sex;
 
+    private boolean belong;
+
+    private LocalDateTime regDate=LocalDateTime.now();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="studyRoomId")
     private Study_Room studyRoom;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="memberId")
     private Member member;
 
 
-     */
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="studyRoomApplyId")
     private StudyRoomApply studyRoomApply;
@@ -52,5 +59,18 @@ public class ApplyHistory {
 
         return applyHistory;
 
+    }
+
+
+
+    public void setHistoryMember(Member member){
+        this.member=member;
+
+    }
+    public void setHistoryStudyRoom(Study_Room studyRoom){
+        this.studyRoom=studyRoom;
+    }
+    public void setHistoryApply(StudyRoomApply studyRoomApply){
+        this.studyRoomApply=studyRoomApply;
     }
 }

@@ -44,8 +44,8 @@ public class Member implements UserDetails {
     private Role authority;
 
 
-    /*@OneToMany(fetch=FetchType.LAZY)
-    private List<ApplyHistory> applyList=new ArrayList<>();*/
+    @OneToMany(fetch=FetchType.LAZY)
+    private List<ApplyHistory> applyList=new ArrayList<>();
 
     @OneToMany(mappedBy = "member",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<StudyRoomApply> studyRoomApplies=new ArrayList<>();

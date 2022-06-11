@@ -3,12 +3,10 @@ package com.mate.cybermate.Service;
 
 import com.mate.cybermate.CybermateApplication;
 import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
+import com.mate.cybermate.Dao.ApplyHistoryRepository;
 import com.mate.cybermate.Dao.StudyRoomApplyRepository;
 import com.mate.cybermate.Dao.StudyRoomRepository;
-import com.mate.cybermate.domain.Board;
-import com.mate.cybermate.domain.StudyRoomApply;
-import com.mate.cybermate.domain.Study_Room;
-import com.mate.cybermate.domain.Member;
+import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +21,7 @@ public class StudyRoomApplyService {
     private final StudyRoomApplyRepository studyRoomApplyRepository;
     private final StudyRoomRepository studyRoomRepository;
     private final StudyRoomService studyRoomService;
+    private final ApplyHistoryRepository applyHistoryRepository;
 
 
     @Transactional
@@ -39,15 +38,26 @@ public class StudyRoomApplyService {
                 studyRoomApplySaveForm.getSubject()
 
         );
+        ApplyHistory applyHistory=ApplyHistory.createApplyHistory(
+                roomApply.getRoomName(),
+                member.getNickName(),
+                roomApply.getSubject(),
+                member.getAge(),
+                member.getSex()
+        );
+
         roomApply.setMember(member);
 
         Study_Room studyRoom=Study_Room.createRoom(roomApply);
-
         studyRoom.setBoard(board);
 
+        roomApply.setStudyRoom(studyRoom);
 
-        roomApply.setStudyRoomAndMember(studyRoom,members);
+        applyHistory.setHistoryApply(roomApply);
+        applyHistory.setHistoryMember(member);
+        applyHistory.setHistoryStudyRoom(studyRoom);
 
+        applyHistoryRepository.save(applyHistory);
 
         studyRoomRepository.save(studyRoom);
 

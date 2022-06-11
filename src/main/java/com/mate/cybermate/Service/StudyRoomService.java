@@ -1,5 +1,6 @@
 package com.mate.cybermate.Service;
 
+import com.mate.cybermate.CybermateApplication;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
 import com.mate.cybermate.Dao.StudyRoomRepository;
 import com.mate.cybermate.domain.Member;
@@ -66,9 +67,11 @@ public class StudyRoomService {
         List<Study_Room> roomList = getRoomList();
 
 
+        //System.out.println(roomList.get(0).getTotal().size());
         List<StudyRoomListDTO> RoomLists = new ArrayList<>();
 
         for (Study_Room room : roomList) {
+
 
             if (room.getBoard().getBoardId() == id) {
 

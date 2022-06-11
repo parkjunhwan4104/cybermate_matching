@@ -290,26 +290,26 @@ h2 {
 
             <tbody>
             <span th:if="${size}!=0">
-                <tr th:each="Room : ${studyRoomList}" class="">
-                    <td class="" th:text="${Room.roomName}">이름</td>
-                    <td class="" th:text="${Room.subject}">강의명</td>
-                    <td class="" th:text="${Room.requirement}">입장조건</td>
-                    <td class="" th:text="${Room.people}">팀원 수</td>
+                <tr th:each="room : ${applyHistoryList}" class="">
+                    <td class="" th:text="${room.roomName}">이름</td>
+                    <td class="" th:text="${room.subject}">강의명</td>
+                    <td class="" th:text="${room.requirement}">입장조건</td>
+                    <td class="" th:text="${room.people}">팀원 수</td>
 
 
 
-                    <span th:if="${Room.belong}==true">
+                    <span th:if="${room.belong}==true">
                         <td >
-                            <a th:href="@{~/members/studyRoom/}+${Room.id}">
+                            <a th:href="@{~/members/studyRoom/}+${room.id}">
                                 <button>입장</button>
                             </a>
                         </td>
                     </span>
 
 
-                    <span th:if="${Room.belong}==false">
+                    <span th:if="${room.belong}==false">
                         <td >
-                            <form th:action="@{~/boards/1/}+${Room.id}" method="POST">
+                            <form th:action="@{~/boards/1/}+${room.id}" method="POST">
                                 <button>신청</button>
                             </form>
                         </td>

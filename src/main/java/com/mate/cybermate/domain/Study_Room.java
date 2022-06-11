@@ -1,4 +1,5 @@
 package com.mate.cybermate.domain;
+import com.mate.cybermate.CybermateApplication;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,12 +38,13 @@ public class Study_Room {
     private LocalDateTime regDate=LocalDateTime.now();
 
 
-    private static List<List<Member>> list=new ArrayList<>();
 
     private static List<Member> memberList=new ArrayList<>();
 
     @OneToMany(mappedBy = "studyRoom" ,fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<StudyRoomApply> studyRoomApply=new ArrayList<>();
+
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -82,17 +84,19 @@ public class Study_Room {
         return this.memberList;
     }
 
+
     public void setMemberList(List<Member> members){
 
         this.memberList=members;
     }
 
-    public List<List<Member>> getTotal(){
-        return this.list;
-    }
 
-    public void setTotalList(List<Member> members){
-        this.list.add(members);
-    }
+
+
+
 
 }
+
+
+
+

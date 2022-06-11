@@ -1,7 +1,10 @@
 package com.mate.cybermate.Controller;
 
+import com.mate.cybermate.CybermateApplication;
+import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
 import com.mate.cybermate.Service.*;
+import com.mate.cybermate.domain.ApplyHistory;
 import com.mate.cybermate.domain.Board;
 import com.mate.cybermate.domain.Study_Room;
 import com.mate.cybermate.domain.Member;
@@ -22,7 +25,7 @@ public class BoardController {
     private final BoardService boardService;
     private final StudyRoomApplyService studyRoomApplyService;
     private final MemberService memberService;
-
+    private final ApplyHistoryService applyHistoryService;
     private final StudyRoomService studyRoomService;
 
     @GetMapping("/boards/1")
@@ -42,28 +45,40 @@ public class BoardController {
 
                 List<StudyRoomListDTO> studyRoomList = studyRoomService.getRoomListByBoardId(num);
 
+                List<ApplyHistoryDTO> applyHistoryDTOList=null;
+
                 for(int i=0;i<studyRoomList.size();i++){
+                    //applyHistoryDTOList=applyHistoryService.getRoomListBySrId(studyRoomList.get(i).getId());
+                    applyHistoryDTOList=applyHistoryService.getApplyHistoryAll();
 
 
 
+                    for(int j=0;j<applyHistoryDTOList.size();j++){
 
-                    for(int j=0;j<studyRoomList.get(i).getTotal().get(i).size();j++){
-                        System.out.println(i+"번의 사이즈" +studyRoomList.get(i).getTotal().get(i).size());
-
-                        System.out.println("현재 스터디룸에 속한 회원 로그인아이디: "+studyRoomList.get(i).getTotal().get(i).get(j).getLoginId());
-                        System.out.println("현재 로그인한 회원"+member.getLoginId());
-                        if(studyRoomList.get(i).getTotal().get(i).get(j).getLoginId().equals(member.getLoginId())){
-                            studyRoomList.get(i).setBelong(true);
+                        /*System.out.println(i+"번쨰");
+                        System.out.println("현재 스터디룸에 속한 회원 로그인아이디: "+applyHistoryDTOList.get(j).getMemberName());
+                        System.out.println("현재 로그인한 회원"+member.getNickName());*/
+                        if(applyHistoryDTOList.get(j).getSrId()==(studyRoomList.get(i).getId())){
+                            if(applyHistoryDTOList.get(j).getMemberName().equals(member.getNickName())){
+                                studyRoomList.get(i).setBelong(true);
+                            }
+                            else{
+                                studyRoomList.get(i).setBelong(false);
+                            }
                         }
-                        else{
-                            studyRoomList.get(i).setBelong(false);
-                        }
+
+
+
+
+
                     }
 
-                    System.out.println(studyRoomList.get(i).getBelong());
+
+
                 }
 
-                model.addAttribute("studyRoomList", studyRoomList);
+                model.addAttribute("applyHistoryList", studyRoomList);
+
 
 
 

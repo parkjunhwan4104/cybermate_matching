@@ -73,12 +73,8 @@ public class StudyRoomApply {
         this.member=member;
     }
 
-    public void setStudyRoomAndMember(Study_Room studyRoom,List<Member> members){
-
+    public void setStudyRoom(Study_Room studyRoom){
         this.studyRoom=studyRoom;
-        studyRoom.setMemberList(members);
-        studyRoom.setTotalList(members);
-
     }
 
 
