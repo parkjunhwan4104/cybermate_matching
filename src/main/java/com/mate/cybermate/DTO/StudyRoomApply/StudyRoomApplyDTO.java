@@ -20,6 +20,10 @@ public class StudyRoomApplyDTO {
 
     private String sex;
 
+    private Long srId;
+
+    private boolean accept;
+
     public StudyRoomApplyDTO(StudyRoomApply studyRoomApply, Member member){
         this.id= studyRoomApply.getSraId();
         this.roomName= studyRoomApply.getRoomName();
@@ -27,5 +31,7 @@ public class StudyRoomApplyDTO {
         this.subject= studyRoomApply.getSubject();
         this.age=member.getAge();
         this.sex=member.getSex();
+        this.srId=studyRoomApply.getStudyRoom().getSrId();
+        this.accept=studyRoomApply.isAccept();
     }
 }

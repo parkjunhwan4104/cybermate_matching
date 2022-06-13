@@ -48,27 +48,19 @@ public class ApplyHistoryService {
 
     }
 
-    public List<ApplyHistoryDTO> getRoomListBySrId(Long srId) {
-        List<ApplyHistory> histories = getApplyHistory();
+    public ApplyHistory getApplyHistoryFindById(Long srId){
+        List<ApplyHistory> StudyRoomList=getApplyHistory();
 
+        ApplyHistory applyHistory=null;
 
-        //System.out.println(roomList.get(0).getTotal().size());
-        List<ApplyHistoryDTO> historyList = new ArrayList<>();
-
-        for (ApplyHistory history : histories) {
-
-
-            if (history.getStudyRoom().getSrId() == srId) {
-
-                ApplyHistoryDTO historyListDTO = new ApplyHistoryDTO(history);
-
-                historyList.add(historyListDTO);
-
+        for(int i=0;i<StudyRoomList.size();i++){
+            if(StudyRoomList.get(i).getStudyRoom().getSrId()==srId){
+                applyHistory=StudyRoomList.get(i);
             }
         }
-        return historyList;
-
+        return applyHistory;
     }
+
 
 
 }

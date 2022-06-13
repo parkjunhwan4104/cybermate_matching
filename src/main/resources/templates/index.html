@@ -350,17 +350,19 @@ h2 {
 
                     <tbody>
 
-                    <tr>
-                        <td>파이썬 부수기</td>
+                    <tr th:each="makeRoom: ${applyHistoryList}">
+                        <td th:text="${makeRoom.roomName}"></td>
                         <td>
-                            <button class="">
-                                입장
-                            </button>
-
-                            <button class="">
-                                신청현황
-                            </button>
-
+                            <a th:href="@{~/members/studyRoom/}+${makeRoom.srId}">
+                                <button class="">
+                                    입장
+                                </button>
+                            </a>
+                            <a th:href="@{~/members/accept/}+${makeRoom.srId}">
+                                <button class="">
+                                    신청현황
+                                </button>
+                            </a>
 
                         </td>
                     </tr>
@@ -370,7 +372,7 @@ h2 {
                 <table class="scrolltable">
                     <thead>
                     <tr>
-                        <th>내가 입장한 스터디룸</th>
+                        <th>내가 들어간 스터디룸</th>
                         <th>
                             <!-- <button class="">
                               수강확인
@@ -381,22 +383,17 @@ h2 {
 
                     <tbody>
 
-                    <tr>
-                        <td>머신러닝 입문</td>
+                    <tr th:each="room: ${onlyApplyList}">
+                        <td th:text="${room.roomName}"></td>
                         <td>
-                            <button class="">
-                                입장
-                            </button>
+                            <a th:href="@{~/members/studyRoom/}+${room.srId}">
+                                <button class="">
+                                    입장
+                                </button>
+                            </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>영어회화스터디</td>
-                        <td>
-                            <button class="">
-                                입장
-                            </button>
-                        </td>
-                    </tr>
+
 
                     </tbody>
                 </table>

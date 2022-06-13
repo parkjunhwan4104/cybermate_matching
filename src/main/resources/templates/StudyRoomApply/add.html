@@ -265,9 +265,15 @@ h2 {
 
 
             <div class="form">
-                <h4>과목</h4>
+                <h4>강의명</h4>
                 <input id="subject" class="border rounded p-1 rounded bg-gray-50" type="text" autocomplete="off" th:field="*{subject}"  th:errorclass="field-error" required>
                 <span th:errors="*{subject}"></span>
+            </div>
+
+            <div class="form">
+                <h4>강의 개수</h4>
+                <input  class="border rounded p-1 rounded bg-gray-50" th:field="*{contentNo}" type="number" autocomplete="off" th:errorclass="field-error" required>
+                <span th:errors="*{contentNo}"></span>
             </div>
 
 

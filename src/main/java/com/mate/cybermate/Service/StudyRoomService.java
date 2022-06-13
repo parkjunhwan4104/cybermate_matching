@@ -22,7 +22,35 @@ public class StudyRoomService {
     private final StudyRoomRepository studyRoomRepository;
 
 
+    @Transactional
+    public void updateLectureNo(Long count,Study_Room studyRoom){
+        studyRoom.setCurrentLectureNo(count);
+        studyRoom.setMatesLectureNo(count);
 
+    }
+
+    @Transactional
+    public void updateStudyRoomPercent(Study_Room studyRoom){
+
+        float CLN=(float)studyRoom.getCurrentLectureNo();
+        float CN=(float)studyRoom.getContentNo();
+
+        float MLN=(float)(studyRoom.getContentNo()*studyRoom.getCurrentNum());
+        float lecturePercent=CLN/CN;
+
+
+        float a=(float)(Math.round(lecturePercent * 100) / 100.0);
+        System.out.println(a);
+
+
+        float matesPercent=CLN/MLN;
+
+        float b=(float)(Math.round(matesPercent * 100) / 100.0);
+
+        System.out.println(b);
+        studyRoom.setLecturePercent(a);
+        studyRoom.setMatesPercent(b);
+    }
 
 
     @Transactional

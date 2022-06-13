@@ -261,6 +261,11 @@ h2 {
     background-color: #f0f0f0;
 }
 
+.bb{
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
 
     </style>
 </head>
@@ -287,40 +292,38 @@ h2 {
             <thead>
                 <tr>
                     <th>스터디</th>
-                    <th>이름</th>
                     <th>강의명</th>
                     <th>나이</th>
                     <th>성별</th>
                     <th>수락</th>
+                    <th>거절</th>
                 </tr>
             </thead>
         
             <tbody>
   
-                <tr>
-                    <td>스터디1</td>
-                    <td>사용자10</td>
-                    <td>모두의파이썬</td>
-                    <td>22</td>
-                    <td>여</td>
+                <tr th:each="apply: ${historyList}">
+                    <td th:text="${apply.roomName}"></td>
+                    <td th:text="${apply.subject}"></td>
+                    <td th:text="${apply.age}"></td>
+                    <td th:text="${apply.sex}"></td>
                     <td>
-                      <button class="">
-                        수락
-                      </button>
+                        <form th:action="@{~/members/accept/}+${srId}+@{~/apply/}+${apply.studyApplyId}" method="POST">
+                          <button class="bb">
+                            수락
+                          </button>
+
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{~/members/deny/}+${srId}+@{~/apply/}+${apply.studyApplyId}" method="POST">
+                            <button class="">
+                                거절
+                            </button>
+                        </form>
                     </td>
                 </tr>
-                <tr>
-                    <td>스터디2</td>
-                    <td>사용자24</td>
-                    <td>자바의 정석</td>
-                    <td>19</td>
-                    <td>남</td>
-                    <td>
-                      <button class="">
-                        수락
-                      </button>
-                    </td>
-                </tr>
+
                         
             </tbody>
         </table>

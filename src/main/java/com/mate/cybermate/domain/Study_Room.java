@@ -35,6 +35,18 @@ public class Study_Room {
 
     private Long goalLectureNo;
 
+    private Long leftContent;
+
+    private Long contentNo;
+
+    private Long currentLectureNo;
+
+    private Long matesLectureNo;
+
+    private float lecturePercent;
+
+    private float matesPercent;
+
     private LocalDateTime regDate=LocalDateTime.now();
 
 
@@ -58,7 +70,7 @@ public class Study_Room {
         studyRoom.subject=studyRoomApply.getSubject();
         studyRoom.requirement=studyRoomApply.getRequirement();
         studyRoom.currentNum=Long.valueOf(1);
-
+        studyRoom.contentNo=studyRoomApply.getContentNo();
         return studyRoom;
     }
 
@@ -76,19 +88,38 @@ public class Study_Room {
         this.goalLectureNo=goalLectureNo;
     }
 
-    public void setCurrentNum(Long currentNum){
-        this.currentNum=currentNum;
+    public void setLeftContent(Long num){
+        this.leftContent=num;
     }
 
-    public List<Member> getMemberList(){
-        return this.memberList;
+    public void setCurrentNum(){
+
+        this.currentNum=this.currentNum+1;
+    }
+
+    public void setCurrentLectureNo(Long currentLectureNo){
+
+
+            this.currentLectureNo=currentLectureNo;
+
+    }
+
+    public void setMatesLectureNo(Long no){
+
+
+            this.matesLectureNo = no;
+
+    }
+
+    public void setLecturePercent(float no){
+        this.lecturePercent=no;
+    }
+
+    public void setMatesPercent(float no){
+        this.matesPercent=no;
     }
 
 
-    public void setMemberList(List<Member> members){
-
-        this.memberList=members;
-    }
 
 
 

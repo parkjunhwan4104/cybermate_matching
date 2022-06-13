@@ -22,8 +22,6 @@ public class StudyRoomApply {
 
     private Long maxNum;
 
-    private Long currentNum;
-
     private String requirement;
 
     private String description;
@@ -34,7 +32,12 @@ public class StudyRoomApply {
 
     private String sex;
 
+    private Long contentNo;
+
+    private boolean accept;
+
     private LocalDateTime regDate=LocalDateTime.now();
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,25 +49,27 @@ public class StudyRoomApply {
     private Study_Room studyRoom;
 
 
-    public static StudyRoomApply createRoomApplyForOwner(String roomName,Long maxNum,String requirement,String description,String subject){
+    public static StudyRoomApply createRoomApplyForOwner(String roomName,Long maxNum,String requirement,String description,String subject,Long con){
         StudyRoomApply studyRoomApply=new StudyRoomApply();
         studyRoomApply.roomName=roomName;
         studyRoomApply.maxNum=maxNum;
         studyRoomApply.requirement=requirement;
         studyRoomApply.description=description;
         studyRoomApply.subject=subject;
+        studyRoomApply.contentNo=con;
+
 
 
         return studyRoomApply;
     }
 
-    public static StudyRoomApply createRoomApply(String roomName,String subject,Long age,String sex){
+    public static StudyRoomApply createRoomApply(String roomName,String subject,Long age,String sex,Long contentNo ){
         StudyRoomApply studyRoomApply=new StudyRoomApply();
         studyRoomApply.roomName=roomName;
         studyRoomApply.subject=subject;
         studyRoomApply.age=age;
         studyRoomApply.sex=sex;
-
+        studyRoomApply.contentNo=contentNo;
         return studyRoomApply;
     }
 
@@ -77,6 +82,16 @@ public class StudyRoomApply {
         this.studyRoom=studyRoom;
     }
 
+    public void setAccept(boolean accept){
+        this.accept=accept;
+    }
+
+    public void setAge(Long age){
+        this.age=age;
+    }
+    public void setSex(String sex){
+        this.sex=sex;
+    }
 
 
 
