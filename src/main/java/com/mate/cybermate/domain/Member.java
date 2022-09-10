@@ -40,6 +40,11 @@ public class Member implements UserDetails {
 
     private String introduce;
 
+    private Long lectureNo;
+
+    private Long currentLectureNo;
+    private float lecturePercent;
+
     @Enumerated(EnumType.STRING)
     private Role authority;
 
@@ -123,6 +128,20 @@ public class Member implements UserDetails {
         this.favorite=favorite;
     }
 
+    public void setLectureNo(Long no){
+        this.lectureNo=no;
+    }
+
+    public void setCurrentLectureNo(Long currentLectureNo){
+
+
+        this.currentLectureNo=currentLectureNo;
+
+    }
+
+    public void setLecturePercent(float no){
+        this.lecturePercent=no;
+    }
 
 
 }

@@ -43,6 +43,7 @@ li {
   flex-direction: column;
   align-items: center;
   display: flex;
+
 }
 
 .header {
@@ -251,6 +252,7 @@ h2 {
     border: 1px solid #888;
     height: 320px;
     width: 100%;
+    margin-top:50px;
 }
 .scrolltable thead {
     display:block;
@@ -319,14 +321,16 @@ h2 {
     </div>
 
     <div class="goal">
-        <button>게시판</button>
+        <a href="/members/studyRoom/boards">
+            <button>게시판</button>
+        </a>
     </div>
 
     <div class="goal">
         <p class="rate" th:text="'나의 진도율 '+${myPercent}+'%'">
 
         </p>
-        <p class="rate" th:text="'메이트 진도율 '+${teamPercent}+'%'">
+        <p class="rate" th:text="'평균 진도율 '+${teamPercent}+'%'">
 
         </p>
     </div>
@@ -347,13 +351,13 @@ h2 {
                 <option value="1">1개</option>
                 <option value="2">2개</option>
                 <option value="3">3개</option>
-                <option value="3">4개</option>
-                <option value="3">5개</option>
-                <option value="3">6개</option>
-                <option value="3">7개</option>
-                <option value="3">8개</option>
-                <option value="3">9개</option>
-                <option value="3">10개</option>
+                <option value="4">4개</option>
+                <option value="5">5개</option>
+                <option value="6">6개</option>
+                <option value="7">7개</option>
+                <option value="8">8개</option>
+                <option value="9">9개</option>
+                <option value="10">10개</option>
             </select>
             <button class="">
                 확인
@@ -365,25 +369,49 @@ h2 {
     <div class="login">
 
 
+        <p class="mt-40">게시판</p>
+        <button class="mt-40">글 작성</button>
+
 
         <table class="scrolltable">
             <thead>
             <tr>
-                <th>수강일</th>
-                <th>들은 강의 회차 수</th>
+                <th>게시글 번호</th>
+                <th>작성자</th>
+                <th>제목</th>
             </tr>
             </thead>
 
             <tbody>
 
             <tr>
-                <td>5월 6일</td>
-                <td>1개</td>
+                <td>1</td>
+                <td>작성자1</td>
+                <td>
+                    <a th:href="@{~/}">
+                        <p>[질문]게시글 1</p>
+                    </a>
+                </td>
             </tr>
             <tr>
-                <td>6월 1일</td>
-                <td>2개</td>
+                <td>2</td>
+                <td>작성자2</td>
+                <td>
+                    <a th:href="@{~/}">
+                        <p>[공지]게시글 2</p>
+                    </a>
+                </td>
             </tr>
+            <tr>
+                <td>3</td>
+                <td>작성자3</td>
+                <td>
+                    <a th:href="@{~/}">
+                        <p>[질문]게시글 3</p>
+                    </a>
+                </td>
+            </tr>
+
             </tbody>
         </table>
 

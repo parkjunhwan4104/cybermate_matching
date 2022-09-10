@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>[어플이름]게시글 목록</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="./login.css">
     <style>
         * {
   margin: 0;
@@ -38,7 +36,7 @@ li {
 
 .login {
   width: 30%;
-  height: 460px;
+  height: 460px; /*460px*/
   background: white;
   justify-content: center; /*생략??*/
   flex-direction: column;
@@ -51,10 +49,35 @@ li {
   height: 70px;
   background-color: white;
   justify-content: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   display: flex;
   border: 1px solid black;
+}
+
+.goal {
+  width: 30%;
+  height: 70px;
+  background-color: white;
+  justify-content: center;
+  flex-direction: flex;
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+  text-align: center; 
+}
+.goal button {
+  width: 100px;
+  height: 40px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: hsl(219, 100%, 61%);
+  border: 1px solid black;
+  color: white;
+  font-size: 18px;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  letter-spacing: 1px;
 }
 
 .bottom {
@@ -176,8 +199,8 @@ h2 {
 }
 
 .form {
- margin-top:5px;
- margin-bottom: 10px;
+ margin-top: 10px;
+ margin-bottom: 20px;
 }
 
 .form button {
@@ -194,9 +217,9 @@ h2 {
 }
 
 .form input {
-  height: 28px;
+  height: 40px;
   border-radius: 5px;
-  margin-top: 3px;
+  margin-top: 10px;
   padding: 0px 20px;
   border: 1px solid lightgray;
   outline: none;
@@ -208,7 +231,6 @@ h2 {
 }
 
 .foot_div button {
-  margin-top: 10px;
   width: 100px;
   height: 40px;
   border: 0;
@@ -222,76 +244,110 @@ h2 {
   letter-spacing: 1px;
 }
 
+.scrolltable{
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #888;
+    height: 460px;
+    width: 100%;
+}
+.scrolltable thead {
+    display:block;
+    background: hsl(219, 100%, 61%);
+    color:#fff;
+    height: 40px;
+    text-align: center;
+    width:100%;
+}
+.scrolltable tbody{
+    display:block;
+    overflow:auto;
+    height:420px; /*418px 190px*/
+    width:100%;
+}
+/* 행 장식 */
+.scrolltable th, .scrolltable td {
+  padding: 10px;
+  text-align: left;
+  width: 180px; /*100px*/
+  text-align: center;
+  font-size: 0.875em;
+  /* border: 1px solid black; */
+}
+.scrolltable tbody tr:nth-child(2n+1){
+    background-color: #f0f0f0;
+}
+
 
     </style>
 </head>
 
 <body>
-<div class="wrap">
+    <div class="wrap">
 
-    <div class="header">
-        <h2>스터디룸 만들기</h2>
+        <div class="header">
+          <h2>게시판</h2>
+          <div class="foot_div">
+            <a th:href="@{~/}">
+              <button  type="button" class="border bg-gray-500 p-1 rounded text-white">나가기</button>
+            </a>
+          </div>
+        </div>
+
+        <div class="goal">
+          <button>글쓰기</button>
+        </div>
+
+        <div class="login">
+
+        <table class="scrolltable">
+          <thead>
+              <tr>
+                  <th>게시글 번호</th>
+                  <th>작성자</th>
+                  <th>제목</th>
+              </tr>
+          </thead>
+      
+          <tbody>
+
+              <tr>
+                  <td>1</td>
+                  <td>작성자1</td>
+                  <td>
+                    <a th:href="@{~/}">
+                      <p>[질문]게시글 1</p>
+                    </a>
+                  </td>
+              </tr>
+              <tr>
+                  <td>2</td>
+                  <td>작성자2</td>
+                  <td>
+                    <a th:href="@{~/}">
+                      <p>[공지]게시글 2</p>
+                    </a>
+                  </td>
+              </tr>
+              <tr>
+                  <td>3</td>
+                  <td>작성자3</td>
+                  <td>
+                    <a th:href="@{~/}">
+                      <p>[질문]게시글 3</p>
+                    </a>
+                  </td>
+              </tr>
+                      
+          </tbody>
+      </table>
+
+
+        </div>
+
+        
+
     </div>
-
-    <div class="login">
-
-        <form  th:action="@{~/members/makeRoom}" th:object="${studyRoomApplySaveForm}" method="POST">
-
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-            <div class="form">
-                <h4>스터디룸 이름</h4>
-                <input id="roomName" class="border rounded p-1 rounded bg-gray-50" type="text" autocomplete="off" th:field="*{roomName}"  th:errorclass="field-error" required>
-                <span th:errors="*{roomName}"></span>
-            </div>
-
-            <div class="form">
-                <h4>최대인원</h4>
-                <input  class="border rounded p-1 rounded bg-gray-50" th:field="*{maxNum}" type="number" autocomplete="off" th:errorclass="field-error" required>
-                <span th:errors="*{maxNum}"></span>
-            </div>
-
-            <div class="form">
-                <h4>요구조건</h4>
-                <input class="border rounded p-1 rounded bg-gray-50"  type="text" autocomplete="off" th:field="*{requirement}"  th:errorclass="field-error" required>
-                <span th:errors="*{requirement}"></span>
-            </div>
-
-            <div class="form">
-                <h4>소개문구</h4>
-                <input class="border rounded p-1 rounded bg-gray-50" type="text" autocomplete="off" th:field="*{description}"  th:errorclass="field-error" required>
-                <span th:errors="*{description}"></span>
-            </div>
-
-
-            <div class="form">
-                <h4>강의명</h4>
-                <input id="subject" class="border rounded p-1 rounded bg-gray-50" type="text" autocomplete="off" th:field="*{subject}"  th:errorclass="field-error" required>
-                <span th:errors="*{subject}"></span>
-            </div>
-
-            <div class="form">
-                <h4>강의 개수</h4>
-                <input  class="border rounded p-1 rounded bg-gray-50" th:field="*{contentNo}" type="number" autocomplete="off" th:errorclass="field-error" required>
-                <span th:errors="*{contentNo}"></span>
-            </div>
-
-
-
-
-            <div class="foot_div">
-                <button type="submit" >생성</button>
-                <a th:href="@{~/}">
-                    <button  type="button" class="border bg-gray-500 p-1 rounded text-white">취소</button>
-                </a>
-            </div>
-        </form>
-
-
-    </div>
-
-
-</div>
 </body>
 
 </html>

@@ -12,216 +12,140 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
 
     <style>
-              * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Noto Sans KR", sans-serif;
-}
-
-/* a {
-  text-decoration: none;
-  color: black;
-} */
-
-li {
-  list-style: none;
-}
 
 .wrap {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
-  flex-direction: column;
-}
-
-.login {
-  width: 30%;
-  height: 530px;
+  width: 300px;
+  height: 500px;
   background: white;
-  justify-content: center; /*생략??*/
-  flex-direction: column;
-  align-items: center;
-  display: flex;
-  /* overflow:scroll; */
+  border: 0.5px solid black;
+  margin: 0 auto;
+  font-family: 함초롬돋움;
+  text-align : center;
 }
 
-.header {
-  width: 30%;
-  height: 70px;
-  background-color: white;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  display: flex;
-  border: 1px solid black;
-}
-
-.bottom {
-  width: 30%;
-}
-
-.tab_bar {
- width: 25%;
- height: 70px;
- background:rgb(124, 170, 255);
- display: flex;
- justify-content: center;
- align-items: center;
- flex-direction: column;
- float: left;
- border: 1px solid white;
- font-size: 20px;
- color: white;
- text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-}
-
-
-h2 {
-  font-size: 2em;
+.submit_button {
+  width: 80%;
+  height: 35px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: skyblue;
   color: white;
-  text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
+  font-family: 함초롬돋움;
+  font-size: 15px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
-.log_on {
-  border: 1px solid black;
-  text-align: center;
-}
-
-.rate {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.login_sns {
-  padding: 20px;
-  display: flex;
-}
-
-.login_sns li {
-  padding: 0px 15px;
-}
-
-.login_sns a {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  border-radius: 50px;
-  background: white;
-  font-size: 20px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
-}
-
-.login_id {
-  margin-top: 20px;
+.cancel_button {
   width: 80%;
-}
-
-.login_id input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.login_pw {
-  margin-top: 20px;
-  width: 80%;
-}
-
-.login_pw input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.login_etc {
-  padding: 10px;
-  width: 80%;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-}
-
-.submit {
-  margin-top: 50px;
-  width: 100%;
-  border: 1px solid red;
-}
-
-.submit button {
-  width: 100%;
-  height: 100px;
+  height: 35px;
   border: 0;
   outline: none;
   border-radius: 5px;
   background: gray;
-  border: 1px solid black;
   color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
+  font-family: 함초롬돋움;
+  font-size: 15px;
 }
 
-.form {
- margin-top: 5px;
- margin-bottom: 10px;
-}
-
-.form button {
+.login_input {
+  width: 40%;
   height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: 함초롬돋움;
+  font-size: 10px;
+  margin-bottom: 5px;
+  margin-top:5px;
+}
+
+.password_input {
+  width: 40%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: 함초롬돋움;
+  font-size: 10px;
+  margin-bottom: 5px;
+  margin-right: 80px;
+}
+
+.nickname_input {
+  width: 40%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: 함초롬돋움;
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+
+.age_input {
+  width: 40%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: 함초롬돋움;
+  font-size: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.interests_input {
+  width: 40%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: 함초롬돋움;
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+
+.h_title {
+  margin-top: 30px;
+  margin-bottom:30px;
+  font-size:30px;
+  font-weight: bold;
+
+}
+hr{
+height: 3px;
+
+}
+
+.dup_button {
+  width: 20%;
+  height: 35px;
   border: 0;
   outline: none;
   border-radius: 5px;
   background: gray;
-  border: 1px solid black;
   color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
+  font-family: 함초롬돋움;
+  font-size: 5px;
+
 }
 
-.form input {
-  height: 30px;
-  border-radius: 5px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
+.join_form {
+  list-style: none;
+  padding-left: 0px;
+  margin-bottom:30px;
 }
 
-.foot_div {
-  /* border: 1px solid black; */
-  text-align: center;
-}
-
-.foot_div button {
-  width: 100px;
-  height: 40px;
-  border: 0;
-  outline: none;
-  border-radius: 5px;
-  background: hsl(219, 100%, 61%);
-  border: 1px solid black;
-  color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
+.mar{
+   margin-top:10px;
+   margin-bottom:10px;
 }
 
 </style>
@@ -244,71 +168,87 @@ h2 {
 </head>
 
 <body>
-<div class="wrap">
+    <div class="wrap">
 
-    <div class="header">
-        <h2>회원가입</h2>
-    </div>
+        <h1 class="h_title">
+            회원가입
+        </h1>
 
-    <div class="login">
+
+
 
         <form th:action="@{~/members/join}" th:object="${memberSaveForm}"  method="POST" onsubmit="return checkStatus()">
 
-            <div class="form">
-                <h4>아이디</h4>
-                <input id="loginId"  name="loginId" type="text" placeholder="아이디" autocomplete="off" th:field="*{loginId}"  th:errorclass="field-error">
-                <span th:errors="*{loginId}"></span>
-                <button type="button" onclick="checkDupleLoginId()">중복확인</button>
-            </div>
+            <ul class="join_form">
+                <li>
+                    <label style="font-weight:bold">아이디</label>
+                    <input class="login_input" id="loginId"  name="loginId" type="text" placeholder="아이디를 입력하세요" autocomplete="off" th:field="*{loginId}"  th:errorclass="field-error">
+                    <span th:errors="*{loginId}"></span>
+                    <button class="dup_button" onclick="checkDupleLoginId()">중복확인</button>
+                </li>
 
-            <div class="form">
-                <h4>닉네임</h4>
-                <input id="nickName"  name="nickName" type="text" placeholder="이름" autocomplete="off" th:field="*{nickName}"  th:errorclass="field-error">
-                <span th:errors="*{nickName}"></span>
-                <button type="button" onclick="checkDupleNickName()">중복확인</button>
-            </div>
+                <li>
+                    <label style="font-weight:bold">비밀번호</label>
+                    <input class="password_input" name="loginPw" type="password" placeholder="비밀번호를 입력하세요" autocomplete="off" th:field="*{loginPw}" th:errorclass="field-error">
+                    <span th:errors="*{loginPw}"></span>
 
-            <div class="form">
-                <h4>비밀번호</h4>
-                <input  name="loginPw" type="password" placeholder="비밀번호" autocomplete="off" th:field="*{loginPw}" th:errorclass="field-error">
-                <span th:errors="*{loginPw}"></span>
-            </div>
+                </li>
 
-            <div class="form">
-                <h4>성별</h4>
-                <input name="sex" type="text" placeholder="여자,남자" autocomplete="off" th:field="*{sex}"   th:errorclass="field-error">
-                <span th:errors="*{sex}"></span>
+                <li>
+                    <label style="font-weight:bold">닉네임</label>
+                    <input class="nickname_input" id="nickName"  name="nickName" type="text" placeholder="닉네임를 입력하세요" autocomplete="off" th:field="*{nickName}"  th:errorclass="field-error">
+                    <span th:errors="*{nickName}"></span>
+                    <button class="dup_button" onclick="checkDupleNickName()">중복확인</button>
 
-            </div>
+                </li>
 
-            <div class="form">
-                <h4>나이</h4>
-                <input  name="age" type="number" placeholder="나이" autocomplete="off" th:field="*{age}"  th:errorclass="field-error">
-                <span th:errors="*{age}"></span>
 
-            </div>
 
-            <div class="form">
-                <h4>관심분야</h4>
-                <input  name="favorite" type="text" placeholder="관심분야" autocomplete="off" th:field="*{favorite}"  th:errorclass="field-error">
-                <span th:errors="*{favorite}"></span>
+            </ul>
 
-            </div>
+            <hr color="black" width="100%">
 
-            <div class="foot_div">
-                <button type="submit" >회원가입</button>
+            <p><span  style="color:navy; font-weight: bold;">추가 정보</span></p>
+            <div class="mar"></div>
+            <ul class="join_form">
+
+                <li>
+                    <label  style="font-weight:bold;">관심분야</label>
+                    <select name="interest" class="interests_input" style="margin-right: 80px;">
+                        <option value="ai">인공지능(AI)</option>
+                        <option value="python">파이썬</option>
+                        <option value="bigdata">빅데이터</option>
+                    </select>
+                </li>
+
+                <li>
+                    <label style="font-weight:bold; margin-left: -60px;">성별</label>
+                    <input type="radio" name="chk_info" value="male">남자
+                    <input type="radio" name="chk_info" value="female" >여자
+                </li>
+
+                <li>
+
+                    <label style="font-weight:bold">나이</label>
+                    <input class="age_input" style="margin-right: 40px;" name="age" type="text" placeholder="나이를 입력하세요" autocomplete="off" th:field="*{age}"  th:errorclass="field-error">
+                    <span th:errors="*{age}"></span>
+                </li>
+            </ul>
+
+
+                <button class="submit_button" type="submit" >회원가입</button>
 
                 <a href="/">
-                    <button type="button" >
+                    <button class="cancel_button" type="button" >
                         취소
                     </button>
                 </a>
-            </div>
+
 
         </form>
 
 
-    </div>
+
 
 
 </div>

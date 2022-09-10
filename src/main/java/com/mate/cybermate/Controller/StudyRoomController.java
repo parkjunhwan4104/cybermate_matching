@@ -2,6 +2,8 @@ package com.mate.cybermate.Controller;
 
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
+import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
+import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.Service.ApplyHistoryService;
 import com.mate.cybermate.Service.MemberService;
 import com.mate.cybermate.Service.StudyRoomApplyService;
@@ -10,12 +12,16 @@ import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +44,9 @@ public class StudyRoomController {
         ApplyHistory applyHistory=applyHistoryService.getApplyHistoryFindById(srId);
 
         if(applyHistory.getMember().getNickName().equals(member.getNickName())){
-            model.addAttribute("myPercent",studyRoom.getLecturePercent()*100);
+            model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
-            model.addAttribute("currentNo",studyRoom.getContentNo());
+            model.addAttribute("currentNo",member.getLectureNo());
 
             model.addAttribute("srId",srId);
 
@@ -50,9 +56,9 @@ public class StudyRoomController {
         }
         else{
 
-            model.addAttribute("myPercent",studyRoom.getLecturePercent()*100);
+            model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
-            model.addAttribute("currentNo",studyRoom.getContentNo());
+            model.addAttribute("currentNo",member.getLectureNo());
 
             model.addAttribute("srId",srId);
 
@@ -73,6 +79,11 @@ public class StudyRoomController {
 
     @PostMapping("/members/studyRoom/{srId}")
     public String doCheck(@PathVariable(name="srId") Long srId,@RequestParam(name="count")String count,Model model,Principal principal){
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+        String formatedNow = now.format(formatter);
+
+
 
 
         Member member=memberService.getMember(principal.getName());
@@ -82,26 +93,30 @@ public class StudyRoomController {
 
         if(applyHistory.getMember().getNickName().equals(member.getNickName())){
 
-            studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom);
-            studyRoomService.updateStudyRoomPercent(studyRoom);
+            studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom,member);
+            studyRoomService.updateStudyRoomPercent(studyRoom,member);
 
-            model.addAttribute("currentNo",studyRoom.getContentNo()-studyRoom.getCurrentLectureNo());
-            model.addAttribute("myPercent",studyRoom.getLecturePercent()*100);
+
+            model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("goal",studyRoom.getGoal());
+            model.addAttribute("now",formatedNow);
+            model.addAttribute("count",count);
 
             return "studyRoom/detailForOwner";
         }
 
         else{
-            studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom);
-            studyRoomService.updateStudyRoomPercent(studyRoom);
+            studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom,member);
+            studyRoomService.updateStudyRoomPercent(studyRoom,member);
 
 
-            model.addAttribute("currentNo",studyRoom.getContentNo()-studyRoom.getCurrentLectureNo());
-            model.addAttribute("myPercent",studyRoom.getLecturePercent()*100);
+
+            model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("goal",studyRoom.getGoal());
+            model.addAttribute("now",formatedNow);
+            model.addAttribute("count",count);
             return "studyRoom/detail";
         }
 
@@ -133,12 +148,12 @@ public class StudyRoomController {
         List<AcceptHistory> acceptHistories= studyRoomApplyService.getAcceptHistoryBySrId(srId);
 
 
-
-            for(int i=0; i<applyList.size();i++){
-              acceptHistories.get(i).setStudyRoomApply(applyList.get(i));
+        if(acceptHistories.size()!=0) {
+            for (int i = 0; i < applyList.size(); i++) {
+                acceptHistories.get(i).setStudyRoomApply(applyList.get(i));
 
             }
-
+        }
 
         model.addAttribute("historyList",acceptHistories);
         model.addAttribute("srId",srId);
@@ -198,6 +213,46 @@ public class StudyRoomController {
 
         return "member/accept";
 
+    }
+
+    /*@GetMapping("/members/studyRoom/set/lectureNo/{srId}")
+    public String showApply(Model model,Principal principal,@PathVariable(name="srId") Long srId){
+
+        Member member=memberService.getMember(principal.getName());
+
+        model.addAttribute("studyRoomApplySetLectureForm",new StudyRoomApplySetLectureForm());
+
+        model.addAttribute("srId",srId);
+        return "StudyRoomApply/lectureSet";
+    }
+*/
+
+    @PostMapping("/members/studyRoom/set/lectureNo/{srId}")
+    public String doSet(@PathVariable(name="srId") Long srId, @Validated StudyRoomApplySetLectureForm studyRoomApplySetLectureForm, BindingResult bindingResult, Principal principal, Model model){
+        if(bindingResult.hasErrors()){
+            return "StudyRoomApply/lectureSet";
+        }
+        try{
+
+
+            Member member=memberService.getMember(principal.getName());
+            memberService.setLectureNo(studyRoomApplySetLectureForm,member.getLoginId());
+
+            model.addAttribute("srId",srId);
+
+        }
+        catch(Exception e){
+            model.addAttribute("error_msg",e.getMessage());
+            return "StudyRoomApply/lectureSet";
+        }
+        return "redirect:/";
+
+    }
+
+    @GetMapping("/members/studyRoom/boards")
+    public String showBoard(){
+
+        return "studyRoom/articleList";
     }
 
 

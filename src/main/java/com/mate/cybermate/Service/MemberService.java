@@ -2,11 +2,12 @@ package com.mate.cybermate.Service;
 
 
 import com.mate.cybermate.Config.Role;
-import com.mate.cybermate.DTO.member.MemberLoginForm;
+import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.DTO.member.MemberMyPageForm;
 import com.mate.cybermate.DTO.member.MemberSaveForm;
 import com.mate.cybermate.Dao.MemberRepository;
 import com.mate.cybermate.domain.Member;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,6 +29,7 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         return memberRepository.findByLoginId(username).get();
     }
 
@@ -104,6 +106,16 @@ public class MemberService implements UserDetailsService {
 
 
     }
+
+    @Transactional
+    public void setLectureNo(StudyRoomApplySetLectureForm studyRoomApplySetLectureForm,String loginId){
+        Member member=findByLoginId(loginId);
+
+        member.setLectureNo(studyRoomApplySetLectureForm.getLectureNo());
+
+
+    }
+
 
 
 }

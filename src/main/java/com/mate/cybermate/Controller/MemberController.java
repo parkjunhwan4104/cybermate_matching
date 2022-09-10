@@ -102,9 +102,13 @@ public class MemberController {
     }
 
     @GetMapping("/members/myPage")
-    public String showMyPage(Model model){
-        model.addAttribute("memberMyPageForm",new MemberMyPageForm());
+    public String showMyPage(Model model,Principal principal){
 
+        Member findMember=memberService.getMember(principal.getName());
+
+        model.addAttribute("memberMyPageForm",new MemberMyPageForm());
+        model.addAttribute("memberId",principal.getName());
+        model.addAttribute("introduce",findMember.getIntroduce());
 
         return "member/myPage";
     }

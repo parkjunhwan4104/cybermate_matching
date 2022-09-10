@@ -3,6 +3,7 @@ package com.mate.cybermate.Controller;
 import com.mate.cybermate.CybermateApplication;
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
+import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.Service.*;
 import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -107,20 +108,23 @@ public class BoardController {
     }
 
     @PostMapping("/boards/1/{srId}")
-    public String doApply(@PathVariable(name = "srId") Long srId, Principal principal) {
+    public String doApply(@PathVariable(name = "srId") Long srId, Principal principal,Model model) {
         Study_Room makeRoom = studyRoomService.findById(srId);
         Member member = memberService.getMember(principal.getName());
-        List<StudyRoomApply> list = studyRoomApplyService.getRoomList();
 
+
+        List<AcceptHistory> list=studyRoomApplyService.getAcceptHistoryBySrId(srId);
         for (int i = 0; i < list.size(); i++) {
-            if ((list.get(i).getStudyRoom().getSrId() == srId) && (list.get(i).getMember().equals(member))) {
+            if ((list.get(i).getStudyRoomApply().getStudyRoom().getSrId()== srId) && (list.get(i).getStudyRoomApply().getMember().equals(member))) {
                 return "redirect:/boards/1";
 
             }
 
         }
         studyRoomApplyService.addStudyRoomApply(srId, member);
-        return "redirect:/boards/1";
+        model.addAttribute("studyRoomApplySetLectureForm",new StudyRoomApplySetLectureForm());
+        model.addAttribute("srId",srId);
+        return  "StudyRoomApply/lectureSet";
 
     }
 

@@ -37,13 +37,12 @@ public class Study_Room {
 
     private Long leftContent;
 
-    private Long contentNo;
 
-    private Long currentLectureNo;
+
+    private boolean isPermitAuto;
 
     private Long matesLectureNo;
 
-    private float lecturePercent;
 
     private float matesPercent;
 
@@ -63,14 +62,14 @@ public class Study_Room {
     @JoinColumn(name="boardId")
     private Board board;
 
-    public static Study_Room createRoom(StudyRoomApply studyRoomApply){
+    public static Study_Room createRoom(StudyRoomApply studyRoomApply,boolean isPermit){
         Study_Room studyRoom=new Study_Room();
         studyRoom.roomName=studyRoomApply.getRoomName();
         studyRoom.maxNum=studyRoomApply.getMaxNum();
         studyRoom.subject=studyRoomApply.getSubject();
         studyRoom.requirement=studyRoomApply.getRequirement();
         studyRoom.currentNum=Long.valueOf(1);
-        studyRoom.contentNo=studyRoomApply.getContentNo();
+        studyRoom.isPermitAuto=isPermit;
         return studyRoom;
     }
 
@@ -95,14 +94,11 @@ public class Study_Room {
     public void setCurrentNum(){
 
         this.currentNum=this.currentNum+1;
+
+
     }
 
-    public void setCurrentLectureNo(Long currentLectureNo){
 
-
-            this.currentLectureNo=currentLectureNo;
-
-    }
 
     public void setMatesLectureNo(Long no){
 
@@ -111,9 +107,7 @@ public class Study_Room {
 
     }
 
-    public void setLecturePercent(float no){
-        this.lecturePercent=no;
-    }
+
 
     public void setMatesPercent(float no){
         this.matesPercent=no;

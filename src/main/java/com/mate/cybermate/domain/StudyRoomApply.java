@@ -36,6 +36,8 @@ public class StudyRoomApply {
 
     private boolean accept;
 
+    private boolean isPermitAuto;
+
     private LocalDateTime regDate=LocalDateTime.now();
 
 
@@ -49,7 +51,7 @@ public class StudyRoomApply {
     private Study_Room studyRoom;
 
 
-    public static StudyRoomApply createRoomApplyForOwner(String roomName,Long maxNum,String requirement,String description,String subject,Long con){
+    public static StudyRoomApply createRoomApplyForOwner(String roomName,Long maxNum,String requirement,String description,String subject,Long con,boolean isPermit){
         StudyRoomApply studyRoomApply=new StudyRoomApply();
         studyRoomApply.roomName=roomName;
         studyRoomApply.maxNum=maxNum;
@@ -57,7 +59,7 @@ public class StudyRoomApply {
         studyRoomApply.description=description;
         studyRoomApply.subject=subject;
         studyRoomApply.contentNo=con;
-
+        studyRoomApply.isPermitAuto=isPermit;
 
 
         return studyRoomApply;

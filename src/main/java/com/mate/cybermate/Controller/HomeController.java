@@ -6,6 +6,7 @@ import com.mate.cybermate.Service.ApplyHistoryService;
 import com.mate.cybermate.Service.MemberService;
 import com.mate.cybermate.Service.StudyRoomApplyService;
 import com.mate.cybermate.domain.Member;
+import com.mate.cybermate.domain.StudyRoomApply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ public class HomeController {
     public String showHome(Model model,Principal principal)  {
 
 
+        List<Long> studyRoomList=new ArrayList<>();
 
         if(principal!=null) {
             Member member=memberService.getMember(principal.getName());
@@ -50,22 +52,35 @@ public class HomeController {
                 }
             }
 
+            /*for(int k=0;k<list.size();k++){
+
+                List<StudyRoomApply> studyRoomApplies=studyRoomApplyService.getListBySrId(list.get(k).getSrId(),member);
+                for(int j=0;j<studyRoomApplies.size();j++){
+                    studyRoomList.add(studyRoomApplies.get(k).getStudyRoom().getSrId());
+            }
+
+*/
+
+
+
+
             if(applyDTOList.size()!=0) {
                 for (int i = 0; i < applyDTOList.size(); i++) {
 
 
                     for (int j = 0; j < list.size(); j++) {
 
-                        if ((applyDTOList.get(i).getMemberName().equals(list.get(j).getMemberName()))) {
 
+                        if ((applyDTOList.get(i).getSrId()==list.get(j).getSrId())) {
 
                             applyDTOList.remove(i);
+
                         }
                     }
 
                 }
             }
-            System.out.println(applyDTOList.size());
+
 
 
             model.addAttribute("applyHistoryList",list);

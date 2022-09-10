@@ -5,6 +5,7 @@ import com.mate.cybermate.CybermateApplication;
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
 import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
+import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.Dao.AcceptHistoryRepository;
 import com.mate.cybermate.Dao.ApplyHistoryRepository;
 import com.mate.cybermate.Dao.StudyRoomApplyRepository;
@@ -32,19 +33,21 @@ public class StudyRoomApplyService {
     @Transactional
     public void saveRoom(StudyRoomApplySaveForm studyRoomApplySaveForm, Member member, Board board){
 
-        List<Member> members=new ArrayList<>();
-        members.add(member);
 
         StudyRoomApply roomApply = StudyRoomApply.createRoomApplyForOwner(
                 studyRoomApplySaveForm.getRoomName(),
                 studyRoomApplySaveForm.getMaxNum(),
                 studyRoomApplySaveForm.getRequirement(),
                 studyRoomApplySaveForm.getDescription(),
-                studyRoomApplySaveForm.getSubject(),
-                studyRoomApplySaveForm.getContentNo()
+                studyRoomApplySaveForm.getLectureName(),
+                studyRoomApplySaveForm.getContentNo(),
+                studyRoomApplySaveForm.isPermitAuto()
 
 
         );
+        member.setLectureNo(studyRoomApplySaveForm.getContentNo());
+        member.setCurrentLectureNo(Long.valueOf(0));
+        member.setLecturePercent(0);
 
         roomApply.setSex(member.getSex());
         roomApply.setAge(member.getAge());
@@ -58,8 +61,10 @@ public class StudyRoomApplyService {
 
         roomApply.setMember(member);
 
-        Study_Room studyRoom=Study_Room.createRoom(roomApply);
+        Study_Room studyRoom=Study_Room.createRoom(roomApply, roomApply.isAccept());
         studyRoom.setBoard(board);
+        studyRoomService.initialLectureNo(studyRoom);
+
 
         roomApply.setStudyRoom(studyRoom);
         roomApply.setAccept(true);
@@ -90,7 +95,7 @@ public class StudyRoomApplyService {
                 studyRoom.getSubject(),
                 member.getAge(),
                 member.getSex(),
-                studyRoom.getContentNo()
+                member.getLectureNo()
 
 
         );
@@ -99,7 +104,8 @@ public class StudyRoomApplyService {
         roomApply.setMember(member);
 
         roomApply.setStudyRoom(studyRoom);
-
+        member.setLecturePercent(0);
+        member.setCurrentLectureNo(Long.valueOf(0));
 
 
         studyRoomApplyRepository.save(roomApply);
@@ -147,6 +153,17 @@ public class StudyRoomApplyService {
         return RoomApplyList;
     }
 
+    public List<StudyRoomApply> getRoomListBySrId(Long srId){
+        List<StudyRoomApply> RoomApplyList=getRoomList();
+        List<StudyRoomApply> roomApplies=new ArrayList<>();
+        for(int i=0;i<RoomApplyList.size();i++){
+            if(RoomApplyList.get(i).getStudyRoom().getSrId()==srId){
+                roomApplies.add(RoomApplyList.get(i));
+            }
+        }
+        return roomApplies;
+    }
+
 
     public List<StudyRoomApplyDTO> getApplyListByMemberId(Member member){
         List<StudyRoomApply> roomApplyList=getRoomList();
@@ -171,6 +188,7 @@ public class StudyRoomApplyService {
         List<StudyRoomApply> roomApplyList=getRoomList();
 
         for(int i=0;i<roomApplyList.size();i++){
+            System.out.println(roomApplyList.get(i).isAccept());
             if(roomApplyList.get(i).isAccept()==false){
                 roomApplyList.remove(i);
             }
@@ -297,6 +315,8 @@ public class StudyRoomApplyService {
         AcceptHistory history=findHistoryById(id);
         acceptHistoryRepository.delete(history);
     }
+
+
 
 
 

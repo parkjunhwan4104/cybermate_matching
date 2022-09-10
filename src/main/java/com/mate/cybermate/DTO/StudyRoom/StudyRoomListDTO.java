@@ -30,6 +30,8 @@ public class StudyRoomListDTO {
 
     private boolean belong;
 
+    private String isPermitAuto;
+
     public void setBelong(boolean belong){
         this.belong=belong;
     }
@@ -45,6 +47,14 @@ public class StudyRoomListDTO {
         this.currentNum= studyRoom.getCurrentNum();
         this.people=currentNum+"/"+maxNum;
         this.regDate= studyRoom.getRegDate();
+
+        if(studyRoom.isPermitAuto()==true){
+            this.isPermitAuto="O";
+        }
+        else{
+            this.isPermitAuto="X";
+        }
+
 
 
 

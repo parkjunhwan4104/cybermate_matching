@@ -253,6 +253,7 @@ h2 {
     border: 1px solid #888;
     height: 320px;
     width: 100%;
+    margin-bottom:100px;
 }
 .scrolltable thead {
     display:block;
@@ -322,14 +323,16 @@ h2 {
         </div>
 
         <div class="goal">
-        <button>게시판</button>
+            <a href="/members/studyRoom/boards">
+                <button>게시판</button>
+            </a>
         </div>
 
         <div class="goal">
             <p class="rate" th:text="'나의 진도율 '+${myPercent}+'% ,'">
 
             </p>
-            <p class="rate" th:text="'메이트 진도율 '+${teamPercent}+'%'">
+            <p class="rate" th:text="'평균 진도율 '+${teamPercent}+'%'">
 
             </p>
         </div>
@@ -391,40 +394,67 @@ h2 {
         <div class="login">
 
 
+            <p >게시판</p>
+            <button >글 작성</button>
+
 
             <table class="scrolltable">
-              <thead>
-                  <tr>
-                    <th>수강일</th>
-                    <th>들은 강의 회차 수</th>
-                  </tr>
-              </thead>
-          
-              <tbody>
-    
-                  <tr>
-                      <td>5월 30일</td>
-                      <td>2개</td>
-                  </tr>
-        
-              </tbody>
-          </table>
+                <thead>
+                <tr>
+                    <th>게시글 번호</th>
+                    <th>작성자</th>
+                    <th>제목</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td>1</td>
+                    <td>작성자1</td>
+                    <td>
+                        <a th:href="@{~/}">
+                            <p>[질문]게시글 1</p>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>작성자2</td>
+                    <td>
+                        <a th:href="@{~/}">
+                            <p>[공지]게시글 2</p>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>작성자3</td>
+                    <td>
+                        <a th:href="@{~/}">
+                            <p>[질문]게시글 3</p>
+                        </a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
 
 
 
-        <!-- <div style="width: 100%;
-        height: 70px;
-        background-color: white;
-        justify-content: center;
-        flex-direction: flex;
-        align-items: center;
-        display: flex;
-        border: 1px solid black;
-        text-align: center;">
-        <p>게시판</p>
-        <button>글 작성</button>
+            <!-- <div style="width: 100%;
+            height: 70px;
+            background-color: white;
+            justify-content: center;
+            flex-direction: flex;
+            align-items: center;
+            display: flex;
+            border: 1px solid black;
+            text-align: center;">
+            <p>게시판</p>
+            <button>글 작성</button>
 
-        </div> -->
+            </div> -->
         </div>
 
         

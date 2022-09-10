@@ -21,34 +21,82 @@ public class StudyRoomService {
 
     private final StudyRoomRepository studyRoomRepository;
 
-
     @Transactional
-    public void updateLectureNo(Long count,Study_Room studyRoom){
-        studyRoom.setCurrentLectureNo(count);
-        studyRoom.setMatesLectureNo(count);
+    public void initialLectureNo(Study_Room studyRoom){
+
+        studyRoom.setMatesLectureNo(Long.valueOf(0));
 
     }
 
     @Transactional
-    public void updateStudyRoomPercent(Study_Room studyRoom){
+    public void updateLectureNo(Long count,Study_Room studyRoom,Member member){
 
-        float CLN=(float)studyRoom.getCurrentLectureNo();
-        float CN=(float)studyRoom.getContentNo();
+        Long newValue= member.getCurrentLectureNo()+count;
 
-        float MLN=(float)(studyRoom.getContentNo()*studyRoom.getCurrentNum());
+        if(newValue<=member.getLectureNo()) {
+            member.setCurrentLectureNo(newValue);
+        }
+        Long newMatesValue=studyRoom.getMatesLectureNo()+count;
+
+        List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
+        List<Member> memberList=new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).isAccept()==true){
+                memberList.add(list.get(i).getMember());
+            }
+        }
+        Long sum=Long.valueOf(0);
+        for(int i=0;i<memberList.size();i++){
+            sum+=memberList.get(i).getLectureNo();
+        }
+
+        if(newMatesValue<=sum) {
+            studyRoom.setMatesLectureNo(newMatesValue);
+        }
+
+    }
+
+    @Transactional
+    public void updateStudyRoomPercent(Study_Room studyRoom,Member member){
+
+        List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
+        List<Member> memberList=new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).isAccept()==true){
+                memberList.add(list.get(i).getMember());
+            }
+        }
+
+        float CLN=(float)member.getCurrentLectureNo();
+        float CN=(float)member.getLectureNo();
+        float MLN=0;
+        float matesTotalNo=0;
+
+        for(int i=0;i<memberList.size();i++){
+            MLN+=(float)memberList.get(i).getLectureNo();
+
+        }
+
+
         float lecturePercent=CLN/CN;
 
 
+
+
         float a=(float)(Math.round(lecturePercent * 100) / 100.0);
-        System.out.println(a);
 
+        member.setLecturePercent(a);
 
-        float matesPercent=CLN/MLN;
+        for(int i=0;i<memberList.size();i++){
+            matesTotalNo+= memberList.get(i).getCurrentLectureNo();
+        }
+
+        float matesPercent=matesTotalNo/MLN;
 
         float b=(float)(Math.round(matesPercent * 100) / 100.0);
 
-        System.out.println(b);
-        studyRoom.setLecturePercent(a);
+
+
         studyRoom.setMatesPercent(b);
     }
 
