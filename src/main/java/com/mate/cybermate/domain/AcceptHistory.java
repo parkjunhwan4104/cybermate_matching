@@ -21,7 +21,6 @@ public class AcceptHistory {
 
     private String roomName;
 
-
     private String subject;
 
     private Long age;
@@ -53,5 +52,7 @@ public class AcceptHistory {
        this.studyRoomApply=studyRoomApply;
 
    }
+
+
 
 }

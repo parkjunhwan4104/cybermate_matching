@@ -1,5 +1,6 @@
 package com.mate.cybermate.Controller;
 
+import com.mate.cybermate.DTO.AcceptHistory.AcceptHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
 import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
@@ -102,6 +103,7 @@ public class StudyRoomController {
             model.addAttribute("goal",studyRoom.getGoal());
             model.addAttribute("now",formatedNow);
             model.addAttribute("count",count);
+            model.addAttribute("srName",studyRoom.getRoomName());
 
             return "studyRoom/detailForOwner";
         }
@@ -117,6 +119,7 @@ public class StudyRoomController {
             model.addAttribute("goal",studyRoom.getGoal());
             model.addAttribute("now",formatedNow);
             model.addAttribute("count",count);
+            model.addAttribute("srName",studyRoom.getRoomName());
             return "studyRoom/detail";
         }
 
@@ -143,20 +146,15 @@ public class StudyRoomController {
 
         Member member=memberService.getMember(principal.getName());
 
-        List<StudyRoomApply> applyList=studyRoomApplyService.getListBySrId(srId,member);
+        StudyRoomApply sra=studyRoomApplyService.findById(srId);
 
-        List<AcceptHistory> acceptHistories= studyRoomApplyService.getAcceptHistoryBySrId(srId);
+        List<AcceptHistoryDTO> acceptHistoryDTOList=studyRoomApplyService.getAcceptHistoryDTOListById(srId,member);
 
 
-        if(acceptHistories.size()!=0) {
-            for (int i = 0; i < applyList.size(); i++) {
-                acceptHistories.get(i).setStudyRoomApply(applyList.get(i));
 
-            }
-        }
-
-        model.addAttribute("historyList",acceptHistories);
+        model.addAttribute("historyList",acceptHistoryDTOList);
         model.addAttribute("srId",srId);
+        model.addAttribute("srName",sra.getRoomName());
 
 
         return "member/accept";

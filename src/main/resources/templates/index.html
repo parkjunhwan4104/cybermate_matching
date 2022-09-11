@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이러닝메이트 Main</title>
+    <title>이러닝메이트</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
     <style>
 
 .wrap {
@@ -16,6 +22,17 @@
   text-align : center;
 }
 
+.wrap2 {
+  width: 300px;
+  height: 500px;
+  background: white;
+  border: 0.5px solid black;
+  margin: 0 auto;
+  font-family: 함초롬돋움;
+  text-align : center;
+
+  position:relative;
+}
 .login_button {
   width: 80%;
   height: 35px;
@@ -44,21 +61,254 @@
 .mg{
     margin-bottom:50px;
 }
+
+.logout_button {
+  border: 0;
+  height: 25px;
+  outline: none;
+  border-radius: 3px;
+  background: #999999;
+  color: white;
+  font-family: 함초롬돋움;
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+
+
+.footer {
+  background-color: white;
+  width:100%;
+  height:65px;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.menu_button {
+  width: 30%;
+  height: 40px;
+  font-size: 12px;
+  font-family: 함초롬돋움;
+  border: 0;
+  outline: none;
+}
+
+.select_button {
+  width: 30%;
+  height: 40px;
+  font-size: 12px;
+  font-family: 함초롬돋움;
+  border: 0;
+  outline: none;
+  background-color: #8FB0C6;
+  color:white;
+}
+
+.make_button {
+  width: 80%;
+  height: 35px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: skyblue;
+  color: white;
+  font-family: 함초롬돋움;
+  font-size: 15px;
+}
+
+
+
+.scrolltable{
+    table-layout: fixed;
+    border-collapse: collapse;
+    /* border: 1px solid red; */
+    height: 230px;
+    width: 90%;
+    margin:auto;
+}
+.scrolltable thead {
+    display:block;
+    background: gray;
+    color:#fff;
+    height: 40px;
+    text-align: center;
+    width:100%;
+    font-family: 함초롬돋움;
+}
+.scrolltable tbody{
+    display:block;
+    overflow:auto;
+    height:190px; /*418px 190px*/
+    width:100%;
+}
+/* 행 장식 */
+.scrolltable th, .scrolltable td {
+  padding: 10px;
+  text-align: left;
+  width: 180px; /*100px*/
+  text-align: center;
+  font-size: 0.8em;
+  /* border: 1px solid black; */
+}
+
+.scrolltable tbody::-webkit-scrollbar {
+  width: 5px; /*스크롤바의 너비*/
+}
+
+.scrolltable tbody::-webkit-scrollbar-thumb {
+  background-color: gray; /*스크롤바의 색상*/
+  border-radius: 10px;
+}
+
+.scrolltable tbody::-webkit-scrollbar-track {
+  background-color: rgba(33, 122, 244, .1); /*스크롤바 트랙 색상*/
+}
+
+.enter_button {
+  border: 0;
+  height: 25px;
+  outline: none;
+  border-radius: 3px;
+  /* background: #999999; */
+  color: black;
+  font-family: 함초롬돋움;
+  margin-left: 10px;
+  margin-right: -10px;
+}
+
+.list_button {
+  border: 0;
+  height: 25px;
+  outline: none;
+  border-radius: 3px;
+  /* background: #999999; */
+  color: black;
+  font-family: 함초롬돋움;
+  margin-left: 10px;
+}
+
     </style>
 
 </head>
 
 <body>
-<div class="wrap">
-    <h1>
-        이러닝메이트
-    </h1>
-    <div class="mg"></div>
-    <img src="C:\Users\user\Downloads\study-group.png" alt="My Image" width="50%" height="45%">
+<div class="wrap" sec:authorize="isAnonymous()">
 
-    <div class="mg"></div>
-    <button class="login_button">로그인</button>
-    <button class="join_button">회원가입</button>
+
+
+        <div >
+            <h1>
+                이러닝메이트
+            </h1>
+            <div class="mg"></div>
+            <img src="C:\Users\user\Downloads\study-group.png" alt="My Image" width="50%" height="45%">
+
+            <div class="mg"></div>
+
+            <a th:href="@{~/members/login}">
+                <button class="login_button">로그인</button>
+            </a>
+            <a th:href="@{~/members/join}">
+                <button class="join_button">회원가입</button>
+            </a>
+        </div>
+</div>
+
+<div class="wrap2" sec:authorize="isAuthenticated()">
+        <div  >
+
+            <div style="margin:auto; height: 50p;">
+                <h3 style="float:left; margin-left: 20px">이러닝 메이트</h3>
+                <a href="/members/logout">
+                    <button class="logout_button" type="submit" value="submit">
+                        로그아웃
+                    </button>
+                </a>
+            </div>
+
+            <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+
+
+            <a href="/members/makeRoom">
+                <button class="make_button" type="submit" value="submit">
+                    스터디룸 만들기
+                </button>
+            </a>
+
+            <p style="margin-left:-120px;">총 <span style="color: red; font-weight: bold;">5</span>개의 스터디룸</p>
+            <p style="margin-left:-150px;">총 <span style="color:red; font-weight: bold;">3</span>건의 신청</p>
+
+            <table class="scrolltable">
+                <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>입장</th>
+                    <th>신청현황</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>파이썬</td>
+                    <td>
+                        <button class="enter_button">입장</button>
+                    </td>
+                    <td>
+                        <button class="list_button">보기</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>파이썬</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>파이썬</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>파이썬</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>파이썬</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>파이썬</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="footer">
+                <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+                <a th:href="@{~/}">
+                    <button class="select_button">My스터디룸</button>
+                </a>
+                <a th:href="@{~/}">
+                    <button class="menu_button">스터디룸 목록</button>
+                </a>
+                <a th:href="@{~/}">
+                    <button class="menu_button">정보 수정</button>
+                </a>
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
 
 </div>
 

@@ -28,282 +28,176 @@ li {
 }
 
 .wrap {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
-  flex-direction: column;
-}
-
-.login {
-  width: 30%;
-  height: 460px; /*460px*/
+  width: 300px;
+  height: 500px;
   background: white;
-  justify-content: center; /*생략??*/
-  flex-direction: column;
-  align-items: center;
-  display: flex;
+  border: 0.5px solid black;
+  margin: 0 auto;
+  font-family: 함초롬돋움;
+  text-align : center;
+
+  position:relative;
 }
 
-.header {
-  width: 30%;
-  height: 70px;
-  background-color: white;
-  justify-content: center;
-  /* flex-direction: column; */
-  align-items: center;
-  display: flex;
-  border: 1px solid black;
-}
-
-.goal {
-  width: 30%;
-  height: 70px;
-  background-color: white;
-  justify-content: center;
-  flex-direction: flex;
-  align-items: center;
-  display: flex;
-  border: 1px solid black;
-  text-align: center; 
-}
-.goal button {
-  width: 100px;
-  height: 40px;
+.logout_button {
   border: 0;
+  height: 25px;
   outline: none;
-  border-radius: 5px;
-  background: hsl(219, 100%, 61%);
-  border: 1px solid black;
+  border-radius: 3px;
+  background: #999999;
   color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
-}
-
-.bottom {
-  width: 30%;
-}
-
-.tab_bar {
- width: 25%;
- height: 70px;
- background:rgb(124, 170, 255);
- display: flex;
- justify-content: center;
- align-items: center;
- flex-direction: column;
- float: left;
- border: 1px solid white;
- font-size: 20px;
- color: white;
- text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-}
-
-
-h2 {
-  font-size: 2em;
-  color: white;
-  text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
-}
-
-.log_on {
-  border: 1px solid black;
-  text-align: center;
-}
-
-.rate {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.login_sns {
-  padding: 20px;
-  display: flex;
-}
-
-.login_sns li {
-  padding: 0px 15px;
-}
-
-.login_sns a {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  border-radius: 50px;
-  background: white;
-  font-size: 20px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
-}
-
-.login_id {
+  font-family: 함초롬돋움;
+  float: right;
   margin-top: 20px;
-  width: 80%;
+  margin-right: 20px;
 }
 
-.login_id input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
+.footer {
+  background-color: white;
+  width:100%;
+  height:65px;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.menu_button {
+  width: 30%;
+  height: 40px;
+  font-size: 12px;
+  font-family: 함초롬돋움;
+  border: 0;
   outline: none;
 }
 
-.login_pw {
-  margin-top: 20px;
-  width: 80%;
-}
-
-.login_pw input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
+.select_button {
+  width: 30%;
+  height: 40px;
+  font-size: 12px;
+  font-family: 함초롬돋움;
+  border: 0;
   outline: none;
+  background-color: #8FB0C6;
+  color:white;
 }
 
-.login_etc {
-  padding: 10px;
+.board_button {
   width: 80%;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-}
-
-.submit {
-  margin-top: 50px;
-  width: 100%;
-  border: 1px solid red;
-}
-
-.submit button {
-  width: 100%;
-  height: 100px;
+  height: 35px;
   border: 0;
   outline: none;
   border-radius: 5px;
-  background: gray;
-  border: 1px solid black;
+  background: skyblue;
   color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
+  font-family: 함초롬돋움;
+  font-size: 15px;
+  margin-bottom: -10px;
 }
 
-.form {
- margin-top: 10px;
- margin-bottom: 20px;
-}
 
-.form button {
-  height: 40px;
-  border: 0;
-  outline: none;
-  border-radius: 5px;
-  background: gray;
-  border: 1px solid black;
-  color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
-}
-
-.form input {
-  height: 40px;
-  border-radius: 5px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.foot_div {
-  /* border: 1px solid black; */
-  text-align: center;
-}
-
-.foot_div button {
-  width: 100px;
-  height: 40px;
-  border: 0;
-  outline: none;
-  border-radius: 5px;
-  background: hsl(219, 100%, 61%);
-  border: 1px solid black;
-  color: white;
-  font-size: 18px;
-  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-  letter-spacing: 1px;
-}
 
 .scrolltable{
     table-layout: fixed;
     border-collapse: collapse;
-    border: 1px solid #888;
-    height: 320px;
-    width: 100%;
-    margin-bottom:100px;
+    /* border: 1px solid red; */
+    height: 70px;
+    width: 90%;
+    margin:auto;
 }
 .scrolltable thead {
     display:block;
-    background: hsl(219, 100%, 61%);
+    background: gray;
     color:#fff;
-    height: 40px;
+    height: 20px;
     text-align: center;
     width:100%;
+    font-family: 함초롬돋움;
 }
 .scrolltable tbody{
     display:block;
     overflow:auto;
-    height:280px; /*418px 190px*/
+    height:50px; /*418px 190px*/
     width:100%;
 }
 /* 행 장식 */
 .scrolltable th, .scrolltable td {
-  padding: 10px;
-  text-align: left;
+  /* padding: 10px; */
+  /* text-align: left; */
   width: 180px; /*100px*/
   text-align: center;
-  font-size: 0.875em;
+  font-size: 0.8em;
   /* border: 1px solid black; */
 }
-.scrolltable tbody tr:nth-child(2n+1){
-    background-color: #f0f0f0;
+
+.scrolltable tbody::-webkit-scrollbar {
+  width: 5px; /*스크롤바의 너비*/
 }
 
-.goal_a {
-  width: 30%;
-  height: 70px;
-  background-color: white;
-  justify-content: center;
-  flex-direction: flex;
-  align-items: center;
-  display: flex;
+.scrolltable tbody::-webkit-scrollbar-thumb {
+  background-color: gray; /*스크롤바의 색상*/
+  border-radius: 10px;
+}
+
+.scrolltable tbody::-webkit-scrollbar-track {
+  background-color: rgba(33, 122, 244, .1); /*스크롤바 트랙 색상*/
+}
+
+.enter_button {
+  border: 0;
+  height: 25px;
+  outline: none;
+  border-radius: 3px;
+  /* background: #999999; */
+  color: black;
+  font-family: 함초롬돋움;
+  margin-left: 10px;
+  margin-right: -10px;
+}
+
+.list_button {
+  border: 0;
+  height: 25px;
+  outline: none;
+  border-radius: 3px;
+  /* background: #999999; */
+  color: black;
+  font-family: 함초롬돋움;
+  margin-left: 10px;
+}
+
+.goal {
+  width: 100%;
+  height: 35px;
+  border: 0;
+  outline: none;
+  background: #ffffe0;
+  color: white;
+  font-family: 함초롬돋움;
+  font-size: 20px;
+}
+
+.count {
+  width: 20%;
+  height: 20px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
   border: 1px solid black;
-  text-align: center; 
+  font-family: 함초롬돋움;
+  font-size: 10px;
 }
 
-.goal_a select{
-
-
-    border: 1px solid black
-}
-
-.goal_a button{
-    border-radius: 5px;
-  background: #bdbebd;
-  border: 1px solid black;
+.submit_button {
+  border: 0;
+  height: 25px;
+  outline: none;
+  border-radius: 3px;
+  background: #999999;
+  color: white;
+  font-family: 함초롬돋움;
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
 }
 
 
@@ -313,41 +207,65 @@ h2 {
 <body>
     <div class="wrap">
 
-        <div class="header">
-          <h2>스터디룸(방장)</h2>
-          <div class="foot_div">
+        <div style="margin:auto; height: 50px;">
+            <h3 style="float:left; margin-left: 20px; color:navy" th:text="${srName}">파이썬 초보자</h3>
             <a th:href="@{~/}">
-              <button  type="button" class="border bg-gray-500 p-1 rounded text-white">나가기</button>
-            </a>
-          </div>
-        </div>
-
-        <div class="goal">
-            <a href="/members/studyRoom/boards">
-                <button>게시판</button>
+                <button class="logout_button" type="button" class="border bg-gray-500 p-1 rounded text-white">나가기</button>
             </a>
         </div>
 
+        <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+
+        <a href="/members/studyRoom/boards">
+            <button class="board_button">게시판</button>
+        </a>
+
         <div class="goal">
-            <p class="rate" th:text="'나의 진도율 '+${myPercent}+'% ,'">
-
-            </p>
-            <p class="rate" th:text="'평균 진도율 '+${teamPercent}+'%'">
-
-            </p>
+            <p style="color:black;" th:text="'                '+${goal}"></p>
         </div>
-        
-        <div class="goal_a">
+
+        <p style="margin-left:-120px;">나의 진도율: <span style="color: red; font-weight: bold;" th:text="${myPercent}"></span>%</p>
+        <p style="margin-left:-90px; margin-top:-10px">스터디룸 진도율: <span style="color:red; font-weight: bold;" th:text="${teamPercent}"></span>%</p>
+
+
+        <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+
+        <div style="margin:auto; height: 50px;">
+            <form  th:action="@{~/members/studyRoom/}+${srId}"  method="POST">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <p style="float:left; margin-left: 20px;">진도체크</p>
+                <select name="count" class="count" style="margin-right: 80px; margin-top:20px">
+                    <option value="none" selected="selected">개수</option>
+                    <option value="1">1개</option>
+                    <option value="2">2개</option>
+                    <option value="3">3개</option>
+                    <option value="4">4개</option>
+                    <option value="5">5개</option>
+                    <option value="6">6개</option>
+                    <option value="7">7개</option>
+                    <option value="8">8개</option>
+                    <option value="8">9개</option>
+                    <option value="10">10개</option>
+                </select>
+                <button class="submit_button">
+                    등록
+                </button>
+            </form>
+        </div>
+
+        <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+
+        <div style="margin:auto; height: 50px;">
             <form th:action="@{~/members/studyRoom/setGoal/}+${srId}"   method="POST">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <p>목표</p>
-                <select name="period">
+                <p style="float:left; margin-left: 20px;">학습목표</p>
+                <select name="period" class="count" style=" margin-top:20px">
                     <option value="none" selected="selected">기간</option>
                     <option value="1일">1일</option>
                     <option value="1주일">1주일</option>
                     <option value="1달">1달</option>
                 </select>
-                <select name="count">
+                <select name="count" class="count" style=" margin-top:20px">
                     <option value="none" selected="selected">개수</option>
                     <option value="1">1개</option>
                     <option value="2">2개</option>
@@ -360,104 +278,65 @@ h2 {
                     <option value="9">9개</option>
                     <option value="10">10개</option>
                 </select>
-                <button >
+                <button class="submit_button" >
                     수정
                 </button>
             </form>
-          <p th:text="'                '+${goal}"></p>
-        </div>
-
-        <div class="goal_a">
-          <form  th:action="@{~/members/studyRoom/}+${srId}"  method="POST">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <p>강의 진도 체크</p>
-            <select name="count">
-              <option value="none" selected="selected">개수</option>
-              <option value="1">1개</option>
-              <option value="2">2개</option>
-              <option value="3">3개</option>
-              <option value="4">4개</option>
-              <option value="5">5개</option>
-              <option value="6">6개</option>
-              <option value="7">7개</option>
-              <option value="8">8개</option>
-              <option value="8">9개</option>
-              <option value="10">10개</option>
-            </select>
-            <button class="">
-              확인
-            </button>
-          </form>
         </div>
 
 
-        <div class="login">
+        <table class="scrolltable">
+            <thead>
+            <tr>
+                <th>수강일</th>
+                <th>수강 회차 개수</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>2022-05-06</td>
+                <td>2개</td>
+            </tr>
+            <tr>
+                <td>2022-05-06</td>
+                <td>2개</td>
+            </tr>
+            <tr>
+                <td>2022-05-06</td>
+                <td>2개</td>
+            </tr>
+            <tr>
+                <td>2022-05-06</td>
+                <td>2개</td>
+            </tr>
+            <tr>
+                <td>2022-05-06</td>
+                <td>2개</td>
+            </tr>
+            <tr>
+                <td>2022-05-06</td>
+                <td>2개</td>
+            </tr>
+            </tbody>
+        </table>
 
 
-            <p >게시판</p>
-            <button >글 작성</button>
+        <div class="footer">
+            <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+            <a th:href="@{~/}">
+                <button class="select_button">My스터디룸</button>
+            </a>
+            <a th:href="@{~/}">
+                <button class="menu_button">스터디룸 목록</button>
+            </a>
+            <a th:href="@{~/}">
+                <button class="menu_button">정보 수정</button>
+            </a>
 
-
-            <table class="scrolltable">
-                <thead>
-                <tr>
-                    <th>게시글 번호</th>
-                    <th>작성자</th>
-                    <th>제목</th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <tr>
-                    <td>1</td>
-                    <td>작성자1</td>
-                    <td>
-                        <a th:href="@{~/}">
-                            <p>[질문]게시글 1</p>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>작성자2</td>
-                    <td>
-                        <a th:href="@{~/}">
-                            <p>[공지]게시글 2</p>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>작성자3</td>
-                    <td>
-                        <a th:href="@{~/}">
-                            <p>[질문]게시글 3</p>
-                        </a>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-
-
-
-            <!-- <div style="width: 100%;
-            height: 70px;
-            background-color: white;
-            justify-content: center;
-            flex-direction: flex;
-            align-items: center;
-            display: flex;
-            border: 1px solid black;
-            text-align: center;">
-            <p>게시판</p>
-            <button>글 작성</button>
-
-            </div> -->
         </div>
 
-        
+
 
     </div>
 </body>

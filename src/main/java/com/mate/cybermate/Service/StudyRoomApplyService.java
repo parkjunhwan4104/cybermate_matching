@@ -2,6 +2,7 @@ package com.mate.cybermate.Service;
 
 
 import com.mate.cybermate.CybermateApplication;
+import com.mate.cybermate.DTO.AcceptHistory.AcceptHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
 import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
@@ -188,7 +189,7 @@ public class StudyRoomApplyService {
         List<StudyRoomApply> roomApplyList=getRoomList();
 
         for(int i=0;i<roomApplyList.size();i++){
-            System.out.println(roomApplyList.get(i).isAccept());
+
             if(roomApplyList.get(i).isAccept()==false){
                 roomApplyList.remove(i);
             }
@@ -309,6 +310,37 @@ public class StudyRoomApplyService {
         }
         return history;
     }
+
+    public List<AcceptHistoryDTO> getAcceptHistoryDTOListById(Long id,Member member){
+        List<AcceptHistory> acceptHistories=getAcceptHistoryBySrId(id);
+
+        List<StudyRoomApply> applyList=getListBySrId(id,member);
+
+        List<AcceptHistoryDTO> DTOList=new ArrayList<>();
+
+        if(acceptHistories.size()!=0) {
+            for (int i = 0; i < applyList.size(); i++) {
+                acceptHistories.get(i).setStudyRoomApply(applyList.get(i));
+
+            }
+        }
+        for(int i=0;i<acceptHistories.size();i++){
+           AcceptHistoryDTO acceptHistoryDTO=new AcceptHistoryDTO(acceptHistories.get(i));
+           DTOList.add(acceptHistoryDTO);
+        }
+
+        return DTOList;
+
+    }
+
+
+
+
+
+
+
+
+
 
     @Transactional
     public void deleteAcceptHistory(Long id){
