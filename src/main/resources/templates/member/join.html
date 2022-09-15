@@ -184,7 +184,7 @@ height: 3px;
                     <label style="font-weight:bold">아이디</label>
                     <input class="login_input" id="loginId"  name="loginId" type="text" placeholder="아이디를 입력하세요" autocomplete="off" th:field="*{loginId}"  th:errorclass="field-error">
                     <span th:errors="*{loginId}"></span>
-                    <button class="dup_button" onclick="checkDupleLoginId()">중복확인</button>
+                    <button  type="button" class="dup_button" onclick="checkDupleLoginId()">중복확인</button>
                 </li>
 
                 <li>
@@ -198,7 +198,7 @@ height: 3px;
                     <label style="font-weight:bold">닉네임</label>
                     <input class="nickname_input" id="nickName"  name="nickName" type="text" placeholder="닉네임를 입력하세요" autocomplete="off" th:field="*{nickName}"  th:errorclass="field-error">
                     <span th:errors="*{nickName}"></span>
-                    <button class="dup_button" onclick="checkDupleNickName()">중복확인</button>
+                    <button type="button" class="dup_button" onclick="checkDupleNickName()">중복확인</button>
 
                 </li>
 
@@ -214,18 +214,23 @@ height: 3px;
 
                 <li>
                     <label  style="font-weight:bold;">관심분야</label>
-                    <select name="interest" class="interests_input" style="margin-right: 80px;">
-                        <option value="ai">인공지능(AI)</option>
-                        <option value="python">파이썬</option>
-                        <option value="bigdata">빅데이터</option>
-                    </select>
+                    <input class="age_input" style="margin-right: 65px;" name="favorite" type="text" placeholder="관심분야를 입력하세요" autocomplete="off" th:field="*{favorite}"  th:errorclass="field-error">
+                    <span th:errors="*{favorite}"></span>
                 </li>
 
                 <li>
-                    <label style="font-weight:bold; margin-left: -60px;">성별</label>
-                    <input type="radio" name="chk_info" value="male">남자
-                    <input type="radio" name="chk_info" value="female" >여자
+                    <label style="font-weight:bold; margin-left: 40px;">성별</label>
+
+                    <select class="interests_input" name="chk_sex" th:field="*{sex}" style="margin-right: 80px;">
+                        <option value="male" >남자</option>
+                        <option value="female"  >여자</option>
+
+                    </select>
                 </li>
+
+
+
+
 
                 <li>
 

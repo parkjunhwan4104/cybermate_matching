@@ -48,7 +48,7 @@ public class StudyRoomListDTO {
         this.people=currentNum+"/"+maxNum;
         this.regDate= studyRoom.getRegDate();
 
-        if(studyRoom.isPermitAuto()==true){
+        if(studyRoom.getIsPermitAuto().equals("true")){
             this.isPermitAuto="O";
         }
         else{

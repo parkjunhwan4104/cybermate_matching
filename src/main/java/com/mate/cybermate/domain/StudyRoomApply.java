@@ -20,12 +20,6 @@ public class StudyRoomApply {
 
     private String roomName;
 
-    private Long maxNum;
-
-    private String requirement;
-
-    private String description;
-
     private String subject;
 
     private Long age;
@@ -35,9 +29,7 @@ public class StudyRoomApply {
     private Long contentNo;
 
     private boolean accept;
-
-    private boolean isPermitAuto;
-
+    
     private LocalDateTime regDate=LocalDateTime.now();
 
 
@@ -50,20 +42,6 @@ public class StudyRoomApply {
     @JoinColumn(name="srId")
     private Study_Room studyRoom;
 
-
-    public static StudyRoomApply createRoomApplyForOwner(String roomName,Long maxNum,String requirement,String description,String subject,Long con,boolean isPermit){
-        StudyRoomApply studyRoomApply=new StudyRoomApply();
-        studyRoomApply.roomName=roomName;
-        studyRoomApply.maxNum=maxNum;
-        studyRoomApply.requirement=requirement;
-        studyRoomApply.description=description;
-        studyRoomApply.subject=subject;
-        studyRoomApply.contentNo=con;
-        studyRoomApply.isPermitAuto=isPermit;
-
-
-        return studyRoomApply;
-    }
 
     public static StudyRoomApply createRoomApply(String roomName,String subject,Long age,String sex,Long contentNo ){
         StudyRoomApply studyRoomApply=new StudyRoomApply();
@@ -94,6 +72,8 @@ public class StudyRoomApply {
     public void setSex(String sex){
         this.sex=sex;
     }
+
+
 
 
 

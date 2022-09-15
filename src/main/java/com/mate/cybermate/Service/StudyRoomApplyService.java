@@ -1,12 +1,9 @@
 package com.mate.cybermate.Service;
 
 
-import com.mate.cybermate.CybermateApplication;
 import com.mate.cybermate.DTO.AcceptHistory.AcceptHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
-import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
-import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.Dao.AcceptHistoryRepository;
 import com.mate.cybermate.Dao.ApplyHistoryRepository;
 import com.mate.cybermate.Dao.StudyRoomApplyRepository;
@@ -31,61 +28,7 @@ public class StudyRoomApplyService {
     private final AcceptHistoryRepository acceptHistoryRepository;
 
 
-    @Transactional
-    public void saveRoom(StudyRoomApplySaveForm studyRoomApplySaveForm, Member member, Board board){
 
-
-        StudyRoomApply roomApply = StudyRoomApply.createRoomApplyForOwner(
-                studyRoomApplySaveForm.getRoomName(),
-                studyRoomApplySaveForm.getMaxNum(),
-                studyRoomApplySaveForm.getRequirement(),
-                studyRoomApplySaveForm.getDescription(),
-                studyRoomApplySaveForm.getLectureName(),
-                studyRoomApplySaveForm.getContentNo(),
-                studyRoomApplySaveForm.isPermitAuto()
-
-
-        );
-        member.setLectureNo(studyRoomApplySaveForm.getContentNo());
-        member.setCurrentLectureNo(Long.valueOf(0));
-        member.setLecturePercent(0);
-
-        roomApply.setSex(member.getSex());
-        roomApply.setAge(member.getAge());
-        ApplyHistory applyHistory=ApplyHistory.createApplyHistory(
-                roomApply.getRoomName(),
-                member.getNickName(),
-                roomApply.getSubject(),
-                member.getAge(),
-                member.getSex()
-        );
-
-        roomApply.setMember(member);
-
-        Study_Room studyRoom=Study_Room.createRoom(roomApply, roomApply.isAccept());
-        studyRoom.setBoard(board);
-        studyRoomService.initialLectureNo(studyRoom);
-
-
-        roomApply.setStudyRoom(studyRoom);
-        roomApply.setAccept(true);
-
-        applyHistory.setHistoryApply(roomApply);
-        applyHistory.setHistoryMember(member);
-        applyHistory.setHistoryStudyRoom(studyRoom);
-
-
-
-        applyHistoryRepository.save(applyHistory);
-
-        studyRoomRepository.save(studyRoom);
-
-
-        studyRoomApplyRepository.save(roomApply);
-
-
-
-    }
 
     @Transactional
     public void addStudyRoomApply(Long srId,Member member){

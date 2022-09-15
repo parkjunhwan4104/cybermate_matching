@@ -1,14 +1,9 @@
 package com.mate.cybermate.Controller;
 
 import com.mate.cybermate.DTO.AcceptHistory.AcceptHistoryDTO;
-import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
-import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
-import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySaveForm;
+import com.mate.cybermate.DTO.StudyRoom.StudyRoomSaveForm;
 import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
-import com.mate.cybermate.Service.ApplyHistoryService;
-import com.mate.cybermate.Service.MemberService;
-import com.mate.cybermate.Service.StudyRoomApplyService;
-import com.mate.cybermate.Service.StudyRoomService;
+import com.mate.cybermate.Service.*;
 import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,6 +28,44 @@ public class StudyRoomController {
     private final StudyRoomService studyRoomService;
     private final ApplyHistoryService applyHistoryService;
     private final StudyRoomApplyService studyRoomApplyService;
+    private final BoardService boardService;
+
+    @GetMapping("/members/makeRoom")
+    public String showApply(Model model,Principal principal){
+
+        Member member=memberService.getMember(principal.getName());
+
+        model.addAttribute("studyRoomSaveForm",new StudyRoomSaveForm());
+
+
+        return "studyRoom/studyRoomAdd";
+    }
+
+    @PostMapping("/members/makeRoom")
+    public String doApply(@Validated StudyRoomSaveForm studyRoomSaveForm, BindingResult bindingResult, Principal principal, Model model){
+        if(bindingResult.hasErrors()){
+            return "studyRoom/studyRoomAdd";
+        }
+
+        try{
+            Long num=Long.valueOf(1);
+
+            Board board=boardService.getBoard(num);
+
+            Member member=memberService.getMember(principal.getName());
+
+            studyRoomService.saveRoom(studyRoomSaveForm,member,board);
+
+
+
+        }
+        catch(Exception e){
+            model.addAttribute("error_msg",e.getMessage());
+            return "studyRoom/studyRoomAdd";
+        }
+        return "redirect:/";
+
+    }
 
     @GetMapping("/members/studyRoom/{srId}")
     public String showStudyRoom(@PathVariable(name="srId") Long srId, Model model, Principal principal){

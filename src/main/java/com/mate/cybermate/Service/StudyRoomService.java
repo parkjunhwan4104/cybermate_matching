@@ -1,11 +1,9 @@
 package com.mate.cybermate.Service;
 
-import com.mate.cybermate.CybermateApplication;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
+import com.mate.cybermate.DTO.StudyRoom.StudyRoomSaveForm;
 import com.mate.cybermate.Dao.StudyRoomRepository;
-import com.mate.cybermate.domain.Member;
-import com.mate.cybermate.domain.StudyRoomApply;
-import com.mate.cybermate.domain.Study_Room;
+import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +18,33 @@ import java.util.Optional;
 public class StudyRoomService {
 
     private final StudyRoomRepository studyRoomRepository;
+
+    @Transactional
+    public void saveRoom(StudyRoomSaveForm studyRoomSaveForm, Member member,Board board){
+            Study_Room studyRoom=Study_Room.createRoom(
+                    studyRoomSaveForm.getRoomName(),
+                    studyRoomSaveForm.getMaxNum(),
+                    studyRoomSaveForm.getSubject(),
+                    studyRoomSaveForm.getDescription(),
+                    studyRoomSaveForm.getRequirement(),
+                    studyRoomSaveForm.getContentNo(),
+                    studyRoomSaveForm.getIsPermitAuto()
+
+            );
+
+        member.setLectureNo(studyRoomSaveForm.getContentNo());
+        member.setCurrentLectureNo(Long.valueOf(0));
+        member.setLecturePercent(0);
+
+        studyRoom.setMember(member);
+        studyRoom.setBoard(board);
+
+        initialLectureNo(studyRoom);
+
+        studyRoomRepository.save(studyRoom);
+
+    }
+
 
     @Transactional
     public void initialLectureNo(Study_Room studyRoom){

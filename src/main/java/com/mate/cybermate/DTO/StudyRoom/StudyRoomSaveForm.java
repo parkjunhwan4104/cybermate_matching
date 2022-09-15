@@ -1,4 +1,5 @@
-package com.mate.cybermate.DTO.StudyRoomApply;
+package com.mate.cybermate.DTO.StudyRoom;
+
 
 import lombok.Data;
 
@@ -6,9 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class StudyRoomApplySaveForm {
-
-
+public class StudyRoomSaveForm {
 
     @NotBlank(message = "스터디룸 이름을 입력해주세요.")
     private String roomName;
@@ -23,15 +22,12 @@ public class StudyRoomApplySaveForm {
     private String description;
 
     @NotBlank(message = "강의명을 입력해주세요.")
-    private String lectureName;
+    private String subject;
 
     @NotNull(message = "강의 개수를 입력해주세요")
     private Long contentNo;
 
     @NotNull(message = "자동매칭 여부를 선택해주세요.")
-    private boolean isPermitAuto;
-
-
-
+    private String isPermitAuto;
 
 }

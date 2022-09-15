@@ -49,12 +49,15 @@ public class MemberController {
     }
 
     @PostMapping("/members/join")
-    public String doJoin(@Validated MemberSaveForm memberSaveForm, BindingResult bindingResult,Model model){
+    public String doJoin(@Validated MemberSaveForm memberSaveForm,  BindingResult bindingResult,Model model){
         if(bindingResult.hasErrors()){
             return "member/join";
         }
 
         try{
+
+
+
             memberService.saveMember(memberSaveForm);
 
         }

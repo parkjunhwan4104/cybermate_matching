@@ -127,6 +127,8 @@ function checkStatus(){
         CHECK_STATUS=false;
     }
 
+
+
     if(!CHECK_STATUS){
 
         alert("중복확인을 해주시기 바랍니다.");

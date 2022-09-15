@@ -30,6 +30,7 @@ public class Study_Room {
 
     private String requirement;
 
+    private String description;
 
     private String goal;
 
@@ -37,9 +38,9 @@ public class Study_Room {
 
     private Long leftContent;
 
+    private Long contentNo;
 
-
-    private boolean isPermitAuto;
+    private String isPermitAuto;
 
     private Long matesLectureNo;
 
@@ -55,20 +56,24 @@ public class Study_Room {
     @OneToMany(mappedBy = "studyRoom" ,fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<StudyRoomApply> studyRoomApply=new ArrayList<>();
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="memberId")
+    private Member member;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="boardId")
     private Board board;
 
-    public static Study_Room createRoom(StudyRoomApply studyRoomApply,boolean isPermit){
+    public static Study_Room createRoom(String roomName,Long maxNum,String subject,String description, String requirement,Long contentNo,String isPermit){
         Study_Room studyRoom=new Study_Room();
-        studyRoom.roomName=studyRoomApply.getRoomName();
-        studyRoom.maxNum=studyRoomApply.getMaxNum();
-        studyRoom.subject=studyRoomApply.getSubject();
-        studyRoom.requirement=studyRoomApply.getRequirement();
+        studyRoom.roomName=roomName;
+        studyRoom.maxNum=maxNum;
+        studyRoom.subject=subject;
+        studyRoom.description=description;
+        studyRoom.requirement=requirement;
         studyRoom.currentNum=Long.valueOf(1);
+        studyRoom.contentNo=contentNo;
         studyRoom.isPermitAuto=isPermit;
         return studyRoom;
     }
@@ -98,6 +103,9 @@ public class Study_Room {
 
     }
 
+    public void setMember(Member member){
+        this.member=member;
+    }
 
 
     public void setMatesLectureNo(Long no){
