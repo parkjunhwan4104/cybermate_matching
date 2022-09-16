@@ -73,4 +73,8 @@ public class ApplyHistory {
     public void setHistoryApply(StudyRoomApply studyRoomApply){
         this.studyRoomApply=studyRoomApply;
     }
+
+    public void setBelong(boolean belong){
+        this.belong=belong;
+    }
 }

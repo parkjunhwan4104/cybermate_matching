@@ -48,17 +48,40 @@ public class ApplyHistoryService {
 
     }
 
-    public ApplyHistory getApplyHistoryFindById(Long srId){
+    public List<ApplyHistoryDTO> getApplyHistoryDTOListFindById(Long srId){
+        List<ApplyHistoryDTO> StudyRoomList=getApplyHistoryAll();
+
+        List<ApplyHistoryDTO> applyHistoryList=new ArrayList<>();
+
+        for(int i=0;i<StudyRoomList.size();i++){
+            if(StudyRoomList.get(i).getSrId()==srId){
+                applyHistoryList.add(StudyRoomList.get(i));
+            }
+        }
+
+        return applyHistoryList;
+    }
+
+    public ApplyHistory getApplyHistoryFindById(Long Id){
         List<ApplyHistory> StudyRoomList=getApplyHistory();
 
         ApplyHistory applyHistory=null;
 
         for(int i=0;i<StudyRoomList.size();i++){
-            if(StudyRoomList.get(i).getStudyRoom().getSrId()==srId){
+            if(StudyRoomList.get(i).getApplyHistoryId()==Id){
                 applyHistory=StudyRoomList.get(i);
             }
         }
         return applyHistory;
+    }
+
+    @Transactional
+    public void deleteApplyHistory(Long applyHistoryId){
+
+        ApplyHistory applyHistory=getApplyHistoryFindById(applyHistoryId);
+
+        applyHistoryRepository.delete(applyHistory);
+
     }
 
 

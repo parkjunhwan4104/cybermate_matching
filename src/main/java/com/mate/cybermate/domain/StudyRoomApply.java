@@ -29,7 +29,7 @@ public class StudyRoomApply {
     private Long contentNo;
 
     private boolean accept;
-    
+
     private LocalDateTime regDate=LocalDateTime.now();
 
 

@@ -149,7 +149,7 @@ li {
                     <td th:text="${apply.age}"></td>
                     <td th:text="${apply.sex}"></td>
                     <td>
-                        <form th:action="@{~/members/accept/}+${srId}+@{~/apply/}+${apply.studyApplyId}" method="POST">
+                        <form th:action="@{~/members/accept/}+${srId}+@{~/apply/}+${apply.sraId}" method="POST">
                           <button class="apply_button">
                             수락
                           </button>
@@ -157,7 +157,7 @@ li {
                         </form>
                     </td>
                     <td>
-                        <form th:action="@{~/members/deny/}+${srId}+@{~/apply/}+${apply.studyApplyId}" method="POST">
+                        <form th:action="@{~/members/deny/}+${srId}+@{~/apply/}+${apply.sraId}" method="POST">
                             <button class="apply_button">
                                 거절
                             </button>

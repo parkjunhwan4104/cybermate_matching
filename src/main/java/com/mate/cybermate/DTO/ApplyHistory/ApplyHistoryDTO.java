@@ -39,14 +39,12 @@ public class ApplyHistoryDTO {
 
     private String people;
 
-    public void setBelong(boolean belong){
-        this.belong=belong;
-    }
+
 
     public ApplyHistoryDTO(ApplyHistory applyHistory){
         this.applyHistoryId=applyHistory.getApplyHistoryId();
         this.roomName=applyHistory.getRoomName();
-        this.memberName=applyHistory.getMember().getNickName();
+        this.memberName=applyHistory.getMemberName();
         this.subject=applyHistory.getSubject();
         this.age=applyHistory.getMember().getAge();
         this.sex=applyHistory.getMember().getSex();

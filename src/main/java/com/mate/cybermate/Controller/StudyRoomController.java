@@ -1,8 +1,8 @@
 package com.mate.cybermate.Controller;
 
-import com.mate.cybermate.DTO.AcceptHistory.AcceptHistoryDTO;
+
+import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomSaveForm;
-import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.Service.*;
 import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -180,11 +180,11 @@ public class StudyRoomController {
 
         StudyRoomApply sra=studyRoomApplyService.findById(srId);
 
-        List<AcceptHistoryDTO> acceptHistoryDTOList=studyRoomApplyService.getAcceptHistoryDTOListById(srId,member);
+        List<ApplyHistoryDTO> applyHistoryDTOList=applyHistoryService.getApplyHistoryDTOListFindById(srId);
 
 
 
-        model.addAttribute("historyList",acceptHistoryDTOList);
+        model.addAttribute("historyList",applyHistoryDTOList);
         model.addAttribute("srId",srId);
         model.addAttribute("srName",sra.getRoomName());
 
@@ -193,28 +193,25 @@ public class StudyRoomController {
     }
 
     @PostMapping("/members/accept/{srId}/apply/{sraId}")
-    public String doAccept(@PathVariable(name="srId") Long srId,@PathVariable(name="sraId") Long sraId, Principal principal,Model model){
-        Member member=memberService.getMember(principal.getName());
+    public String doAccept(@PathVariable(name="srId") Long srId,@PathVariable(name="sraId") Long sraId,Model model){
 
-        List<StudyRoomApply> applyList=studyRoomApplyService.getListBySrId(srId,member);
+        List<ApplyHistoryDTO> applyHistoryDTOList=applyHistoryService.getApplyHistoryDTOListFindById(srId);
 
-        List<AcceptHistory> acceptHistories= studyRoomApplyService.getAcceptHistoryBySrId(srId);
-
-        for(int i=0;i<acceptHistories.size();i++){
-            if(acceptHistories.get(i).getStudyApplyId()==sraId){
+        for(int i=0;i<applyHistoryDTOList.size();i++){
+            if(applyHistoryDTOList.get(i).getSraId()==sraId){
 
 
                 studyRoomApplyService.setAccept(sraId,true);
-                Study_Room studyRoom=studyRoomService.findById( acceptHistories.get(i).getStudyRoomApply().getStudyRoom().getSrId());
+                Study_Room studyRoom=studyRoomService.findById(srId);
                 studyRoom.setCurrentNum();
-                studyRoomApplyService.deleteAcceptHistory(acceptHistories.get(i).getAhId());
-                acceptHistories.remove(i);
+                applyHistoryService.deleteApplyHistory(applyHistoryDTOList.get(i).getApplyHistoryId());
+                applyHistoryDTOList.remove(i);
 
 
             }
         }
 
-        model.addAttribute("historyList",acceptHistories);
+        model.addAttribute("historyList",applyHistoryDTOList);
         model.addAttribute("srId",srId);
 
 
@@ -222,23 +219,20 @@ public class StudyRoomController {
     }
 
     @PostMapping("/members/deny/{srId}/apply/{sraId}")
-    public String doDeny(@PathVariable(name="srId") Long srId,@PathVariable(name="sraId") Long sraId,Principal principal,Model model){
-        Member member=memberService.getMember(principal.getName());
+    public String doDeny(@PathVariable(name="srId") Long srId,@PathVariable(name="sraId") Long sraId,Model model){
 
-        List<StudyRoomApply> applyList=studyRoomApplyService.getListBySrId(srId,member);
+        List<ApplyHistoryDTO> applyHistoryDTOList=applyHistoryService.getApplyHistoryDTOListFindById(srId);
 
-        List<AcceptHistory> acceptHistories= studyRoomApplyService.getAcceptHistoryBySrId(srId);
-
-        for(int i=0;i<acceptHistories.size();i++){
-            if(acceptHistories.get(i).getStudyApplyId()==sraId){
-                studyRoomApplyService.deleteAcceptHistory(acceptHistories.get(i).getAhId());
-                acceptHistories.remove(i);
+        for(int i=0;i<applyHistoryDTOList.size();i++){
+            if(applyHistoryDTOList.get(i).getSraId()==sraId){
+                applyHistoryService.deleteApplyHistory(applyHistoryDTOList.get(i).getApplyHistoryId());
+                applyHistoryDTOList.remove(i);
 
 
             }
         }
 
-        model.addAttribute("historyList",acceptHistories);
+        model.addAttribute("historyList",applyHistoryDTOList);
         model.addAttribute("srId",srId);
 
         return "member/accept";
@@ -257,27 +251,7 @@ public class StudyRoomController {
     }
 */
 
-    @PostMapping("/members/studyRoom/set/lectureNo/{srId}")
-    public String doSet(@PathVariable(name="srId") Long srId, @Validated StudyRoomApplySetLectureForm studyRoomApplySetLectureForm, BindingResult bindingResult, Principal principal, Model model){
-        if(bindingResult.hasErrors()){
-            return "StudyRoomApply/lectureSet";
-        }
-        try{
 
-
-            Member member=memberService.getMember(principal.getName());
-            memberService.setLectureNo(studyRoomApplySetLectureForm,member.getLoginId());
-
-            model.addAttribute("srId",srId);
-
-        }
-        catch(Exception e){
-            model.addAttribute("error_msg",e.getMessage());
-            return "StudyRoomApply/lectureSet";
-        }
-        return "redirect:/";
-
-    }
 
     @GetMapping("/members/studyRoom/boards")
     public String showBoard(){

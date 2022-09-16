@@ -55,6 +55,9 @@ public class Member implements UserDetails {
     @OneToMany(mappedBy = "member",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<StudyRoomApply> studyRoomApplies=new ArrayList<>();
 
+    @OneToMany(mappedBy = "member",fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private List<Study_Room> studyRoomList=new ArrayList<>();
+
 
 
 

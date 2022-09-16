@@ -27,7 +27,7 @@ public class HomeController {
     public String showHome(Model model,Principal principal)  {
 
 
-        List<Long> studyRoomList=new ArrayList<>();
+
 
         if(principal!=null) {
             Member member=memberService.getMember(principal.getName());

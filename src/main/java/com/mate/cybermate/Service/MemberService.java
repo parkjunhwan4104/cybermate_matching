@@ -2,7 +2,6 @@ package com.mate.cybermate.Service;
 
 
 import com.mate.cybermate.Config.Role;
-import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.DTO.member.MemberMyPageForm;
 import com.mate.cybermate.DTO.member.MemberSaveForm;
 import com.mate.cybermate.Dao.MemberRepository;
@@ -107,14 +106,7 @@ public class MemberService implements UserDetailsService {
 
     }
 
-    @Transactional
-    public void setLectureNo(StudyRoomApplySetLectureForm studyRoomApplySetLectureForm,String loginId){
-        Member member=findByLoginId(loginId);
 
-        member.setLectureNo(studyRoomApplySetLectureForm.getLectureNo());
-
-
-    }
 
 
 

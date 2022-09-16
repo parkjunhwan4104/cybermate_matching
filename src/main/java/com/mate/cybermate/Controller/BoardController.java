@@ -1,17 +1,14 @@
 package com.mate.cybermate.Controller;
 
-import com.mate.cybermate.CybermateApplication;
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
+import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
-import com.mate.cybermate.DTO.StudyRoomApply.StudyRoomApplySetLectureForm;
 import com.mate.cybermate.Service.*;
 import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.util.List;
@@ -35,53 +32,22 @@ public class BoardController {
 
             Long num = Long.valueOf(1);
             Board board = boardService.getBoard(num);
-            Member member = memberService.getMember(principal.getName());
 
 
             if (board.getRoomList().size() != 0) {
 
                 List<StudyRoomListDTO> studyRoomList = studyRoomService.getRoomListByBoardId(num);
 
-
-                List<ApplyHistoryDTO> applyHistoryDTOList = applyHistoryService.getApplyHistoryAll();
-
                 for (int i = 0; i < studyRoomList.size(); i++) {
                     //applyHistoryDTOList=applyHistoryService.getRoomListBySrId(studyRoomList.get(i).getId());
 
-
-
-                    List<StudyRoomApply> list=studyRoomApplyService.getListBySrId(studyRoomList.get(i).getId(),member);
-
-                    for (int j = 0; j < applyHistoryDTOList.size(); j++) {
-
-                        /*System.out.println(i+"번쨰");
-                        System.out.println("현재 스터디룸에 속한 회원 로그인아이디: "+applyHistoryDTOList.get(j).getMemberName());
-                        System.out.println("현재 로그인한 회원"+member.getNickName());*/
-                        if (applyHistoryDTOList.get(j).getSrId() == (studyRoomList.get(i).getId())) {
-                            if (applyHistoryDTOList.get(j).getMemberName().equals(member.getNickName())) {
-                                studyRoomList.get(i).setBelong(true);
-
-                            }
-
-                            else {
-                                studyRoomList.get(i).setBelong(false);
-
-                            }
-
-                            for(int k=0;k<list.size();k++){
-
-                                if(!(applyHistoryDTOList.get(j).getMemberName().equals(member.getNickName()))&&(list.get(k).isAccept()==true)){
-
-                                    studyRoomList.get(i).setBelong(true);
-
-                                }
-
-
-                            }
-                        }
-
-
+                    if(studyRoomList.get(i).getOwnerName().equals(principal.getName())){
+                        studyRoomList.get(i).setBelong(true);
                     }
+                    else{
+                        studyRoomList.get(i).setBelong(false);
+                    }
+
 
 
                 }

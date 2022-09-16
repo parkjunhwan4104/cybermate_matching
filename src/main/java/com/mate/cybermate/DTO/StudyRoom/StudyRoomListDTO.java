@@ -20,6 +20,8 @@ public class StudyRoomListDTO {
     private String subject;
     private String requirement;
 
+    private String ownerName;
+
     private Long maxNum;
 
     private LocalDateTime regDate;
@@ -36,6 +38,7 @@ public class StudyRoomListDTO {
         this.belong=belong;
     }
 
+
     public StudyRoomListDTO(Study_Room studyRoom){
 
 
@@ -43,10 +46,12 @@ public class StudyRoomListDTO {
         this.subject= studyRoom.getSubject();
         this.roomName= studyRoom.getRoomName();
         this.requirement= studyRoom.getRequirement();
+        this.ownerName=studyRoom.getMember().getNickName();
         this.maxNum= studyRoom.getMaxNum();
         this.currentNum= studyRoom.getCurrentNum();
         this.people=currentNum+"/"+maxNum;
         this.regDate= studyRoom.getRegDate();
+
 
         if(studyRoom.getIsPermitAuto().equals("true")){
             this.isPermitAuto="O";

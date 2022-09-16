@@ -1,10 +1,9 @@
 package com.mate.cybermate.Service;
 
 
-import com.mate.cybermate.DTO.AcceptHistory.AcceptHistoryDTO;
+
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
-import com.mate.cybermate.Dao.AcceptHistoryRepository;
 import com.mate.cybermate.Dao.ApplyHistoryRepository;
 import com.mate.cybermate.Dao.StudyRoomApplyRepository;
 import com.mate.cybermate.Dao.StudyRoomRepository;
@@ -25,7 +24,6 @@ public class StudyRoomApplyService {
     private final StudyRoomService studyRoomService;
     private final ApplyHistoryRepository applyHistoryRepository;
     private final ApplyHistoryService applyHistoryService;
-    private final AcceptHistoryRepository acceptHistoryRepository;
 
 
 
@@ -54,17 +52,18 @@ public class StudyRoomApplyService {
 
         studyRoomApplyRepository.save(roomApply);
 
-        AcceptHistory acceptHistory=AcceptHistory.createAcceptHistory(
+        ApplyHistory applyHistory=ApplyHistory.createApplyHistory(
                 roomApply.getRoomName(),
+                member.getNickName(),
                 roomApply.getSubject(),
                 roomApply.getAge(),
-                roomApply.getSex(),
-                roomApply.getSraId()
+                roomApply.getSex()
         );
 
-
-        acceptHistory.setStudyRoomApply(roomApply);
-        acceptHistoryRepository.save(acceptHistory);
+        applyHistory.setHistoryStudyRoom(studyRoom);
+        applyHistory.setHistoryMember(member);
+        applyHistory.setHistoryApply(roomApply);
+        applyHistoryRepository.save(applyHistory);
 
 
     }
@@ -220,76 +219,11 @@ public class StudyRoomApplyService {
 
     }
 
-    public List<AcceptHistory> getAcceptHistory(){
-        List<AcceptHistory> acceptHistories= acceptHistoryRepository.findAll();
-
-        return acceptHistories;
-
-    }
-
-    public List<AcceptHistory> getAcceptHistoryBySrId(Long srId){
-        List<AcceptHistory> acceptHistories= acceptHistoryRepository.findAll();
-
-        List<AcceptHistory> acceptHistoryList=new ArrayList<>();
-
-        for(int i=0;i<acceptHistories.size();i++){
-            if(acceptHistories.get(i).getStudyRoomApply().getStudyRoom().getSrId()==srId){
-                acceptHistoryList.add(acceptHistories.get(i));
-            }
-        }
-
-        return acceptHistoryList;
-
-    }
-
-    public AcceptHistory findHistoryById(Long id){
-        List<AcceptHistory> list=getAcceptHistory();
-        AcceptHistory history=null;
-
-        for(int i=0;i<list.size();i++) {
-            if (list.get(i).getAhId()== id){
-                history=list.get(i);
-            }
-        }
-        return history;
-    }
-
-    public List<AcceptHistoryDTO> getAcceptHistoryDTOListById(Long id,Member member){
-        List<AcceptHistory> acceptHistories=getAcceptHistoryBySrId(id);
-
-        List<StudyRoomApply> applyList=getListBySrId(id,member);
-
-        List<AcceptHistoryDTO> DTOList=new ArrayList<>();
-
-        if(acceptHistories.size()!=0) {
-            for (int i = 0; i < applyList.size(); i++) {
-                acceptHistories.get(i).setStudyRoomApply(applyList.get(i));
-
-            }
-        }
-        for(int i=0;i<acceptHistories.size();i++){
-           AcceptHistoryDTO acceptHistoryDTO=new AcceptHistoryDTO(acceptHistories.get(i));
-           DTOList.add(acceptHistoryDTO);
-        }
-
-        return DTOList;
-
-    }
 
 
 
 
 
-
-
-
-
-
-    @Transactional
-    public void deleteAcceptHistory(Long id){
-        AcceptHistory history=findHistoryById(id);
-        acceptHistoryRepository.delete(history);
-    }
 
 
 
