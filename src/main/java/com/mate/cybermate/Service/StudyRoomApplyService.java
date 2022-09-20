@@ -41,6 +41,8 @@ public class StudyRoomApplyService {
 
 
         );
+
+
         roomApply.setAccept(false);
 
         roomApply.setMember(member);
@@ -108,18 +110,20 @@ public class StudyRoomApplyService {
     }
 
 
-    public List<StudyRoomApplyDTO> getApplyListByMemberId(Member member){
+    public List<StudyRoomApplyDTO> getAcceptApplyListByMemberId(Member member){
         List<StudyRoomApply> roomApplyList=getRoomList();
 
         List<StudyRoomApplyDTO> RoomApplyLists =new ArrayList<>();
 
         for(StudyRoomApply roomApply:roomApplyList){
 
-            if(roomApply.getMember().getMemberId()==member.getMemberId()){
-                //System.out.println(room.getMember().getLoginId());
-                StudyRoomApplyDTO RoomApplyListDTO =new StudyRoomApplyDTO(roomApply,member);
+            if(roomApply.isAccept()==true) {
+                if (roomApply.getMember().getMemberId() == member.getMemberId()) {
+                    //System.out.println(room.getMember().getLoginId());
+                    StudyRoomApplyDTO RoomApplyListDTO =new StudyRoomApplyDTO(roomApply,member);
 
-                RoomApplyLists.add(RoomApplyListDTO);
+                    RoomApplyLists.add(RoomApplyListDTO);
+                }
             }
         }
         return RoomApplyLists;
@@ -208,6 +212,22 @@ public class StudyRoomApplyService {
 
 
 
+    }
+
+    public int getTotalApplyNumByLoginId(String loginId){
+        List<StudyRoomApply> studyRoomApplyList=getRoomList();
+
+        int count=0;
+
+        for(int i=0;i<studyRoomApplyList.size();i++){
+            if(studyRoomApplyList.get(i).isAccept()==false){
+                if(studyRoomApplyList.get(i).getStudyRoom().getMember().getLoginId().equals(loginId)){
+
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     @Transactional

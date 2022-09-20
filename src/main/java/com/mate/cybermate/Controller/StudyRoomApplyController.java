@@ -26,21 +26,32 @@ public class StudyRoomApplyController {
         Study_Room makeRoom = studyRoomService.findById(srId);
         Member member = memberService.getMember(principal.getName());
 
+        int toDupleApplyCheck=0;
 
-        /*List<AcceptHistory> list=studyRoomApplyService.getAcceptHistoryBySrId(srId);
-        for (int i = 0; i < list.size(); i++) {
-            if ((list.get(i).getStudyRoomApply().getStudyRoom().getSrId()== srId) && (list.get(i).getStudyRoomApply().getMember().equals(member))) {
-                return "redirect:/boards/1";
+        if(makeRoom.getStudyRoomApply().size()==0){
+            studyRoomApplyService.addStudyRoomApply(srId, member);
+        }
+
+        else{
+
+            for (int i = 0; i < makeRoom.getStudyRoomApply().size(); i++) {
+
+                if(makeRoom.getStudyRoomApply().get(i).getMember().getLoginId().equals(member.getLoginId())){
+                    toDupleApplyCheck++;
+                }
+
+                if(i==makeRoom.getStudyRoomApply().size()-1){
+                    if(toDupleApplyCheck==0){
+                        studyRoomApplyService.addStudyRoomApply(srId, member);
+                    }
+                }
+
 
             }
 
         }
-        */
-        studyRoomApplyService.addStudyRoomApply(srId, member);
-
-
-        return  "redirect:/boards/1";
-
+        return "redirect:/boards/1";
 
     }
+
 }

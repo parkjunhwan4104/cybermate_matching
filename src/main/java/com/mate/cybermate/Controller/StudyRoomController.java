@@ -178,7 +178,7 @@ public class StudyRoomController {
 
         Member member=memberService.getMember(principal.getName());
 
-        StudyRoomApply sra=studyRoomApplyService.findById(srId);
+        Study_Room sra=studyRoomService.findById(srId);
 
         List<ApplyHistoryDTO> applyHistoryDTOList=applyHistoryService.getApplyHistoryDTOListFindById(srId);
 
@@ -197,6 +197,8 @@ public class StudyRoomController {
 
         List<ApplyHistoryDTO> applyHistoryDTOList=applyHistoryService.getApplyHistoryDTOListFindById(srId);
 
+        Study_Room sra=studyRoomService.findById(srId);
+
         for(int i=0;i<applyHistoryDTOList.size();i++){
             if(applyHistoryDTOList.get(i).getSraId()==sraId){
 
@@ -213,7 +215,7 @@ public class StudyRoomController {
 
         model.addAttribute("historyList",applyHistoryDTOList);
         model.addAttribute("srId",srId);
-
+        model.addAttribute("srName",sra.getRoomName());
 
         return "member/accept";
     }
@@ -222,6 +224,8 @@ public class StudyRoomController {
     public String doDeny(@PathVariable(name="srId") Long srId,@PathVariable(name="sraId") Long sraId,Model model){
 
         List<ApplyHistoryDTO> applyHistoryDTOList=applyHistoryService.getApplyHistoryDTOListFindById(srId);
+
+        Study_Room sra=studyRoomService.findById(srId);
 
         for(int i=0;i<applyHistoryDTOList.size();i++){
             if(applyHistoryDTOList.get(i).getSraId()==sraId){
@@ -234,6 +238,7 @@ public class StudyRoomController {
 
         model.addAttribute("historyList",applyHistoryDTOList);
         model.addAttribute("srId",srId);
+        model.addAttribute("srName",sra.getRoomName());
 
         return "member/accept";
 

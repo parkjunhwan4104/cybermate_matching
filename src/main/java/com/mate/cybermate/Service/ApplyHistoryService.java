@@ -48,6 +48,21 @@ public class ApplyHistoryService {
 
     }
 
+    public int getTotalApplyByLoginId(String loginId){
+        List<ApplyHistory> applyHistoryList=getApplyHistory();
+
+        int count=0;
+
+        for(int i=0;i<applyHistoryList.size();i++){
+            if(applyHistoryList.get(i).getStudyRoomApply().isAccept()==false){
+                if(applyHistoryList.get(i).getStudyRoom().getMember().getLoginId().equals(loginId)){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public List<ApplyHistoryDTO> getApplyHistoryDTOListFindById(Long srId){
         List<ApplyHistoryDTO> StudyRoomList=getApplyHistoryAll();
 

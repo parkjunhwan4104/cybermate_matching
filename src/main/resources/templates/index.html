@@ -161,11 +161,13 @@
   height: 25px;
   outline: none;
   border-radius: 3px;
-  /* background: #999999; */
+  background: #999999;
   color: black;
   font-family: 함초롬돋움;
   margin-left: 10px;
   margin-right: -10px;
+
+
 }
 
 .list_button {
@@ -173,7 +175,7 @@
   height: 25px;
   outline: none;
   border-radius: 3px;
-  /* background: #999999; */
+  background: #999999;
   color: black;
   font-family: 함초롬돋움;
   margin-left: 10px;
@@ -193,7 +195,7 @@
                 이러닝메이트
             </h1>
             <div class="mg"></div>
-            <img src="C:\Users\user\Downloads\study-group.png" alt="My Image" width="50%" height="45%">
+            <img src="C:\Users\박준환\Desktop\cyber.png" alt="My Image" width="50%" height="45%">
 
             <div class="mg"></div>
 
@@ -227,8 +229,8 @@
                 </button>
             </a>
 
-            <p style="margin-left:-120px;">총 <span style="color: red; font-weight: bold;">5</span>개의 스터디룸</p>
-            <p style="margin-left:-150px;">총 <span style="color:red; font-weight: bold;">3</span>건의 신청</p>
+            <p style="margin-left:-120px;">총 <span th:text="${belongSrNum}" style="color: red; font-weight: bold;"></span>개의 스터디룸</p>
+            <p style="margin-left:-150px;">총 <span th:text="${totalApplyNum}" style="color:red; font-weight: bold;"></span>건의 신청</p>
 
             <table class="scrolltable">
                 <thead>
@@ -240,40 +242,30 @@
                 </thead>
 
                 <tbody>
-                <tr>
-                    <td>파이썬</td>
-                    <td>
-                        <button class="enter_button">입장</button>
-                    </td>
-                    <td>
-                        <button class="list_button">보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>파이썬</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>파이썬</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>파이썬</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>파이썬</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>파이썬</td>
-                    <td></td>
-                    <td></td>
-                </tr>
+
+                    <tr th:each="room : ${belongSrList}" >
+                        <td class="" th:text="${room.roomName}">이름</td>
+
+                        <td >
+                            <a th:href="@{~/members/studyRoom/}+${room.id}">
+                                <button class="enter_button">입장</button>
+                            </a>
+                        </td>
+
+                        <span th:if="${#strings.equals(room.ownerName, nickName)}">
+                            <td>
+                                <a th:href="@{~/members/accept/}+${room.id}">
+                                    <button class="list_button">신청현황</button>
+                                </a>
+                            </td>
+                        </span>
+
+
+
+                    </tr>
+
+
+
                 </tbody>
             </table>
 

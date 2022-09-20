@@ -186,6 +186,22 @@ public class StudyRoomService {
 
     }
 
+    public List<StudyRoomListDTO> getSrListByLoginId(String loginId){
+        List<Study_Room> srList=studyRoomRepository.findAll();
+
+        List<StudyRoomListDTO> tempList=new ArrayList<>();
+
+        for(int i=0;i<srList.size();i++){
+            if(srList.get(i).getMember().getLoginId().equals(loginId)){
+
+                StudyRoomListDTO RoomListDTO = new StudyRoomListDTO(srList.get(i));
+                tempList.add(RoomListDTO);
+            }
+        }
+
+        return tempList;
+    }
+
 
 
 }

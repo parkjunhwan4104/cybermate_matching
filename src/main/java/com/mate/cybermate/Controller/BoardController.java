@@ -38,16 +38,27 @@ public class BoardController {
 
                 List<StudyRoomListDTO> studyRoomList = studyRoomService.getRoomListByBoardId(num);
 
+
+
                 for (int i = 0; i < studyRoomList.size(); i++) {
                     //applyHistoryDTOList=applyHistoryService.getRoomListBySrId(studyRoomList.get(i).getId());
+                    for(int j=0;j<studyRoomList.get(i).getSraList().size();j++){
 
-                    if(studyRoomList.get(i).getOwnerName().equals(principal.getName())){
-                        studyRoomList.get(i).setBelong(true);
-                    }
-                    else{
-                        studyRoomList.get(i).setBelong(false);
-                    }
+                        if(studyRoomList.get(i).getSraList().get(j).getMember().getLoginId().equals(principal.getName())){
+                            
+                            if(studyRoomList.get(i).getSraList().get(j).isAccept()==true){
 
+                                studyRoomList.get(i).setBelong(true);
+                                break;
+                            }
+                        }
+                        if(studyRoomList.get(i).getOwnerName().equals(principal.getName())){
+                            studyRoomList.get(i).setBelong(true);
+                        }
+                        else{
+                            studyRoomList.get(i).setBelong(false);
+                        }
+                    }
 
 
                 }
