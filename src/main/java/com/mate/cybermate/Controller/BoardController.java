@@ -45,7 +45,7 @@ public class BoardController {
                     for(int j=0;j<studyRoomList.get(i).getSraList().size();j++){
 
                         if(studyRoomList.get(i).getSraList().get(j).getMember().getLoginId().equals(principal.getName())){
-                            
+
                             if(studyRoomList.get(i).getSraList().get(j).isAccept()==true){
 
                                 studyRoomList.get(i).setBelong(true);

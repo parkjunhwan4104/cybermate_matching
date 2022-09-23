@@ -25,7 +25,7 @@ public class ApplyHistory {
 
     private String subject;
 
-    private Long age;
+    private String age;
 
     private String sex;
 
@@ -49,7 +49,7 @@ public class ApplyHistory {
     @JoinColumn(name="studyRoomApplyId")
     private StudyRoomApply studyRoomApply;
 
-    public static ApplyHistory createApplyHistory(String roomName,String memberName,String subject,Long age,String sex){
+    public static ApplyHistory createApplyHistory(String roomName,String memberName,String subject,String age,String sex){
         ApplyHistory applyHistory=new ApplyHistory();
         applyHistory.roomName=roomName;
         applyHistory.memberName=memberName;
@@ -76,5 +76,13 @@ public class ApplyHistory {
 
     public void setBelong(boolean belong){
         this.belong=belong;
+    }
+
+    public void setSex(String sex){
+        this.sex=sex;
+    }
+
+    public void setAge(String age){
+        this.age=age;
     }
 }

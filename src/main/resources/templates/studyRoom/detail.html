@@ -219,7 +219,14 @@ li {
     </a>
 
     <div class="goal">
-        <p style="color:black;" th:text="'                '+${goal}"></p>
+        <span th:if="${goal}==null">
+                 <p style="color:black;">학습목표가 아직 설정되지 않았습니다.</p>
+             </span>
+
+        <span th:if="${goal}!=null">
+                <p style="color:black;" th:text="'                '+${goal}"></p>
+             </span>
+
     </div>
 
     <p style="margin-left:-120px;">나의 진도율: <span style="color: red; font-weight: bold;" th:text="${myPercent}"></span>%</p>
@@ -306,15 +313,15 @@ li {
 
         </div> -->
 
-    <div class="footer">
+    <div >
         <hr color="gray" width="90%" style="border:0; height: 0.5px;">
         <a th:href="@{~/}">
             <button class="select_button">My스터디룸</button>
         </a>
-        <a th:href="@{~/}">
+        <a th:href="@{~/board/1}">
             <button class="menu_button">스터디룸 목록</button>
         </a>
-        <a th:href="@{~/}">
+        <a th:href="@{~/members/myPage}">
             <button class="menu_button">정보 수정</button>
         </a>
 

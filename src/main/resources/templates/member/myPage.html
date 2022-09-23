@@ -57,6 +57,7 @@ li {
   width:100%;
   height:65px;
 
+
   position: absolute;
   bottom: 0;
 }
@@ -138,7 +139,10 @@ li {
 }
 
 
+.bottom{
 
+   margin-top:125px;
+}
 
     </style>
 </head>
@@ -160,8 +164,8 @@ li {
 
          <hr color="gray" width="90%" style="border:0; height: 0.5px;">
         <p style="margin-left:-120px;">
-            <mark style="background-color: pink; font-weight: bold;" th:text="${memberId}+' 님'"></mark>
-            님, 열공하세요!
+            <mark style="background-color: pink; font-weight: bold;" th:text="${memberId}+' 님, 열공하세요!'"></mark>
+
         </p>
         <p style="color:navy; font-weight: bold;" th:text="${introduce}"></p>
 
@@ -169,7 +173,8 @@ li {
 
 
 
-
+        <br>
+        <br>
 
         <form th:action="@{~/members/myPage}" th:object="${memberMyPageForm}"  method="POST" >
 
@@ -177,27 +182,39 @@ li {
 
                 <li>
                     <label  style="font-weight:bold;">관심분야</label>
-                    <select name="favorite" class="interests_input" style="">
-                        <option value="ai">인공지능(AI)</option>
-                        <option value="python">파이썬</option>
-                        <option value="bigdata">빅데이터</option>
-                    </select>
-                    <label><input type="checkbox" name="isPermit" value="no">비공개</label>
+                    <input class="age_input" style="margin-right: 65px;" name="favorite" type="text" placeholder="관심분야를 입력하세요" autocomplete="off" th:field="*{favorite}"  th:errorclass="field-error">
+                    <span th:errors="*{favorite}"></span>
+                    <label style="margin-left:-50px">
+                        <input type="checkbox" name="favoritePermit" value="No">비공개
+                        <input type="hidden" name="favoritePermit" value='Yes' >
+                    </label>
                 </li>
 
+
                 <li>
-                    <label  style="font-weight:bold; margin-left: 30px;">성별</label>
-                    <input type="radio" name="chk_info" value="male">남자
-                    <input type="radio" name="chk_info" value="female" >여자
-                    <label style="margin-left:10px"><input type="checkbox" name="sexPermit" value="no">비공개</label>
+                    <label style="font-weight:bold; margin-left:15px;">성별</label>
+
+                    <select class="interests_input" name="chk_sex" th:field="*{sex}" style="margin-right: 50px;">
+                        <option value="male" >남자</option>
+                        <option value="female"  >여자</option>
+
+                    </select>
+                    <label style="margin-left:-40px">
+                        <input type="checkbox" name="sexPermit" value="No">비공개
+                        <input type="hidden" name="sexPermit" value='Yes' >
+
+                    </label>
                 </li>
 
                 <li>
 
                     <label style="font-weight:bold">나이</label>
-                    <input class="age_input" style="margin-right: 40px;" name="age" type="text" placeholder="나이를 입력하세요" autocomplete="off" th:field="*{age}"  th:errorclass="field-error">
+                    <input class="age_input" style="margin-right:0px;" name="age" type="text" placeholder="나이를 입력하세요" autocomplete="off" th:field="*{age}"  th:errorclass="field-error">
                     <span th:errors="*{age}"></span>
-                    <label style="margin-left:10px"><input type="checkbox" name="agePermit" value="No">비공개</label>
+                    <label style="margin-right:-10px">
+                        <input type="checkbox" name="agePermit" value="No">비공개
+                        <input type="hidden" name="agePermit" value='Yes' >
+                    </label>
 
                 </li>
 
@@ -212,7 +229,7 @@ li {
             </ul>
 
 
-
+            <br>
 
             <button type="submit" class="submit_button" >수정</button>
 
@@ -222,24 +239,24 @@ li {
         </form>
 
 
+    <nav class="bottom">
+        <div >
+            <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+            <a  href="/">
+                <button class="menu_button"  type="button">My스터디룸</button>
+            </a>
 
-    <div class="footer">
-        <hr color="gray" width="90%" style="border:0; height: 0.5px;">
-        <a href="/">
-            <button class="menu_button" type="button">My스터디룸</button>
-        </a>
+            <a  th:href="@{~/board/1}">
+                <button class="menu_button" type="button">스터디룸 목록</button>
+            </a>
 
-        <a href="/">
-            <button class="menu_button" type="button">스터디룸 목록</button>
-        </a>
+            <a  th:href="@{~/members/myPage}">
+                <button class="select_button" type="button">정보 수정</button>
 
-        <a href="/">
-            <button class="select_button" type="button">정보 수정</button>
+            </a>
 
-        </a>
-
-    </div>
-
+        </div>
+    </nav>
 
 
 </div>

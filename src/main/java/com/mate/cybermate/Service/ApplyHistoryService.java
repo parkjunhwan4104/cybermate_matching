@@ -2,6 +2,7 @@ package com.mate.cybermate.Service;
 
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
+import com.mate.cybermate.DTO.member.MemberMyPageForm;
 import com.mate.cybermate.Dao.ApplyHistoryRepository;
 import com.mate.cybermate.domain.ApplyHistory;
 import com.mate.cybermate.domain.Study_Room;
@@ -100,5 +101,33 @@ public class ApplyHistoryService {
     }
 
 
+    @Transactional
+    public void setPermitMyInformation(MemberMyPageForm memberMyPageForm,Member member, String sexPermit, String agePermit){
+
+        List<ApplyHistory> applyHistories=member.getApplyList();
+
+
+        for(int i=0; i<applyHistories.size();i++){
+
+                if(sexPermit.equals("No")){
+                    applyHistories.get(i).setSex("비공개");
+                }
+
+                if(sexPermit.equals("Yes")){
+                    applyHistories.get(i).setSex(memberMyPageForm.getSex());
+                }
+
+                if(agePermit.equals("No")){
+                    applyHistories.get(i).setAge("비공개");
+                }
+                if(agePermit.equals("Yes")){
+                    applyHistories.get(i).setAge(String.valueOf(memberMyPageForm.getAge()));
+                }
+
+
+        }
+
+
+    }
 
 }

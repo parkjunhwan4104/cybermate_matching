@@ -5,7 +5,9 @@ import com.mate.cybermate.DTO.member.CheckStatus;
 import com.mate.cybermate.DTO.member.MemberLoginForm;
 import com.mate.cybermate.DTO.member.MemberMyPageForm;
 import com.mate.cybermate.DTO.member.MemberSaveForm;
+import com.mate.cybermate.Service.ApplyHistoryService;
 import com.mate.cybermate.Service.MemberService;
+import com.mate.cybermate.domain.ApplyHistory;
 import com.mate.cybermate.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,12 +17,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
+    private final ApplyHistoryService applyHistoryService;
 
 
     @GetMapping("/members/check/loginId")
@@ -88,12 +92,27 @@ public class MemberController {
     }
 
     @PostMapping("/members/myPage")
-    public String doSetMyPage(@Validated MemberMyPageForm memberMyPageForm, BindingResult bindingResult,Model model,Principal principal){
+    public String doSetMyPage(@Validated MemberMyPageForm memberMyPageForm, BindingResult bindingResult,Model model,Principal principal,@RequestParam(name="favoritePermit")String favoritePermit,@RequestParam(name="sexPermit")String sexPermit,@RequestParam(name="agePermit")String agePermit){
+
+
+        if(!sexPermit.equals("Yes")){
+            sexPermit="No";
+        }
+        if(!agePermit.equals("Yes")){
+            agePermit="No";
+        }
+
         if(bindingResult.hasErrors()){
             return "/members/myPage";
 
         }
         try{
+
+            Member findMember=memberService.findByLoginId(principal.getName());
+            applyHistoryService.setPermitMyInformation(memberMyPageForm,findMember,sexPermit,agePermit);
+
+
+
             memberService.setMyPage(memberMyPageForm, principal.getName());
 
         }

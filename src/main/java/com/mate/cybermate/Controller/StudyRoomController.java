@@ -74,9 +74,10 @@ public class StudyRoomController {
         Member member=memberService.getMember(principal.getName());
 
         Study_Room studyRoom=studyRoomService.findById(srId);
+
         ApplyHistory applyHistory=applyHistoryService.getApplyHistoryFindById(srId);
 
-        if(applyHistory.getMember().getNickName().equals(member.getNickName())){
+        if(studyRoom.getMember().getLoginId().equals(member.getLoginId())){
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("currentNo",member.getLectureNo());

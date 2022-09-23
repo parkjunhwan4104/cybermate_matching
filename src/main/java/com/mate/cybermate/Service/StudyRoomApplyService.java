@@ -58,7 +58,7 @@ public class StudyRoomApplyService {
                 roomApply.getRoomName(),
                 member.getNickName(),
                 roomApply.getSubject(),
-                roomApply.getAge(),
+                String.valueOf(roomApply.getAge()),
                 roomApply.getSex()
         );
 

@@ -19,7 +19,7 @@ public class ApplyHistoryDTO {
 
     private String subject;
 
-    private Long age;
+    private String age;
 
     private String sex;
 
@@ -46,8 +46,8 @@ public class ApplyHistoryDTO {
         this.roomName=applyHistory.getRoomName();
         this.memberName=applyHistory.getMemberName();
         this.subject=applyHistory.getSubject();
-        this.age=applyHistory.getMember().getAge();
-        this.sex=applyHistory.getMember().getSex();
+        this.age=applyHistory.getAge();
+        this.sex= applyHistory.getSex();
         this.sraId=applyHistory.getStudyRoomApply().getSraId();
         this.memberId=applyHistory.getMember().getMemberId();
         this.srId=applyHistory.getStudyRoom().getSrId();

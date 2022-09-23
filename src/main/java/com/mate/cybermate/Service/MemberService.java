@@ -102,6 +102,10 @@ public class MemberService implements UserDetailsService {
 
         findMember.setIntroduce(memberMyPageForm.getIntroduce());
 
+        findMember.setAge(memberMyPageForm.getAge());
+
+        findMember.setSex(memberMyPageForm.getSex());
+
 
 
     }

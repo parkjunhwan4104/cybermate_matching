@@ -15,6 +15,9 @@ public class MemberMyPageForm {
     @NotBlank(message = "관심분야를 입력해 주세요")
     private String favorite;
 
+    @NotBlank(message = "셩별을 입력해주세요")
+    private String sex;
+
 
     @NotNull(message = "나이를 입력해 주세요")
     private Long age;
