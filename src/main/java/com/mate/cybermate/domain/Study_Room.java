@@ -65,6 +65,10 @@ public class Study_Room {
     @JoinColumn(name="boardId")
     private Board board;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="srBoardId")
+    private StudyRoomBoard studyRoomBoard;
+
     public static Study_Room createRoom(String roomName,Long maxNum,String subject,String description, String requirement,Long contentNo,String isPermit){
         Study_Room studyRoom=new Study_Room();
         studyRoom.roomName=roomName;
@@ -107,11 +111,15 @@ public class Study_Room {
         this.member=member;
     }
 
+    public void setSrBoard(StudyRoomBoard studyRoomBoard){
+        this.studyRoomBoard=studyRoomBoard;
+    }
+
 
     public void setMatesLectureNo(Long no){
 
 
-            this.matesLectureNo = no;
+        this.matesLectureNo = no;
 
     }
 
@@ -129,7 +137,3 @@ public class Study_Room {
 
 
 }
-
-
-
-

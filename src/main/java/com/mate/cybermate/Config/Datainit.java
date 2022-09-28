@@ -42,15 +42,15 @@ public class Datainit {
 
 
 
-                    Member admin= Member.createMember(
-                            "cybermate",
-                            bCryptPasswordEncoder.encode("admin"),
-                            "관리자",
-                            Role.ADMIN,
-                            "남자",
-                            Long.valueOf(25),
-                            "자바"
-                    );
+            Member admin= Member.createMember(
+                    "cybermate",
+                    bCryptPasswordEncoder.encode("admin"),
+                    "관리자",
+                    Role.ADMIN,
+                    "남자",
+                    Long.valueOf(25),
+                    "자바"
+            );
 
             memberRepository.save(admin);
 

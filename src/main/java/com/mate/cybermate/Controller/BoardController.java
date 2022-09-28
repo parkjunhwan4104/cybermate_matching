@@ -24,7 +24,7 @@ public class BoardController {
     private final StudyRoomService studyRoomService;
 
     @GetMapping("/boards/1")
-    public String showBoard(Model model, Principal principal) {
+    public String showBoard(Model model, Principal principal) {   // 스터디룸 리스트들을 보여주는 게시판
 
 
         try {
@@ -42,6 +42,14 @@ public class BoardController {
 
                 for (int i = 0; i < studyRoomList.size(); i++) {
                     //applyHistoryDTOList=applyHistoryService.getRoomListBySrId(studyRoomList.get(i).getId());
+
+                    if(studyRoomList.get(i).getOwnerName().equals(principal.getName())){
+                        studyRoomList.get(i).setBelong(true);
+                    }
+                    else{
+                        studyRoomList.get(i).setBelong(false);
+                    }
+
                     for(int j=0;j<studyRoomList.get(i).getSraList().size();j++){
 
                         if(studyRoomList.get(i).getSraList().get(j).getMember().getLoginId().equals(principal.getName())){
@@ -52,13 +60,9 @@ public class BoardController {
                                 break;
                             }
                         }
-                        if(studyRoomList.get(i).getOwnerName().equals(principal.getName())){
-                            studyRoomList.get(i).setBelong(true);
-                        }
-                        else{
-                            studyRoomList.get(i).setBelong(false);
-                        }
+
                     }
+
 
 
                 }
@@ -74,7 +78,7 @@ public class BoardController {
             model.addAttribute("board", board);
 
 
-            return "board/detail";
+            return "studyRoomList/detail";
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

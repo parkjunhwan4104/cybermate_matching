@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 
-public class Board {
+public class Board {    // 스터디룸의 리스트들을 보여주는 게시판
 
     @Id
     @Column(name="boardId")
@@ -30,12 +30,14 @@ public class Board {
     @OneToMany(mappedBy = "board",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Study_Room> roomList=new ArrayList<>();
 
-    public static Board createBoard(String boardName,Member member){
-            Board board=new Board();
-            board.boardName=boardName;
-            board.member=member;
 
-            return board;
+
+    public static Board createBoard(String boardName,Member member){
+        Board board=new Board();
+        board.boardName=boardName;
+        board.member=member;
+
+        return board;
 
     }
 }

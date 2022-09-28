@@ -21,16 +21,16 @@ public class StudyRoomService {
 
     @Transactional
     public void saveRoom(StudyRoomSaveForm studyRoomSaveForm, Member member,Board board){
-            Study_Room studyRoom=Study_Room.createRoom(
-                    studyRoomSaveForm.getRoomName(),
-                    studyRoomSaveForm.getMaxNum(),
-                    studyRoomSaveForm.getSubject(),
-                    studyRoomSaveForm.getDescription(),
-                    studyRoomSaveForm.getRequirement(),
-                    studyRoomSaveForm.getContentNo(),
-                    studyRoomSaveForm.getIsPermitAuto()
+        Study_Room studyRoom=Study_Room.createRoom(
+                studyRoomSaveForm.getRoomName(),
+                studyRoomSaveForm.getMaxNum(),
+                studyRoomSaveForm.getSubject(),
+                studyRoomSaveForm.getDescription(),
+                studyRoomSaveForm.getRequirement(),
+                studyRoomSaveForm.getContentNo(),
+                studyRoomSaveForm.getIsPermitAuto()
 
-            );
+        );
 
         member.setLectureNo(studyRoomSaveForm.getContentNo());
         member.setCurrentLectureNo(Long.valueOf(0));

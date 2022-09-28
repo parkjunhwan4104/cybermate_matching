@@ -33,25 +33,25 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
                 )
 
                 .formLogin()
-                    .loginPage("/members/login")
-                    .loginProcessingUrl("/members/doLogin")   //로그인이 이루어지는 페이지
-                    .usernameParameter("loginId")
-                    .passwordParameter("loginPw")
-                    .failureUrl("/members/loginFail")
-                    .defaultSuccessUrl("/members/loginSucess")         //로그인 성공후에 인덱스 페이지로 보내줌
+                .loginPage("/members/login")
+                .loginProcessingUrl("/members/doLogin")   //로그인이 이루어지는 페이지
+                .usernameParameter("loginId")
+                .passwordParameter("loginPw")
+                .failureUrl("/members/loginFail")
+                .defaultSuccessUrl("/members/loginSucess")         //로그인 성공후에 인덱스 페이지로 보내줌
                 .and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                    .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .clearAuthentication(true)  //권한 정보를 삭제(true하면)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .clearAuthentication(true)  //권한 정보를 삭제(true하면)
                 .and()
-                    .sessionManagement()
-                        .invalidSessionUrl("/") //유효하지 않은 세션이면 인덱스 페이지로 넘어감
-                        .maximumSessions(1)
-                        .maxSessionsPreventsLogin(true)  //동시접속을 차단해줌
-                        .expiredUrl("/");  //세션이 만료시에 이동할 url을 정해줌
+                .sessionManagement()
+                .invalidSessionUrl("/") //유효하지 않은 세션이면 인덱스 페이지로 넘어감
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)  //동시접속을 차단해줌
+                .expiredUrl("/");  //세션이 만료시에 이동할 url을 정해줌
 
 
     }

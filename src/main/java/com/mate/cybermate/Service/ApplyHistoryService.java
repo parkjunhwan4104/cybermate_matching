@@ -109,20 +109,20 @@ public class ApplyHistoryService {
 
         for(int i=0; i<applyHistories.size();i++){
 
-                if(sexPermit.equals("No")){
-                    applyHistories.get(i).setSex("비공개");
-                }
+            if(sexPermit.equals("No")){
+                applyHistories.get(i).setSex("비공개");
+            }
 
-                if(sexPermit.equals("Yes")){
-                    applyHistories.get(i).setSex(memberMyPageForm.getSex());
-                }
+            if(sexPermit.equals("Yes")){
+                applyHistories.get(i).setSex(memberMyPageForm.getSex());
+            }
 
-                if(agePermit.equals("No")){
-                    applyHistories.get(i).setAge("비공개");
-                }
-                if(agePermit.equals("Yes")){
-                    applyHistories.get(i).setAge(String.valueOf(memberMyPageForm.getAge()));
-                }
+            if(agePermit.equals("No")){
+                applyHistories.get(i).setAge("비공개");
+            }
+            if(agePermit.equals("Yes")){
+                applyHistories.get(i).setAge(String.valueOf(memberMyPageForm.getAge()));
+            }
 
 
         }

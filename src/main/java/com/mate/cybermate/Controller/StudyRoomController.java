@@ -247,11 +247,8 @@ public class StudyRoomController {
 
     /*@GetMapping("/members/studyRoom/set/lectureNo/{srId}")
     public String showApply(Model model,Principal principal,@PathVariable(name="srId") Long srId){
-
         Member member=memberService.getMember(principal.getName());
-
         model.addAttribute("studyRoomApplySetLectureForm",new StudyRoomApplySetLectureForm());
-
         model.addAttribute("srId",srId);
         return "StudyRoomApply/lectureSet";
     }

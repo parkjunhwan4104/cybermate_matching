@@ -158,48 +158,48 @@ li {
 </head>
 
 <body>
-    <div class="wrap">
+<div class="wrap">
 
-        <div style="margin:auto; height: 50p;">
-            <h3 style="float:left; margin-left: 20px">이러닝 메이트</h3>
-            <a th:href="@{~/members/logout}">
-                <button type="submit" class="logout_button" value="submit">
-                    로그아웃
-                </button>
-            </a>
-        </div>
-
-        <hr color="gray" width="90%" style="border:0; height: 0.5px;">
-
-        <a th:href="@{~/members/autoMatching}">
-            <button class="automatch_button" type="submit">자동매칭 신청하기</button>
+    <div style="margin:auto; height: 50p;">
+        <h3 style="float:left; margin-left: 20px">이러닝 메이트</h3>
+        <a th:href="@{~/members/logout}">
+            <button type="submit" class="logout_button" value="submit">
+                로그아웃
+            </button>
         </a>
+    </div>
 
-        <p style="margin-left:-120px;">
-            총
-            <span th:text="${size}"style="color: red; font-weight: bold;"></span>
-            개의 스터디룸
-        </p>
+    <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+
+    <a th:href="@{~/members/autoMatching}">
+        <button class="automatch_button" type="submit">자동매칭 신청하기</button>
+    </a>
+
+    <p style="margin-left:-120px;">
+        총
+        <span th:text="${size}"style="color: red; font-weight: bold;"></span>
+        개의 스터디룸
+    </p>
 
 
 
 
 
 
-        <table class="scrolltable">
-            <thead>
-            <tr>
-                <th>이름</th>
-                <th>강의명</th>
-                <th>입장<br>조건</th>
-                <th>인원</th>
-                <th>자동<br>매칭</th>
-                <th>신청</th>
-            </tr>
-            </thead>
+    <table class="scrolltable">
+        <thead>
+        <tr>
+            <th>이름</th>
+            <th>강의명</th>
+            <th>입장<br>조건</th>
+            <th>인원</th>
+            <th>자동<br>매칭</th>
+            <th>신청</th>
+        </tr>
+        </thead>
 
-            <tbody>
-            <span th:if="${size}!=0">
+        <tbody>
+        <span th:if="${size}!=0">
                 <tr th:each="room : ${applyHistoryList}" >
                     <td class="" th:text="${room.roomName}">이름</td>
                     <td class="" th:text="${room.subject}">강의명</td>
@@ -231,27 +231,27 @@ li {
                     </tr>
 
 
-                </tr>
+            </tr>
 
             </span>
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
 
 
-        <div >
-            <hr color="gray" width="90%" style="border:0; height: 0.5px;">
-            <a th:href="@{~/}">
-                <button class="select_button">My스터디룸</button>
-            </a>
-            <a th:href="@{~/board/1}">
-                <button class="menu_button">스터디룸 목록</button>
-            </a>
-            <a th:href="@{~/members/myPage}">
-                <button class="menu_button">정보 수정</button>
-            </a>
+    <div >
+        <hr color="gray" width="90%" style="border:0; height: 0.5px;">
+        <a th:href="@{~/}">
+            <button class="select_button">My스터디룸</button>
+        </a>
+        <a th:href="@{~/board/1}">
+            <button class="menu_button">스터디룸 목록</button>
+        </a>
+        <a th:href="@{~/members/myPage}">
+            <button class="menu_button">정보 수정</button>
+        </a>
 
-        </div>
+    </div>
 
 
 
