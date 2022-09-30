@@ -2,6 +2,7 @@ package com.mate.cybermate.Service;
 
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomSaveForm;
+import com.mate.cybermate.Dao.StudyRoomBoardRepository;
 import com.mate.cybermate.Dao.StudyRoomRepository;
 import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class StudyRoomService {
 
     private final StudyRoomRepository studyRoomRepository;
+    private final StudyRoomBoardRepository studyRoomBoardRepository;
 
     @Transactional
     public void saveRoom(StudyRoomSaveForm studyRoomSaveForm, Member member,Board board){
@@ -32,6 +34,12 @@ public class StudyRoomService {
 
         );
 
+        StudyRoomBoard studyRoomBoard=StudyRoomBoard.createBoard(studyRoomSaveForm.getRoomName());
+
+        studyRoomBoard.setStudyRoom(studyRoom);
+
+        studyRoom.setSrBoard(studyRoomBoard);
+
         member.setLectureNo(studyRoomSaveForm.getContentNo());
         member.setCurrentLectureNo(Long.valueOf(0));
         member.setLecturePercent(0);
@@ -41,6 +49,7 @@ public class StudyRoomService {
 
         initialLectureNo(studyRoom);
 
+        studyRoomBoardRepository.save(studyRoomBoard);
         studyRoomRepository.save(studyRoom);
 
     }

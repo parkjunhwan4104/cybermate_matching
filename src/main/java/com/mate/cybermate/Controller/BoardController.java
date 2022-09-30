@@ -18,9 +18,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final StudyRoomApplyService studyRoomApplyService;
-    private final MemberService memberService;
-    private final ApplyHistoryService applyHistoryService;
+
     private final StudyRoomService studyRoomService;
 
     @GetMapping("/boards/1")

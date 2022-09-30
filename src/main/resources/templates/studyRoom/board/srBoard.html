@@ -118,7 +118,7 @@
 
     <div style="margin:auto; height: 50p;">
       <h3 style="float:left; margin-left: 20px;" th:text="${boardName}"><span style="font-size: 15px; color:skyblue;"> 게시판</span></h3>
-        <a th:href="@{~/members/studyRoom/}+${srId}}">
+        <a th:href="@{~/members/studyRoom/}+${srId}">
             <button class="back_button">닫기</button>
         </a>
     </div>
@@ -126,7 +126,7 @@
     <hr color="gray" width="90%" style="border:0; height: 0.5px;">
 
 
-      <a th:href="@{~/members/studyRoom/}+${srId}+@{~/board/}+${boardId}">
+      <a th:href="@{~/members/studyRoom/}+${srId}+@{~/board/}+${srBoardId}">
         <button class="write_button">게시글 쓰기</button>
       </a>
 

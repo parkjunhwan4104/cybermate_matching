@@ -216,7 +216,7 @@ li {
 
         <hr color="gray" width="90%" style="border:0; height: 0.5px;">
 
-        <a href="/members/studyRoom/boards">
+        <a th:href="@{~/studyRoom/}+${srId}+@{/board/}+${srBoardId}">
             <button class="board_button">게시판</button>
         </a>
 

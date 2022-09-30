@@ -44,6 +44,11 @@ public class Article {
 
     }
 
+    public void setWriterName(String writerName){
+        this.writerName=writerName;
+    }
+
+
     public void setMember(Member member){
         this.member=member;
         member.getArticleList().add(this);

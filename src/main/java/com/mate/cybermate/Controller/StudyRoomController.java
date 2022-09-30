@@ -29,6 +29,7 @@ public class StudyRoomController {
     private final ApplyHistoryService applyHistoryService;
     private final StudyRoomApplyService studyRoomApplyService;
     private final BoardService boardService;
+    private final StudyRoomBoardService studyRoomBoardService;
 
     @GetMapping("/members/makeRoom")
     public String showApply(Model model,Principal principal){
@@ -77,13 +78,15 @@ public class StudyRoomController {
 
         ApplyHistory applyHistory=applyHistoryService.getApplyHistoryFindById(srId);
 
+        StudyRoomBoard studyRoomBoard=studyRoomBoardService.getSrBoardById(srId);
+
         if(studyRoom.getMember().getLoginId().equals(member.getLoginId())){
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("currentNo",member.getLectureNo());
 
             model.addAttribute("srId",srId);
-
+            model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
             model.addAttribute("goal",studyRoom.getGoal());
 
             return "studyRoom/detailForOwner";
@@ -95,7 +98,7 @@ public class StudyRoomController {
             model.addAttribute("currentNo",member.getLectureNo());
 
             model.addAttribute("srId",srId);
-
+            model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
             model.addAttribute("goal",studyRoom.getGoal());
 
             return "studyRoom/detail";
@@ -125,6 +128,8 @@ public class StudyRoomController {
         Study_Room studyRoom=studyRoomService.findById(srId);
         ApplyHistory applyHistory=applyHistoryService.getApplyHistoryFindById(srId);
 
+        StudyRoomBoard studyRoomBoard=studyRoomBoardService.getSrBoardById(srId);
+
         if(applyHistory.getMember().getNickName().equals(member.getNickName())){
 
             studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom,member);
@@ -137,6 +142,7 @@ public class StudyRoomController {
             model.addAttribute("now",formatedNow);
             model.addAttribute("count",count);
             model.addAttribute("srName",studyRoom.getRoomName());
+            model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
 
             return "studyRoom/detailForOwner";
         }
@@ -153,6 +159,8 @@ public class StudyRoomController {
             model.addAttribute("now",formatedNow);
             model.addAttribute("count",count);
             model.addAttribute("srName",studyRoom.getRoomName());
+            model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
+
             return "studyRoom/detail";
         }
 
@@ -256,11 +264,7 @@ public class StudyRoomController {
 
 
 
-    @GetMapping("/members/studyRoom/boards")
-    public String showBoard(){
 
-        return "studyRoom/articleList";
-    }
 
 
 
