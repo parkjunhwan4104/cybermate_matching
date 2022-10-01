@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 보기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <style>
+
+.wrap {
+  width: 300px;
+  height: 500px;
+  background: white;
+  border: 0.5px solid black;
+  margin: 0 auto;
+  font-family: 함초롬돋움;
+  text-align : center;
+
+  position:relative;
+}
+
+.back_button {
+  border: 0;
+  height: 25px;
+  outline: none;
+  border-radius: 3px;
+  background: #999999;
+  color: white;
+  font-family: 함초롬돋움;
+  float: right;
+  margin-top: 5px;
+  margin-right: 20px;
+
+
+}
+
+
+.apply_button {
+  border: 0;
+  height: 20px;
+  outline: none;
+  border-radius: 3px;
+  /* background: #999999; */
+  color: black;
+  font-family: 함초롬돋움;
+  margin-left: 10px;
+  margin-right: -10px;
+  font-size: 0.5em;
+}
+
+
+
+
+    </style>
+
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div style="margin:auto; height: 50p;">
+      <h3 style="float:left; margin-left: 20px;">제목 :<span style="font-size: 20px; color:navy;" th:text="${title}"></span></h3>
+
+        <a th:href="@{~/studyRoom/}+${srId}+@{/board/}+${srBoardId}">
+            <button class="back_button">닫기</button>
+        </a>
+    </div>
+      <br>
+      <br>
+
+
+    <hr color="gray" width="100%" style="border:0; height: 0.5px;">
+
+    <div style="margin:auto; width: 90%; height: 300px; text-align: left;">
+        <div id="editor" ></div>
+    </div>
+
+
+      <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
+      <script>
+
+                function EditorViewer1__init() {
+                    var viewer = new toastui.Editor.factory({
+                    el: document.querySelector('#editor'),
+                    initialValue: `[[${body}]]`,
+                    viewer:true
+                });
+
+
+
+
+                }
+
+                 EditorViewer1__init();
+
+        </script>
+
+    
+
+
+  </div>
+
+
+    
+</body>
+
+</html>

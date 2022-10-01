@@ -34,11 +34,11 @@ public class Article {
     @JoinColumn(name="srBoardId")
     private StudyRoomBoard studyRoomBoard;
 
-    public static Article createArticle(String title, String body){
+    public static Article createArticle(String title, String body,Member member){
         Article article=new Article();
         article.title=title;
         article.body=body;
-        article.writerName=article.getMember().getNickName();
+        article.writerName=member.getNickName();
 
         return article;
 

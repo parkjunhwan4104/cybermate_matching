@@ -23,7 +23,8 @@ public class ArticleService {
     public void saveArticle(ArticleASaveForm articleASaveForm, Member member, StudyRoomBoard studyRoomBoard){
         Article article=Article.createArticle(
                 articleASaveForm.getTitle(),
-                articleASaveForm.getBody()
+                articleASaveForm.getBody(),
+                member
         );
 
         article.setMember(member);

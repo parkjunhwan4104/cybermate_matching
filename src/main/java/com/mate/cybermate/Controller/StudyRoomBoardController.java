@@ -21,18 +21,18 @@ public class StudyRoomBoardController {
     private final StudyRoomBoardService studyRoomBoardService;
 
     @GetMapping("/studyRoom/{srId}/board/{srBoardId}")
-    public String getBoard(@PathVariable(name="srId")Long srId, @PathVariable(name="srBoardId")Long srBoardId, Model model){
+    public String showBoard(@PathVariable(name="srId")Long srId, @PathVariable(name="srBoardId")Long srBoardId, Model model){
 
         List<Article> articleList= articleService.getArticleListBySrBoardId(srBoardId);
 
-        StudyRoomBoard studyRoomBoard=studyRoomBoardService.getSrBoardById(srId);
+        StudyRoomBoard studyRoomBoard=studyRoomBoardService.getSrBoardById(srBoardId);
 
         model.addAttribute("boardName",studyRoomBoard.getBoardName());
         model.addAttribute("srId",srId);
         model.addAttribute("srBoardId",srBoardId);
         model.addAttribute("articleList",articleList);
 
-        return "studyRoom/board/srBoard";
+        return "studyRoom/board/boardDetail";
 
     }
 }

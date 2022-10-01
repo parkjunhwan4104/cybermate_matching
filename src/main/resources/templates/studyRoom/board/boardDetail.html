@@ -126,7 +126,7 @@
     <hr color="gray" width="90%" style="border:0; height: 0.5px;">
 
 
-      <a th:href="@{~/members/studyRoom/}+${srId}+@{~/board/}+${srBoardId}">
+      <a th:href="@{~/studyRoom/}+${srId}+@{~/board/}+${srBoardId}+@{/articles/add}">
         <button class="write_button">게시글 쓰기</button>
       </a>
 
@@ -140,12 +140,17 @@
       </thead>
   
       <tbody>
-      <tr th:each="article : ${articleList}" >
-          <td class="" th:text="${article.articleId}">No.</td>
-          <td class="" th:text="${article.title}">제목</td>
-          <td class="" th:text="${article.writerName}">작성자</td>
+          <tr th:each="article : ${articleList}" >
+              <td  th:text="${article.articleId}"></td>
+              <td  >
+                  <a th:href="@{~/board/} +${srBoardId}+@{/articles/}+ ${article.articleId}">
+                      <span class="font-bold underline" th:text="${article.title}"></span>
+                  </a>
 
-      </tr>
+              </td>
+              <td  th:text="${article.writerName}"></td>
+
+          </tr>
       </tbody>
   </table>
 

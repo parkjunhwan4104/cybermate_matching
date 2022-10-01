@@ -25,7 +25,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests(authorize ->authorize
                         .mvcMatchers("/members/join","/members/login","/members/check/**").anonymous() //URL이 간소화될수있도록함,  회원가입하는 url, 어나니머스는 로그인이 되지 않은 사람도 해당 페이지를 들어갈수 있도록함
-                        .mvcMatchers("/members/makeRoom","/boards/1","/members/studyRoom/**","/members/studyRoom/setGoal/**","/members/myPage","/boards/1/**","/members/accept/**","/members/deny/**","/studyRoom/**").authenticated()
+                        .mvcMatchers("/members/makeRoom","/boards/1","/members/studyRoom/**","/members/studyRoom/setGoal/**","/members/myPage","/boards/1/**","/members/accept/**","/members/deny/**","/studyRoom/**","/articles/**","/board/**").authenticated()
                         .mvcMatchers("/","/members/loginFail","/members/loginSucess").permitAll()
 
                         .anyRequest()
