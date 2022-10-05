@@ -60,6 +60,8 @@ public class Study_Room {
     @JoinColumn(name="memberId")
     private Member member;
 
+    @OneToMany(mappedBy = "studyRoom",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private List<TakeLectureHistory> takeLectureHistories=new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="boardId")

@@ -61,6 +61,9 @@ public class Member implements UserDetails {
     @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<Article> articleList=new ArrayList<>();
 
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private List<TakeLectureHistory> takeLectureHistories=new ArrayList<>();
+
 
     public static Member createMember(String loginId,String loginPw,String nickName,Role authority,String sex,Long age,String favorite){
         Member member=new Member();

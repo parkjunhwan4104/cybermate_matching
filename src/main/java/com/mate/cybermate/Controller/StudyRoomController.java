@@ -30,6 +30,7 @@ public class StudyRoomController {
     private final StudyRoomApplyService studyRoomApplyService;
     private final BoardService boardService;
     private final StudyRoomBoardService studyRoomBoardService;
+    private final TakeLectureService takeLectureService;
 
     @GetMapping("/members/makeRoom")
     public String showApply(Model model,Principal principal){
@@ -76,11 +77,14 @@ public class StudyRoomController {
 
         Study_Room studyRoom=studyRoomService.findById(srId);
 
-        ApplyHistory applyHistory=applyHistoryService.getApplyHistoryFindById(srId);
-
         StudyRoomBoard studyRoomBoard=studyRoomBoardService.getSrBoardById(srId);
 
+
+
+
         if(studyRoom.getMember().getLoginId().equals(member.getLoginId())){
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
+
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("currentNo",member.getLectureNo());
@@ -88,10 +92,12 @@ public class StudyRoomController {
             model.addAttribute("srId",srId);
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
             model.addAttribute("goal",studyRoom.getGoal());
+            model.addAttribute("takeLectureHistoryList",takeLectureHistories);
 
             return "studyRoom/detailForOwner";
         }
         else{
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
 
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
@@ -100,6 +106,7 @@ public class StudyRoomController {
             model.addAttribute("srId",srId);
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
             model.addAttribute("goal",studyRoom.getGoal());
+            model.addAttribute("takeLectureHistoryList",takeLectureHistories);
 
             return "studyRoom/detail";
         }
@@ -116,9 +123,7 @@ public class StudyRoomController {
 
     @PostMapping("/members/studyRoom/{srId}")
     public String doCheck(@PathVariable(name="srId") Long srId,@RequestParam(name="count")String count,Model model,Principal principal){
-        LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
-        String formatedNow = now.format(formatter);
+
 
 
 
@@ -126,23 +131,26 @@ public class StudyRoomController {
         Member member=memberService.getMember(principal.getName());
 
         Study_Room studyRoom=studyRoomService.findById(srId);
-        ApplyHistory applyHistory=applyHistoryService.getApplyHistoryFindById(srId);
+
+
 
         StudyRoomBoard studyRoomBoard=studyRoomBoardService.getSrBoardById(srId);
 
-        if(applyHistory.getMember().getNickName().equals(member.getNickName())){
+        if(studyRoom.getMember().getNickName().equals(member.getNickName())){
 
             studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom,member);
             studyRoomService.updateStudyRoomPercent(studyRoom,member);
 
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
 
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("goal",studyRoom.getGoal());
-            model.addAttribute("now",formatedNow);
+
             model.addAttribute("count",count);
             model.addAttribute("srName",studyRoom.getRoomName());
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
+            model.addAttribute("takeLectureHistoryList",takeLectureHistories);
 
             return "studyRoom/detailForOwner";
         }
@@ -151,15 +159,16 @@ public class StudyRoomController {
             studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom,member);
             studyRoomService.updateStudyRoomPercent(studyRoom,member);
 
-
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
 
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("goal",studyRoom.getGoal());
-            model.addAttribute("now",formatedNow);
+
             model.addAttribute("count",count);
             model.addAttribute("srName",studyRoom.getRoomName());
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
+            model.addAttribute("takeLectureHistoryList",takeLectureHistories);
 
             return "studyRoom/detail";
         }

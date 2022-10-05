@@ -74,6 +74,9 @@ public class StudyRoomApplyService {
     @Transactional
     public void setAccept(Long sraId,boolean accept){
         StudyRoomApply studyRoomApply=findById(sraId);
+        Study_Room studyRoom=studyRoomApply.getStudyRoom();
+        studyRoomApply.getMember().setLectureNo(studyRoom.getMember().getLectureNo());
+
         studyRoomApply.setAccept(accept);
 
     }

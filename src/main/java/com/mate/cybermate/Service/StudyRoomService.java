@@ -4,11 +4,14 @@ import com.mate.cybermate.DTO.StudyRoom.StudyRoomListDTO;
 import com.mate.cybermate.DTO.StudyRoom.StudyRoomSaveForm;
 import com.mate.cybermate.Dao.StudyRoomBoardRepository;
 import com.mate.cybermate.Dao.StudyRoomRepository;
+import com.mate.cybermate.Dao.TakeLectureHistoryRepository;
 import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +23,8 @@ public class StudyRoomService {
 
     private final StudyRoomRepository studyRoomRepository;
     private final StudyRoomBoardRepository studyRoomBoardRepository;
+    private final TakeLectureHistoryRepository takeLectureHistoryRepository;
+    private final TakeLectureService takeLectureService;
 
     @Transactional
     public void saveRoom(StudyRoomSaveForm studyRoomSaveForm, Member member,Board board){
@@ -65,28 +70,86 @@ public class StudyRoomService {
     @Transactional
     public void updateLectureNo(Long count,Study_Room studyRoom,Member member){
 
+        Long oldValue=Long.valueOf(0);
         Long newValue= member.getCurrentLectureNo()+count;
+
+        Long oldMatesValue=Long.valueOf(0);
+        Long newMatesValue=studyRoom.getMatesLectureNo()+count;
+
+        TakeLectureHistory takeLectureHistory=TakeLectureHistory.createTakeLectureHistory(count);
+
+        List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
+
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+        String formatedNow = now.format(formatter);
+
+
+        String formatedNow2 = takeLectureHistory.getRegDate().format(formatter);
+
+        if(takeLectureHistories.size()==0){
+            takeLectureHistory.setStudyRoom(studyRoom);
+            takeLectureHistory.setRegDay(formatedNow);
+            takeLectureHistory.setMember(member);
+            takeLectureHistoryRepository.save(takeLectureHistory);
+        }
+        else{
+
+            for(int i=0;i<takeLectureHistories.size();i++){
+
+
+                String formatedNow3 = takeLectureHistories.get(i).getRegDate().format(formatter);
+
+                if(formatedNow2.equals(formatedNow3)){
+                    newValue=oldValue+count;
+                    newMatesValue=newMatesValue-takeLectureHistories.get(i).getLectureNum()+count;
+                    takeLectureHistories.get(i).setLectureNum(count);
+                    break;
+                }
+                else{
+                    takeLectureHistory.setStudyRoom(studyRoom);
+                    takeLectureHistory.setRegDay(formatedNow);
+                    takeLectureHistory.setMember(member);
+                    takeLectureHistoryRepository.save(takeLectureHistory);
+
+
+
+
+                }
+                oldValue+=takeLectureHistories.get(i).getLectureNum();
+
+            }
+
+
+        }
+
 
         if(newValue<=member.getLectureNo()) {
             member.setCurrentLectureNo(newValue);
         }
-        Long newMatesValue=studyRoom.getMatesLectureNo()+count;
+
 
         List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
         List<Member> memberList=new ArrayList<>();
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).isAccept()==true){
-                memberList.add(list.get(i).getMember());
+        for(int j=0;j<list.size();j++){
+            if(list.get(j).isAccept()==true){
+                memberList.add(list.get(j).getMember());
             }
         }
         Long sum=Long.valueOf(0);
-        for(int i=0;i<memberList.size();i++){
-            sum+=memberList.get(i).getLectureNo();
+        for(int j=0;j<memberList.size();j++){
+            sum+=memberList.get(j).getLectureNo();
         }
 
         if(newMatesValue<=sum) {
             studyRoom.setMatesLectureNo(newMatesValue);
         }
+
+
+
+
+
+
 
     }
 
@@ -94,6 +157,10 @@ public class StudyRoomService {
     public void updateStudyRoomPercent(Study_Room studyRoom,Member member){
 
         List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
+
+        float matesTotalNo=0;
+
+
         List<Member> memberList=new ArrayList<>();
         for(int i=0;i<list.size();i++){
             if(list.get(i).isAccept()==true){
@@ -101,10 +168,14 @@ public class StudyRoomService {
             }
         }
 
+        if(!memberList.contains(studyRoom.getMember())){
+            memberList.add(studyRoom.getMember());
+        }
+
         float CLN=(float)member.getCurrentLectureNo();
         float CN=(float)member.getLectureNo();
         float MLN=0;
-        float matesTotalNo=0;
+
 
         for(int i=0;i<memberList.size();i++){
             MLN+=(float)memberList.get(i).getLectureNo();
@@ -119,6 +190,8 @@ public class StudyRoomService {
 
         float a=(float)(Math.round(lecturePercent * 100) / 100.0);
 
+
+
         member.setLecturePercent(a);
 
         for(int i=0;i<memberList.size();i++){
@@ -128,7 +201,6 @@ public class StudyRoomService {
         float matesPercent=matesTotalNo/MLN;
 
         float b=(float)(Math.round(matesPercent * 100) / 100.0);
-
 
 
         studyRoom.setMatesPercent(b);
