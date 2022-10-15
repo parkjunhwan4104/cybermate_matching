@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,12 +22,16 @@ public class BoardController {
 
     private final StudyRoomService studyRoomService;
 
+    private final StudyRoomApplyService studyRoomApplyService;
+
     @GetMapping("/boards/1")
-    public String showBoard(Model model, Principal principal) {   // 스터디룸 리스트들을 보여주는 게시판
+    public String showBoard(Model model, Principal principal) {   // 스터디룸 리스트들을 보여주는 게시판(화면)
 
 
         try {
+            List<StudyRoomApply> matchAutoApplyList=studyRoomApplyService.matchAutoApplyList();
 
+            studyRoomService.doMatching(matchAutoApplyList);
 
             Long num = Long.valueOf(1);
             Board board = boardService.getBoard(num);
@@ -64,7 +69,7 @@ public class BoardController {
 
 
                 }
-
+                model.addAttribute("size", board.getRoomList().size());
                 model.addAttribute("applyHistoryList", studyRoomList);
 
 

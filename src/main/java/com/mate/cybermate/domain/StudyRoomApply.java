@@ -30,6 +30,10 @@ public class StudyRoomApply {
 
     private boolean accept;
 
+    private boolean isAuto;
+
+    private String introduce;
+
     private LocalDateTime regDate=LocalDateTime.now();
 
 
@@ -53,6 +57,19 @@ public class StudyRoomApply {
         return studyRoomApply;
     }
 
+    public static StudyRoomApply crateAutoMatchingApply(String subject,Long age, String sex,Long contentNo,String introduce,boolean isAuto){
+        StudyRoomApply studyRoomApply=new StudyRoomApply();
+        studyRoomApply.subject=subject;
+        studyRoomApply.age=age;
+        studyRoomApply.sex=sex;
+        studyRoomApply.contentNo=contentNo;
+        studyRoomApply.introduce=introduce;
+        studyRoomApply.isAuto=isAuto;
+
+        return studyRoomApply;
+    }
+
+
 
     public void setMember(Member member){
         this.member=member;
@@ -66,11 +83,19 @@ public class StudyRoomApply {
         this.accept=accept;
     }
 
+    public void setIsAuto(boolean isAuto){
+        this.isAuto=isAuto;
+    }
+
     public void setAge(Long age){
         this.age=age;
     }
     public void setSex(String sex){
         this.sex=sex;
+    }
+
+    public void setRoomName(String roomName){
+        this.roomName=roomName;
     }
 
 

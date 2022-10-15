@@ -4,6 +4,7 @@ package com.mate.cybermate.Service;
 
 import com.mate.cybermate.DTO.ApplyHistory.ApplyHistoryDTO;
 import com.mate.cybermate.DTO.ApplyHistory.StudyRoomApplyDTO;
+import com.mate.cybermate.DTO.StudyRoomApply.AutoMatchingApplySaveForm;
 import com.mate.cybermate.Dao.ApplyHistoryRepository;
 import com.mate.cybermate.Dao.StudyRoomApplyRepository;
 import com.mate.cybermate.Dao.StudyRoomRepository;
@@ -20,10 +21,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class StudyRoomApplyService {
     private final StudyRoomApplyRepository studyRoomApplyRepository;
-    private final StudyRoomRepository studyRoomRepository;
+
     private final StudyRoomService studyRoomService;
     private final ApplyHistoryRepository applyHistoryRepository;
-    private final ApplyHistoryService applyHistoryService;
+
 
 
 
@@ -44,7 +45,7 @@ public class StudyRoomApplyService {
 
 
         roomApply.setAccept(false);
-
+        roomApply.setIsAuto(false);
         roomApply.setMember(member);
 
         roomApply.setStudyRoom(studyRoom);
@@ -70,9 +71,35 @@ public class StudyRoomApplyService {
 
     }
 
+    @Transactional
+    public void addStudyRoomAutoMatchingApply(Member member, AutoMatchingApplySaveForm autoMatchingApplySaveForm){
+
+
+        StudyRoomApply roomApply = StudyRoomApply.crateAutoMatchingApply(
+
+                autoMatchingApplySaveForm.getSubject(),
+                member.getAge(),
+                member.getSex(),
+                autoMatchingApplySaveForm.getLectureNo(),
+                autoMatchingApplySaveForm.getIntroduce(),
+                true
+
+
+        );
+        roomApply.setAccept(false);
+
+        roomApply.setMember(member);
+
+        member.setLecturePercent(0);
+        member.setCurrentLectureNo(Long.valueOf(0));
+
+
+        studyRoomApplyRepository.save(roomApply);
+    }
+
 
     @Transactional
-    public void setAccept(Long sraId,boolean accept){
+    public void doAccept(Long sraId,boolean accept){
         StudyRoomApply studyRoomApply=findById(sraId);
         Study_Room studyRoom=studyRoomApply.getStudyRoom();
         studyRoomApply.getMember().setLectureNo(studyRoom.getMember().getLectureNo());
@@ -82,7 +109,7 @@ public class StudyRoomApplyService {
     }
 
     public StudyRoomApply findById(Long id){
-        List<StudyRoomApply> list=getRoomList();
+        List<StudyRoomApply> list=getRoomApplyList();
         StudyRoomApply roomApply=null;
 
         for(int i=0;i<list.size();i++) {
@@ -95,14 +122,14 @@ public class StudyRoomApplyService {
 
 
 
-    public List<StudyRoomApply> getRoomList(){
+    public List<StudyRoomApply> getRoomApplyList(){
         List<StudyRoomApply> RoomApplyList= studyRoomApplyRepository.findAll();
 
         return RoomApplyList;
     }
 
     public List<StudyRoomApply> getRoomListBySrId(Long srId){
-        List<StudyRoomApply> RoomApplyList=getRoomList();
+        List<StudyRoomApply> RoomApplyList=getRoomApplyList();
         List<StudyRoomApply> roomApplies=new ArrayList<>();
         for(int i=0;i<RoomApplyList.size();i++){
             if(RoomApplyList.get(i).getStudyRoom().getSrId()==srId){
@@ -114,7 +141,7 @@ public class StudyRoomApplyService {
 
 
     public List<StudyRoomApplyDTO> getAcceptApplyListByMemberId(Member member){
-        List<StudyRoomApply> roomApplyList=getRoomList();
+        List<StudyRoomApply> roomApplyList=getRoomApplyList();
 
         List<StudyRoomApplyDTO> RoomApplyLists =new ArrayList<>();
 
@@ -133,105 +160,23 @@ public class StudyRoomApplyService {
 
     }
 
+    public List<StudyRoomApply> matchAutoApplyList(){ // 자동 매칭 신청을 완료한 신청 리스트
+        List<StudyRoomApply> list=getRoomApplyList();
 
-    public List<StudyRoomApplyDTO> getApplyListByMemberIdAndIsAccept(Member member){
-        List<StudyRoomApply> roomApplyList=getRoomList();
+        List<StudyRoomApply> matchAutoList=new ArrayList<>();
 
-        for(int i=0;i<roomApplyList.size();i++){
+        for(int i=0;i<list.size();i++){
 
-            if(roomApplyList.get(i).isAccept()==false){
-                roomApplyList.remove(i);
+            if(list.get(i).isAuto()==true){
+                matchAutoList.add(list.get(i));
             }
         }
 
-        List<StudyRoomApplyDTO> RoomApplyLists =new ArrayList<>();
-
-
-        for(StudyRoomApply roomApply:roomApplyList){
-
-            if(roomApply.getMember().getMemberId()==member.getMemberId()){
-                //System.out.println(room.getMember().getLoginId());
-                StudyRoomApplyDTO RoomApplyListDTO =new StudyRoomApplyDTO(roomApply,member);
-
-                RoomApplyLists.add(RoomApplyListDTO);
-            }
-        }
-        return RoomApplyLists;
-
+        return matchAutoList;
     }
 
-    public List<StudyRoomApply> getListBySrId(Long srId,Member member){
-        List<StudyRoomApply> roomApplyList=getRoomList();
-
-        List<StudyRoomApply> list=new ArrayList<>();
-
-        for(int i=0;i<roomApplyList.size();i++){
-            if(roomApplyList.get(i).getStudyRoom().getSrId()==srId){
-                if(roomApplyList.get(i).getMember().equals(member)){
-                    list.add(roomApplyList.get(i));
-                }
-            }
-        }
-        return list;
-    }
-
-    public List<StudyRoomApplyDTO> getApplyListBySrId(Long srId,Member member){
-        List<ApplyHistoryDTO> applyHistoryDTOList=applyHistoryService.getApplyHistoryAll();
-        List<ApplyHistoryDTO> list=new ArrayList<>();
-
-        for(int i=0;i<applyHistoryDTOList.size();i++){
-            if(applyHistoryDTOList.get(i).getMemberName().equals(member.getNickName())){
-
-                list.add(applyHistoryDTOList.get(i));
-            }
-        }
-
-        List<StudyRoomApply> roomApplyList=getRoomList();
-
-        List<StudyRoomApplyDTO> RoomApplyLists =new ArrayList<>();
-
-        for(StudyRoomApply roomApply:roomApplyList){
-
-            if(roomApply.getStudyRoom().getSrId()==srId){
-                //System.out.println(room.getMember().getLoginId());
-                StudyRoomApplyDTO RoomApplyListDTO =new StudyRoomApplyDTO(roomApply,member);
-
-                RoomApplyLists.add(RoomApplyListDTO);
-            }
-        }
-
-        for(int i=0;i<RoomApplyLists.size();i++){
-            for(int j=0;j<applyHistoryDTOList.size();j++){
-                if(applyHistoryDTOList.get(j).getSrId()==srId){
-                    if((applyHistoryDTOList.get(j).getMemberName().equals(RoomApplyLists.get(i).getMemberName())||(RoomApplyLists.get(i).isAccept()==false))){
-                        RoomApplyLists.remove(i);
-                    }
-
-                }
-            }
-        }
-
-        return RoomApplyLists;
 
 
-
-    }
-
-    public int getTotalApplyNumByLoginId(String loginId){
-        List<StudyRoomApply> studyRoomApplyList=getRoomList();
-
-        int count=0;
-
-        for(int i=0;i<studyRoomApplyList.size();i++){
-            if(studyRoomApplyList.get(i).isAccept()==false){
-                if(studyRoomApplyList.get(i).getStudyRoom().getMember().getLoginId().equals(loginId)){
-
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
 
     @Transactional
     public void deleteApply(Long sraId){

@@ -88,7 +88,7 @@ public class StudyRoomController {
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("currentNo",member.getLectureNo());
-
+            model.addAttribute("srName",studyRoom.getRoomName());
             model.addAttribute("srId",srId);
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
             model.addAttribute("goal",studyRoom.getGoal());
@@ -102,7 +102,7 @@ public class StudyRoomController {
             model.addAttribute("myPercent",member.getLecturePercent()*100);
             model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
             model.addAttribute("currentNo",member.getLectureNo());
-
+            model.addAttribute("srName",studyRoom.getRoomName());
             model.addAttribute("srId",srId);
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
             model.addAttribute("goal",studyRoom.getGoal());
@@ -221,7 +221,7 @@ public class StudyRoomController {
             if(applyHistoryDTOList.get(i).getSraId()==sraId){
 
 
-                studyRoomApplyService.setAccept(sraId,true);
+                studyRoomApplyService.doAccept(sraId,true);
                 Study_Room studyRoom=studyRoomService.findById(srId);
                 studyRoom.setCurrentNum();
                 applyHistoryService.deleteApplyHistory(applyHistoryDTOList.get(i).getApplyHistoryId());

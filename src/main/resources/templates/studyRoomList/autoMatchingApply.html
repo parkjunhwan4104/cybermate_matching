@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자동 매칭 신청</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+
+.wrap {
+  width: 300px;
+  height: 500px;
+  background: white;
+  border: 0.5px solid black;
+  margin: 0 auto;
+  font-family: 함초롬돋움;
+  text-align : center;
+}
+
+.submit_button {
+  width: 80%;
+  height: 35px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: skyblue;
+  color: white;
+  font-family: 함초롬돋움;
+  font-size: 15px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.cancel_button {
+  width: 80%;
+  height: 35px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: gray;
+  color: white;
+  font-family: 함초롬돋움;
+  font-size: 15px;
+}
+
+.input {
+  width: 55%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: 함초롬돋움;
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+
+
+
+.h_title {
+  margin-top: 10px;
+  font-size:28px;
+}
+
+.join_form {
+  list-style: none;
+  padding-left: 0px;
+}
+
+    </style>
+
+</head>
+
+<body>
+  <div class="wrap">
+    &nbsp;<h1 class="h_title">
+      자동매칭 신청
+    </h1>
+
+    <br>
+    <form th:action="@{~/boards/1/autoMatchingApply}" th:object="${autoMatchingApplySaveForm}" method="POST">
+      <ul class="join_form">
+
+          <li>
+              <label for="introduce" style="font-weight:bold; margin-left:5px">소개문구</label>
+              <input id="introduce" type="text" th:field="*{introduce}" th:errorclass="field-error"  placeholder="소개문구를 입력하세요" class="input" required>
+              <span th:errors="*{introduce}"></span>
+          </li>
+
+
+
+          <li>
+              <label for="subject" style="font-weight:bold; margin-left:20px">과목명</label>
+              <input id="subject" type="text" th:field="*{subject}" th:errorclass="field-error"  placeholder="과목명을 입력하세요" class="input" required>
+              <span th:errors="*{subject}"></span>
+         </li>
+
+        <li>
+            <label for="lectureNo" style="font-weight:bold">목차 개수</label>
+            <input id="lectureNo" type="text" th:field="*{lectureNo}" th:errorclass="field-error" placeholder="전체 강의 목차 개수를 입력하세요" class="input" required>
+            <span th:errors="*{lectureNo}"></span>
+        </li>
+        
+      </ul>
+        <br>
+        <br>
+
+
+        <button class="submit_button" type="submit">완료</button>
+
+
+      
+    </form>
+
+
+
+      <a href="/boards/1">
+          <button class="cancel_button" type="button" >
+              취소
+          </button>
+      </a>
+
+  </div>
+    
+</body>
+
+</html>

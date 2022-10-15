@@ -26,8 +26,9 @@ public class StudyRoomService {
     private final TakeLectureHistoryRepository takeLectureHistoryRepository;
     private final TakeLectureService takeLectureService;
 
+
     @Transactional
-    public void saveRoom(StudyRoomSaveForm studyRoomSaveForm, Member member,Board board){
+    public void saveRoom(StudyRoomSaveForm studyRoomSaveForm, Member member,Board board){  //스터디룸 생성
         Study_Room studyRoom=Study_Room.createRoom(
                 studyRoomSaveForm.getRoomName(),
                 studyRoomSaveForm.getMaxNum(),
@@ -61,14 +62,14 @@ public class StudyRoomService {
 
 
     @Transactional
-    public void initialLectureNo(Study_Room studyRoom){
+    public void initialLectureNo(Study_Room studyRoom){    //초기 스터디룸 강의 개수 초기화
 
         studyRoom.setMatesLectureNo(Long.valueOf(0));
 
     }
 
     @Transactional
-    public void updateLectureNo(Long count,Study_Room studyRoom,Member member){
+    public void updateLectureNo(Long count,Study_Room studyRoom,Member member){   //스터디룸 강의 개수 업데이트
 
         Long oldValue=Long.valueOf(0);
         Long newValue= member.getCurrentLectureNo()+count;
@@ -102,6 +103,10 @@ public class StudyRoomService {
 
                 if(formatedNow2.equals(formatedNow3)){
                     newValue=oldValue+count;
+
+                    if(newValue>studyRoom.getContentNo()){
+                        newValue=studyRoom.getContentNo();
+                    }
                     newMatesValue=newMatesValue-takeLectureHistories.get(i).getLectureNum()+count;
                     takeLectureHistories.get(i).setLectureNum(count);
                     break;
@@ -154,7 +159,7 @@ public class StudyRoomService {
     }
 
     @Transactional
-    public void updateStudyRoomPercent(Study_Room studyRoom,Member member){
+    public void updateStudyRoomPercent(Study_Room studyRoom,Member member){  //스터디룸의 개인 및 단체 강의 수강율 퍼센트 업데이트
 
         List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
 
@@ -208,7 +213,7 @@ public class StudyRoomService {
 
 
     @Transactional
-    public void updateGoal(Long id,String goal){
+    public void updateGoal(Long id,String goal){   //스터디룸 목표 설정(방장 고유 기능)
         Optional<Study_Room> srOptional=studyRoomRepository.findById(id);
 
         srOptional.orElseThrow(
@@ -224,7 +229,7 @@ public class StudyRoomService {
 
 
 
-    public Study_Room findById(Long id){
+    public Study_Room findById(Long id){   //스터디룸 고유 아이디를 통한 스터디룸 찾기
         List<Study_Room> list=getRoomList();
         Study_Room makeRoom=null;
 
@@ -236,7 +241,7 @@ public class StudyRoomService {
         return makeRoom;
     }
 
-    public List<Study_Room> getRoomList(){
+    public List<Study_Room> getRoomList(){  // 모든 스터디룸 리스트 리턴
         List<Study_Room> StudyRoomList= studyRoomRepository.findAll();
 
 
@@ -245,7 +250,7 @@ public class StudyRoomService {
         return StudyRoomList;
     }
 
-    public List<StudyRoomListDTO> getRoomListByBoardId(Long id) {
+    public List<StudyRoomListDTO> getRoomListByBoardId(Long id) {  //스터디룸 목록 리스트 리턴
         List<Study_Room> roomList = getRoomList();
 
 
@@ -267,7 +272,7 @@ public class StudyRoomService {
 
     }
 
-    public List<StudyRoomListDTO> getSrListByLoginId(String loginId){
+    public List<StudyRoomListDTO> getSrListByLoginId(String loginId){  // 회원의 로그인 아이디를 통해 해당 회원이 만든 스터디룸 리스트 리턴
         List<Study_Room> srList=studyRoomRepository.findAll();
 
         List<StudyRoomListDTO> tempList=new ArrayList<>();
@@ -282,6 +287,83 @@ public class StudyRoomService {
 
         return tempList;
     }
+    
+    public List<Study_Room> getPermitAutoMatchingStudyRoomList(){  // 자동 매칭을 허용한 스터디룸 리스트
+        List<Study_Room> studyRoomList=getRoomList();
+
+        List<Study_Room> goalList=new ArrayList<>();
+
+        for(int i=0;i<studyRoomList.size();i++){
+            if(studyRoomList.get(i).getIsPermitAuto().equals("true")){
+                goalList.add(studyRoomList.get(i));
+            }
+        }
+
+        return goalList;
+    }
+
+    public List<Study_Room> getSameSubjectAndSameLectureNoStudyRoomList(StudyRoomApply studyRoomApply){ // 스터디룸 중 자동 매칭 신청에서의 강의명과 목차 개수가 스터디룸의 강의명, 목차개수와 모두 같은 스터디룸 리스트 출력
+        List<Study_Room> studyRoomList=getPermitAutoMatchingStudyRoomList();
+
+        List<Study_Room> goalStudyRoomList=new ArrayList<>();
+        for(int i=0;i<studyRoomList.size();i++){
+            if((studyRoomApply.getSubject().equals(studyRoomList.get(i).getSubject())&&(studyRoomApply.getContentNo()==studyRoomList.get(i).getContentNo()))){
+                goalStudyRoomList.add(studyRoomList.get(i));
+            }
+        }
+
+        return goalStudyRoomList;
+    }
+
+    @Transactional
+    public void doMatching(List<StudyRoomApply> matchAutoApplyList){ // 회원이 입력한 자동 매칭 신청에 부합하는 스터디룸을 찾아 매칭을 해줌
+
+
+        Long miniMum=Long.valueOf(0); //가장 적은 회원 수가 포함된 스터디룸의 회원 수
+
+        if(matchAutoApplyList.size()!=0) {
+
+            for (int i = 0; i < matchAutoApplyList.size(); i++) {
+                List<Study_Room> studyRoomList = getSameSubjectAndSameLectureNoStudyRoomList(matchAutoApplyList.get(i));
+                if (studyRoomList.size() != 0) {
+                    Study_Room target = new Study_Room(); //회원이 매칭될 스터디룸
+
+                    for (int j = 0; j < studyRoomList.size(); j++) {
+
+
+                        if (j == 0) {
+                            miniMum = studyRoomList.get(j).getCurrentNum();
+                            target = studyRoomList.get(j);
+                        } else {
+                            if (studyRoomList.get(j).getCurrentNum() < miniMum) {
+                                miniMum = studyRoomList.get(j).getCurrentNum();
+                                target = studyRoomList.get(j);
+                            }
+
+                            if (studyRoomList.get(j).getCurrentNum() == miniMum) {
+                                if (target.getSrId() > studyRoomList.get(j).getSrId()) {
+                                    target = studyRoomList.get(j);
+                                }
+                            }
+
+                        }
+
+                    }
+                    if(!(matchAutoApplyList.get(i).getMember().getNickName().equals(target.getMember().getNickName()))){
+                        matchAutoApplyList.get(i).setStudyRoom(target);
+                        matchAutoApplyList.get(i).setRoomName(target.getRoomName());
+                        matchAutoApplyList.get(i).getMember().setLectureNo(target.getMember().getLectureNo());
+                        matchAutoApplyList.get(i).setAccept(true);
+                        target.setCurrentNum();
+
+                        matchAutoApplyList.get(i).setIsAuto(false);
+                    }
+
+                }
+            }
+        }
+    }
+
 
 
 

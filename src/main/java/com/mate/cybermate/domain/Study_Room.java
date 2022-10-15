@@ -85,6 +85,7 @@ public class Study_Room {
     }
 
 
+
     public void setBoard(Board board){
         this.board=board;
     }
