@@ -245,7 +245,7 @@ li {
         <form th:action="@{~/members/studyRoom/}+${srId}"  method="POST">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <select class="count" name="count" style="margin-right: 80px; margin-top:20px">
-                <option value="none" selected="selected" >개수</option>
+                <option value="0" selected="selected" >개수</option>
                 <option value="1">1개</option>
                 <option value="2">2개</option>
                 <option value="3">3개</option>

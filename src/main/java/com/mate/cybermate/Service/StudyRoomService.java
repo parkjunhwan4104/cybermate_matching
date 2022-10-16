@@ -86,37 +86,56 @@ public class StudyRoomService {
         String formatedNow = now.format(formatter);
 
 
-        String formatedNow2 = takeLectureHistory.getRegDate().format(formatter);
+        String formatedNow2 = takeLectureHistory.getRegDate().format(formatter);  //추가 하려는 강의 학습 개수
 
-        if(takeLectureHistories.size()==0){
+        int toDistinguishSameDay=0;
+
+       if(takeLectureHistories.size()==0){
             takeLectureHistory.setStudyRoom(studyRoom);
             takeLectureHistory.setRegDay(formatedNow);
             takeLectureHistory.setMember(member);
             takeLectureHistoryRepository.save(takeLectureHistory);
         }
         else{
+           for(int i=0;i<takeLectureHistories.size();i++){
+               String formatNowToDistinguish=takeLectureHistories.get(i).getRegDate().format(formatter);
+
+               if(formatedNow2.equals(formatNowToDistinguish)){
+                   toDistinguishSameDay++;
+               }
+           }
 
             for(int i=0;i<takeLectureHistories.size();i++){
 
 
-                String formatedNow3 = takeLectureHistories.get(i).getRegDate().format(formatter);
+                String formatedNow3 = takeLectureHistories.get(i).getRegDate().format(formatter); //기존에 기록한 강의 학습 개수
 
-                if(formatedNow2.equals(formatedNow3)){
+                System.out.println("만들려는거"+formatedNow2);
+                System.out.println("기존"+formatedNow3);
+                if(formatedNow2.equals(formatedNow3)){  //같은 날에 이미 학습한 강의 개수를 기록을 했을 경우
                     newValue=oldValue+count;
 
                     if(newValue>studyRoom.getContentNo()){
                         newValue=studyRoom.getContentNo();
                     }
+                    System.out.println("바꿀거"+count);
+
                     newMatesValue=newMatesValue-takeLectureHistories.get(i).getLectureNum()+count;
                     takeLectureHistories.get(i).setLectureNum(count);
                     break;
                 }
                 else{
-                    takeLectureHistory.setStudyRoom(studyRoom);
-                    takeLectureHistory.setRegDay(formatedNow);
-                    takeLectureHistory.setMember(member);
-                    takeLectureHistoryRepository.save(takeLectureHistory);
 
+                    if(toDistinguishSameDay>=1){
+                        oldValue+=takeLectureHistories.get(i).getLectureNum();
+                        continue;
+                    }
+                    else {
+                        takeLectureHistory.setStudyRoom(studyRoom);
+                        takeLectureHistory.setRegDay(formatedNow);
+                        takeLectureHistory.setMember(member);
+                        takeLectureHistoryRepository.save(takeLectureHistory);
+                    }
 
 
 
