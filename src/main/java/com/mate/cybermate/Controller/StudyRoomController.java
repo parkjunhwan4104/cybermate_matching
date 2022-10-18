@@ -83,11 +83,10 @@ public class StudyRoomController {
 
 
         if(studyRoom.getMember().getLoginId().equals(member.getLoginId())){
-            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
 
-            model.addAttribute("myPercent",member.getLecturePercent()*100);
-            model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
-            model.addAttribute("currentNo",member.getLectureNo());
+            model.addAttribute("myPercent",studyRoomService.getPersonalLecturePercentBySrId(member,srId)*100);
+            model.addAttribute("teamPercent",studyRoomService.getMatesLecturePercentBySrId(studyRoom)*100);
             model.addAttribute("srName",studyRoom.getRoomName());
             model.addAttribute("srId",srId);
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
@@ -97,11 +96,11 @@ public class StudyRoomController {
             return "studyRoom/detailForOwner";
         }
         else{
-            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
 
-            model.addAttribute("myPercent",member.getLecturePercent()*100);
-            model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
-            model.addAttribute("currentNo",member.getLectureNo());
+
+            model.addAttribute("myPercent",studyRoomService.getPersonalLecturePercentBySrId(member,srId)*100);
+            model.addAttribute("teamPercent",studyRoomService.getMatesLecturePercentBySrId(studyRoom)*100);
             model.addAttribute("srName",studyRoom.getRoomName());
             model.addAttribute("srId",srId);
             model.addAttribute("srBoardId",studyRoomBoard.getSrBoardId());
@@ -139,12 +138,11 @@ public class StudyRoomController {
         if(studyRoom.getMember().getNickName().equals(member.getNickName())){
 
             studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom,member);
-            studyRoomService.updateStudyRoomPercent(studyRoom,member);
 
-            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
 
-            model.addAttribute("myPercent",member.getLecturePercent()*100);
-            model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
+            model.addAttribute("myPercent",studyRoomService.getPersonalLecturePercentBySrId(member,srId)*100);
+            model.addAttribute("teamPercent",studyRoomService.getMatesLecturePercentBySrId(studyRoom)*100);
             model.addAttribute("goal",studyRoom.getGoal());
 
             model.addAttribute("count",count);
@@ -157,12 +155,11 @@ public class StudyRoomController {
 
         else{
             studyRoomService.updateLectureNo(Long.valueOf(Integer.parseInt(count)),studyRoom,member);
-            studyRoomService.updateStudyRoomPercent(studyRoom,member);
 
-            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
+            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
 
-            model.addAttribute("myPercent",member.getLecturePercent()*100);
-            model.addAttribute("teamPercent",studyRoom.getMatesPercent()*100);
+            model.addAttribute("myPercent",studyRoomService.getPersonalLecturePercentBySrId(member,srId)*100);
+            model.addAttribute("teamPercent",studyRoomService.getMatesLecturePercentBySrId(studyRoom)*100);
             model.addAttribute("goal",studyRoom.getGoal());
 
             model.addAttribute("count",count);
@@ -261,7 +258,6 @@ public class StudyRoomController {
         return "member/accept";
 
     }
-
 
 
 

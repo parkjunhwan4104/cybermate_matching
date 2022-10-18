@@ -37,8 +37,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/members/doLogin")   //로그인이 이루어지는 페이지
                 .usernameParameter("loginId")
                 .passwordParameter("loginPw")
-                .failureUrl("/members/loginFail")
-                .defaultSuccessUrl("/members/loginSucess")         //로그인 성공후에 인덱스 페이지로 보내줌
+                .failureUrl("/members/login")
+                .defaultSuccessUrl("/")         //로그인 성공후에 인덱스 페이지로 보내줌
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))

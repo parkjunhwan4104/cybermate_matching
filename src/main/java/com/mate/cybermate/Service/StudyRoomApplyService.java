@@ -38,7 +38,7 @@ public class StudyRoomApplyService {
                 studyRoom.getSubject(),
                 member.getAge(),
                 member.getSex(),
-                member.getLectureNo()
+                studyRoom.getContentNo()
 
 
         );
@@ -49,9 +49,6 @@ public class StudyRoomApplyService {
         roomApply.setMember(member);
 
         roomApply.setStudyRoom(studyRoom);
-        member.setLecturePercent(0);
-        member.setCurrentLectureNo(Long.valueOf(0));
-
 
         studyRoomApplyRepository.save(roomApply);
 
@@ -90,9 +87,6 @@ public class StudyRoomApplyService {
 
         roomApply.setMember(member);
 
-        member.setLecturePercent(0);
-        member.setCurrentLectureNo(Long.valueOf(0));
-
 
         studyRoomApplyRepository.save(roomApply);
     }
@@ -101,8 +95,6 @@ public class StudyRoomApplyService {
     @Transactional
     public void doAccept(Long sraId,boolean accept){
         StudyRoomApply studyRoomApply=findById(sraId);
-        Study_Room studyRoom=studyRoomApply.getStudyRoom();
-        studyRoomApply.getMember().setLectureNo(studyRoom.getMember().getLectureNo());
 
         studyRoomApply.setAccept(accept);
 
@@ -128,16 +120,6 @@ public class StudyRoomApplyService {
         return RoomApplyList;
     }
 
-    public List<StudyRoomApply> getRoomListBySrId(Long srId){
-        List<StudyRoomApply> RoomApplyList=getRoomApplyList();
-        List<StudyRoomApply> roomApplies=new ArrayList<>();
-        for(int i=0;i<RoomApplyList.size();i++){
-            if(RoomApplyList.get(i).getStudyRoom().getSrId()==srId){
-                roomApplies.add(RoomApplyList.get(i));
-            }
-        }
-        return roomApplies;
-    }
 
 
     public List<StudyRoomApplyDTO> getAcceptApplyListByMemberId(Member member){
@@ -177,15 +159,6 @@ public class StudyRoomApplyService {
 
 
 
-
-    @Transactional
-    public void deleteApply(Long sraId){
-
-        StudyRoomApply studyRoomApply=findById(sraId);
-
-        studyRoomApplyRepository.delete(studyRoomApply);
-
-    }
 
 
 

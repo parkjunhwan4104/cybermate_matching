@@ -46,9 +46,8 @@ public class StudyRoomService {
 
         studyRoom.setSrBoard(studyRoomBoard);
 
-        member.setLectureNo(studyRoomSaveForm.getContentNo());
-        member.setCurrentLectureNo(Long.valueOf(0));
-        member.setLecturePercent(0);
+
+        studyRoom.setContentNo(studyRoomSaveForm.getContentNo());
 
         studyRoom.setMember(member);
         studyRoom.setBoard(board);
@@ -68,18 +67,115 @@ public class StudyRoomService {
 
     }
 
+    public Long getCurrentLectureNumByMemberAndSrId(Member member,Long srId){  //회원이 속해있는 스터디룸에서 진도 체크한 강의 수
+
+        Study_Room study_room=findById(srId);
+
+        List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
+
+        Long sum=Long.valueOf(0);
+
+        for(int i=0;i<takeLectureHistories.size();i++){
+            sum+=takeLectureHistories.get(i).getLectureNum();
+        }
+
+        if(sum>study_room.getContentNo()){
+            sum=study_room.getContentNo();
+        }
+
+        return sum;
+    }
+
+    public Long getCurrentMatesLectureNumBySrId(Study_Room studyRoom){ //회원이 속해있는 스터디룸 메이트들의 진도체크 강의 수수
+
+       List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
+
+        List<Member> memberList=new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).isAccept()==true){
+                memberList.add(list.get(i).getMember());
+            }
+        }
+
+        if(!memberList.contains(studyRoom.getMember())){
+            memberList.add(studyRoom.getMember());
+        }
+
+        Long totalLectureNum=Long.valueOf(0);
+
+        for(int i=0;i<memberList.size();i++){
+            totalLectureNum+=getCurrentLectureNumByMemberAndSrId(memberList.get(i),studyRoom.getSrId());
+        }
+
+        if(totalLectureNum>studyRoom.getContentNo()*memberList.size()){
+            totalLectureNum=studyRoom.getContentNo()*memberList.size();
+        }
+
+        return totalLectureNum;
+    }
+
+
+    public float getPersonalLecturePercentBySrId(Member member,Long srId){ //스터디룸의 개인 강의 수강율 퍼센트
+
+        Study_Room studyRoom=findById(srId);
+
+        Long currentNum=getCurrentLectureNumByMemberAndSrId(member,srId);
+
+        Long totalLectureNum=studyRoom.getContentNo();
+
+        if(currentNum>totalLectureNum){
+            currentNum=totalLectureNum;
+        }
+
+        float lecturePercent=(float)currentNum/(float)totalLectureNum;
+
+        float result=(float)(Math.round(lecturePercent * 100) / 100.0);
+
+        return result;
+    }
+
+    public float getMatesLecturePercentBySrId(Study_Room studyRoom){
+        Long currentNum=getCurrentMatesLectureNumBySrId(studyRoom);
+
+        List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
+
+        List<Member> memberList=new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).isAccept()==true){
+                memberList.add(list.get(i).getMember());
+            }
+        }
+
+        if(!memberList.contains(studyRoom.getMember())){
+            memberList.add(studyRoom.getMember());
+        }
+
+        Long totalLectureNum=Long.valueOf(0);
+
+        for(int i=0;i<memberList.size();i++){
+            totalLectureNum+=studyRoom.getContentNo();
+        }
+
+        float matesLecturePercent=(float)currentNum/(float)totalLectureNum;
+
+        float result=(float)(Math.round(matesLecturePercent * 100) / 100.0);
+
+        return result;
+    }
+
+
     @Transactional
     public void updateLectureNo(Long count,Study_Room studyRoom,Member member){   //스터디룸 강의 개수 업데이트
 
         Long oldValue=Long.valueOf(0);
-        Long newValue= member.getCurrentLectureNo()+count;
+        Long newValue=getCurrentLectureNumByMemberAndSrId(member,studyRoom.getSrId())+count;
 
         Long oldMatesValue=Long.valueOf(0);
         Long newMatesValue=studyRoom.getMatesLectureNo()+count;
 
         TakeLectureHistory takeLectureHistory=TakeLectureHistory.createTakeLectureHistory(count);
 
-        List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMember(member);
+        List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,studyRoom.getSrId());
 
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
@@ -110,15 +206,10 @@ public class StudyRoomService {
 
                 String formatedNow3 = takeLectureHistories.get(i).getRegDate().format(formatter); //기존에 기록한 강의 학습 개수
 
-                System.out.println("만들려는거"+formatedNow2);
-                System.out.println("기존"+formatedNow3);
+
                 if(formatedNow2.equals(formatedNow3)){  //같은 날에 이미 학습한 강의 개수를 기록을 했을 경우
                     newValue=oldValue+count;
 
-                    if(newValue>studyRoom.getContentNo()){
-                        newValue=studyRoom.getContentNo();
-                    }
-                    System.out.println("바꿀거"+count);
 
                     newMatesValue=newMatesValue-takeLectureHistories.get(i).getLectureNum()+count;
                     takeLectureHistories.get(i).setLectureNum(count);
@@ -148,11 +239,6 @@ public class StudyRoomService {
         }
 
 
-        if(newValue<=member.getLectureNo()) {
-            member.setCurrentLectureNo(newValue);
-        }
-
-
         List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
         List<Member> memberList=new ArrayList<>();
         for(int j=0;j<list.size();j++){
@@ -162,7 +248,7 @@ public class StudyRoomService {
         }
         Long sum=Long.valueOf(0);
         for(int j=0;j<memberList.size();j++){
-            sum+=memberList.get(j).getLectureNo();
+            sum+=studyRoom.getContentNo();
         }
 
         if(newMatesValue<=sum) {
@@ -171,63 +257,6 @@ public class StudyRoomService {
 
 
 
-
-
-
-
-    }
-
-    @Transactional
-    public void updateStudyRoomPercent(Study_Room studyRoom,Member member){  //스터디룸의 개인 및 단체 강의 수강율 퍼센트 업데이트
-
-        List<StudyRoomApply>list=studyRoom.getStudyRoomApply();
-
-        float matesTotalNo=0;
-
-
-        List<Member> memberList=new ArrayList<>();
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).isAccept()==true){
-                memberList.add(list.get(i).getMember());
-            }
-        }
-
-        if(!memberList.contains(studyRoom.getMember())){
-            memberList.add(studyRoom.getMember());
-        }
-
-        float CLN=(float)member.getCurrentLectureNo();
-        float CN=(float)member.getLectureNo();
-        float MLN=0;
-
-
-        for(int i=0;i<memberList.size();i++){
-            MLN+=(float)memberList.get(i).getLectureNo();
-
-        }
-
-
-        float lecturePercent=CLN/CN;
-
-
-
-
-        float a=(float)(Math.round(lecturePercent * 100) / 100.0);
-
-
-
-        member.setLecturePercent(a);
-
-        for(int i=0;i<memberList.size();i++){
-            matesTotalNo+= memberList.get(i).getCurrentLectureNo();
-        }
-
-        float matesPercent=matesTotalNo/MLN;
-
-        float b=(float)(Math.round(matesPercent * 100) / 100.0);
-
-
-        studyRoom.setMatesPercent(b);
     }
 
 
@@ -371,7 +400,6 @@ public class StudyRoomService {
                     if(!(matchAutoApplyList.get(i).getMember().getNickName().equals(target.getMember().getNickName()))){
                         matchAutoApplyList.get(i).setStudyRoom(target);
                         matchAutoApplyList.get(i).setRoomName(target.getRoomName());
-                        matchAutoApplyList.get(i).getMember().setLectureNo(target.getMember().getLectureNo());
                         matchAutoApplyList.get(i).setAccept(true);
                         target.setCurrentNum();
 

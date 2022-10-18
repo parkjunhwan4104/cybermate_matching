@@ -94,14 +94,12 @@ public class Study_Room {
         this.goal=goal;
     }
 
-    public void setGoalLectureNo(Long goalLectureNo){
 
-        this.goalLectureNo=goalLectureNo;
+    public void setContentNo(Long contentNo){
+        this.contentNo=contentNo;
     }
 
-    public void setLeftContent(Long num){
-        this.leftContent=num;
-    }
+
 
     public void setCurrentNum(){
 

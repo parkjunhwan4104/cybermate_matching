@@ -182,7 +182,7 @@ li {
 
                 <li>
                     <label  style="font-weight:bold;">관심분야</label>
-                    <input class="age_input" style="margin-right: 65px;" name="favorite" type="text" placeholder="관심분야를 입력하세요" autocomplete="off" th:field="*{favorite}"  th:errorclass="field-error">
+                    <input class="age_input" style="margin-right: 65px;" name="favorite" type="text" placeholder="관심분야를 입력하세요" autocomplete="off" th:field="*{favorite}"  th:errorclass="field-error" required>
                     <span th:errors="*{favorite}"></span>
                     <label style="margin-left:-50px">
                         <input type="checkbox" name="favoritePermit" value="No">비공개
@@ -209,7 +209,7 @@ li {
                 <li>
 
                     <label style="font-weight:bold">나이</label>
-                    <input class="age_input" style="margin-right:0px;" name="age" type="text" placeholder="나이를 입력하세요" autocomplete="off" th:field="*{age}"  th:errorclass="field-error">
+                    <input class="age_input" style="margin-right:0px;" name="age" type="text" placeholder="나이를 입력하세요" autocomplete="off" th:field="*{age}"  th:errorclass="field-error" required>
                     <span th:errors="*{age}"></span>
                     <label style="margin-right:-10px">
                         <input type="checkbox" name="agePermit" value="No">비공개
@@ -221,7 +221,7 @@ li {
                 <li>
 
                     <label style="font-weight:bold; margin-left: 5px;">자기소개</label>
-                    <input class="myIntro_input" style="margin-right: 40px;" name="introduce" type="text" placeholder="10자 이내 입력" autocomplete="off" th:field="*{introduce}" th:errorclass="field-error">
+                    <input class="myIntro_input" style="margin-right: 40px;" name="introduce" type="text" placeholder="10자 이내 입력" autocomplete="off" th:field="*{introduce}" th:errorclass="field-error" required>
                     <span th:errors="*{introduce}"></span>
 
                 </li>

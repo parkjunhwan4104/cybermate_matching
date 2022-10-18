@@ -17,18 +17,22 @@ public class TakeLectureService {
 
     private final TakeLectureHistoryRepository takeLectureHistoryRepository;
 
-    public List<TakeLectureHistory> getTakeLectureHistoryByMember(Member member){
+
+    public List<TakeLectureHistory> getTakeLectureHistoryByMemberAndSrId(Member member,Long srId){
         List<TakeLectureHistory> allTakeLecture=takeLectureHistoryRepository.findAll();
 
         List<TakeLectureHistory> memberTakeLectureHistory=new ArrayList<>();
 
         for(int i=0;i<allTakeLecture.size();i++){
-            if(allTakeLecture.get(i).getMember().equals(member)){
+            if(allTakeLecture.get(i).getMember().equals(member)&&(allTakeLecture.get(i).getStudyRoom().getSrId()==srId)){
+
                 memberTakeLectureHistory.add(allTakeLecture.get(i));
             }
         }
         return memberTakeLectureHistory;
     }
+
+
 
 
 }
