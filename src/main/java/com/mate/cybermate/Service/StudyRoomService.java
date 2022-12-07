@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,7 +178,7 @@ public class StudyRoomService {
 
         List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,studyRoom.getSrId());
 
-        LocalDate now = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
         String formatedNow = now.format(formatter);
 
@@ -409,6 +410,12 @@ public class StudyRoomService {
                 }
             }
         }
+    }
+
+    @Transactional
+    public void setInitialGoal(Study_Room studyRoom){
+        studyRoom.initialGoalLectureNo();
+        studyRoom.initialGoalTime();
     }
 
 

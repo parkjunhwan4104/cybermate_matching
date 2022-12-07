@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -278,9 +278,9 @@ li {
                 <p style="float:left; margin-left: 20px;">학습목표</p>
                 <select name="period" class="count" style=" margin-top:20px">
                     <option value="none" selected="selected">기간</option>
-                    <option value="1일">1일</option>
-                    <option value="1주일">1주일</option>
-                    <option value="1달">1달</option>
+                    <option value="1day">1일</option>
+                    <option value="1week">1주일</option>
+                    <option value="1month">1달</option>
                 </select>
                 <select name="count" class="count" style=" margin-top:20px">
                     <option value="none" selected="selected">개수</option>
@@ -321,7 +321,7 @@ li {
             </tbody>
         </table>
 
-
+        <nav class="bottom">
         <div >
             <hr color="gray" width="100%" style="border:0; height: 0.5px;">
             <a th:href="@{~/}">
@@ -335,7 +335,7 @@ li {
             </a>
 
         </div>
-
+        </nav>
 
 
     </div>

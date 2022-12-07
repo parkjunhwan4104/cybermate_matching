@@ -6,6 +6,7 @@ import com.mate.cybermate.DTO.StudyRoom.StudyRoomSaveForm;
 import com.mate.cybermate.Service.*;
 import com.mate.cybermate.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -70,8 +74,11 @@ public class StudyRoomController {
     }
 
     @GetMapping("/members/studyRoom/{srId}")
-    public String showStudyRoom(@PathVariable(name="srId") Long srId, Model model, Principal principal){
+    public String showStudyRoom(@PathVariable(name="srId") Long srId, Model model, Principal principal, HttpServletResponse response) throws Exception{
 
+        response.setContentType("text/html; charset=euc-kr");
+
+        PrintWriter out = response.getWriter();
 
         Member member=memberService.getMember(principal.getName());
 
@@ -79,11 +86,72 @@ public class StudyRoomController {
 
         StudyRoomBoard studyRoomBoard=studyRoomBoardService.getSrBoardById(srId);
 
+        List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
+
+        LocalDateTime now=LocalDateTime.now();
+        if(studyRoom.getGoalLectureNo()!=0&&studyRoom.getGoalTime()!=0) {
+            LocalDateTime deadLineTime = studyRoom.getGoalSettingTime().plusHours(24);
+
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+            String formattedSetGoalTime = studyRoom.getGoalSettingTime().format(formatter);
+
+            if (takeLectureHistories.size() == 0) {
+                if (now.isAfter(deadLineTime)) {
+                    studyRoomService.setInitialGoal(studyRoom);
+                    out.println("<script>alert('설정한 목표의 2/3이상을 달성하지 못했습니다.'); history.go(-1); </script>");
+
+                    out.flush();
+
+
+                }
+            }
+            else {
+                for (int i = 0; i < takeLectureHistories.size(); i++) {
+                    if (takeLectureHistories.get(i).getRegDay().equals(formattedSetGoalTime)) {
+
+
+                        if (now.isAfter(deadLineTime)) {
+
+                            if (takeLectureHistories.get(i).getLectureNum() < (2 / 3) * studyRoom.getGoalLectureNo()) {
+
+                                studyRoomService.setInitialGoal(studyRoom);
+                                out.println("<script>alert('설정한 목표의 2/3이상을 달성하지 못했습니다.'); history.go(-1); </script>");
+
+                                out.flush();
+
+
+                            }
+                            else{
+                                break;
+                            }
+
+                        }
+
+                    }
+
+                    if (i == takeLectureHistories.size() - 1) {
+
+                        studyRoomService.setInitialGoal(studyRoom);
+                        out.println("<script>alert('설정한 목표의 2/3이상을 달성하지 못했습니다.'); history.go(-1); </script>");
+
+                        out.flush();
+
+
+                    }
+                }
+            }
+        }
+
+
 
 
 
         if(studyRoom.getMember().getLoginId().equals(member.getLoginId())){
-            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
+
+
+
+          //  List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
 
             model.addAttribute("myPercent",studyRoomService.getPersonalLecturePercentBySrId(member,srId)*100);
             model.addAttribute("teamPercent",studyRoomService.getMatesLecturePercentBySrId(studyRoom)*100);
@@ -96,8 +164,7 @@ public class StudyRoomController {
             return "studyRoom/detailForOwner";
         }
         else{
-            List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
-
+        //    List<TakeLectureHistory> takeLectureHistories=takeLectureService.getTakeLectureHistoryByMemberAndSrId(member,srId);
 
             model.addAttribute("myPercent",studyRoomService.getPersonalLecturePercentBySrId(member,srId)*100);
             model.addAttribute("teamPercent",studyRoomService.getMatesLecturePercentBySrId(studyRoom)*100);
@@ -122,10 +189,6 @@ public class StudyRoomController {
 
     @PostMapping("/members/studyRoom/{srId}")
     public String doCheck(@PathVariable(name="srId") Long srId,@RequestParam(name="count")String count,Model model,Principal principal){
-
-
-
-
 
         Member member=memberService.getMember(principal.getName());
 
@@ -177,11 +240,42 @@ public class StudyRoomController {
 
     @PostMapping("/members/studyRoom/setGoal/{srId}")
     public String doSetGoal(@PathVariable(name="srId") Long srId,@RequestParam(name="period")String period,@RequestParam(name="count")String count){
+
+        Study_Room studyRoom=studyRoomService.findById(srId);
+
+
+
+        int lectureNum=count.charAt(0);
+
+
+
+        if(period.equals("1day")){
+            period="1일";
+            studyRoom.setGoalTime(1);
+        }
+        if(period.equals("1week")){
+            period="1주일";
+            studyRoom.setGoalTime(7);
+        }
+        if(period.equals("1month")){
+            period="1달";
+            studyRoom.setGoalTime(30);
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+
+        studyRoom.setGoalSettingTime(now);
+
+        studyRoom.setGoalLectureNo(lectureNum);
+
         String goal="";
 
-        if(period.equals("1일")||period.equals("1주일")||period.equals("1달")){
+        if(period.equals("1일")||period.equals("1주")||period.equals("1달")){
+            
             goal=period+" 동안 총 "+count+"개의 강의 수강";
         }
+
+
 
         studyRoomService.updateGoal(srId,goal);
 

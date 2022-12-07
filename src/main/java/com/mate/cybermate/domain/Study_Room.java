@@ -34,9 +34,9 @@ public class Study_Room {
 
     private String goal;
 
-    private Long goalLectureNo;
+    private int goalLectureNo;
 
-    private Long leftContent;
+    private int goalTime;
 
     private Long contentNo;
 
@@ -44,8 +44,7 @@ public class Study_Room {
 
     private Long matesLectureNo;
 
-
-    private float matesPercent;
+    private  LocalDateTime GoalSettingTime;
 
     private LocalDateTime regDate=LocalDateTime.now();
 
@@ -124,11 +123,27 @@ public class Study_Room {
 
     }
 
-
-
-    public void setMatesPercent(float no){
-        this.matesPercent=no;
+    public void initialGoalTime(){
+        this.goalTime=0;
     }
+
+    public void initialGoalLectureNo(){
+        this.goalLectureNo=0;
+    }
+
+
+    public void setGoalTime(int time){
+        this.goalTime=time;
+    }
+
+    public void setGoalLectureNo(int num){
+        this.goalLectureNo=num;
+    }
+
+    public void setGoalSettingTime(LocalDateTime localDateTime){
+        this.GoalSettingTime=localDateTime;
+    }
+
 
 
 

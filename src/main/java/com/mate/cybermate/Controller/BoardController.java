@@ -24,11 +24,15 @@ public class BoardController {
 
     private final StudyRoomApplyService studyRoomApplyService;
 
+    private final MemberService memberService;
+
     @GetMapping("/boards/1")
     public String showBoard(Model model, Principal principal) {   // 스터디룸 리스트들을 보여주는 게시판(화면)
 
 
         try {
+            Member member=memberService.getMember(principal.getName());
+
             List<StudyRoomApply> matchAutoApplyList=studyRoomApplyService.matchAutoApplyList();
 
             studyRoomService.doMatching(matchAutoApplyList);
@@ -44,9 +48,9 @@ public class BoardController {
 
 
                 for (int i = 0; i < studyRoomList.size(); i++) {
-                    //applyHistoryDTOList=applyHistoryService.getRoomListBySrId(studyRoomList.get(i).getId());
 
-                    if(studyRoomList.get(i).getOwnerName().equals(principal.getName())){
+
+                    if(studyRoomList.get(i).getOwnerName().equals(member.getNickName())){
                         studyRoomList.get(i).setBelong(true);
                     }
                     else{

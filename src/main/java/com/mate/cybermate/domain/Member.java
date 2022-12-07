@@ -41,7 +41,6 @@ public class Member implements UserDetails {
     private String introduce;
 
 
-
     @Enumerated(EnumType.STRING)
     private Role authority;
 
